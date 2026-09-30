@@ -156,18 +156,3 @@ struct DynamicSegmentTree {
         return findLast(root, 0, n, l, r, pred);
     }
 };
-
-struct SumMono {
-    struct Type {
-        i64 v;
-    };
-    static Type e() {
-        return {0};
-    }
-    static Type op(const Type& a, const Type& b) {
-        return {a.v + b.v};
-    }
-    static Type from(const i64& x) {
-        return {x};
-    }
-};

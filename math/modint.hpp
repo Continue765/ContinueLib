@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-
 template <std::signed_integral T>
 constexpr std::pair<T, T> exgcd(T a, T m) {
     assert(m > 0);

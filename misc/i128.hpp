@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-
 using i128 = __int128;
 
 ostream& operator<<(ostream& os, i128 n) {

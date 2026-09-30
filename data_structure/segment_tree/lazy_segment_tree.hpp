@@ -149,17 +149,3 @@ struct LazySegmentTree {
         return findLast(1, 0, n, l, r, pred);
     }
 };
-
-template <typename T>
-struct AddMono {
-    using Type = T;
-    static Type e() {
-        return {0};
-    }
-    static Type op(const Type& a, const Type& b) {
-        return {a + b};
-    }
-    static Type from(const i64& x) {
-        return {x};
-    }
-};

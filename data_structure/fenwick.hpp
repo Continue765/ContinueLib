@@ -1,6 +1,6 @@
-template <typename Abel>
+template <typename Mono>
 struct Fenwick {
-    using X = typename Abel::Type;
+    using X = typename Mono::Type;
 
     int n;
     vector<X> a;
@@ -11,28 +11,28 @@ struct Fenwick {
 
     void init(int _n) {
         n = _n;
-        a.assign(n, Abel::e());
+        a.assign(n, Mono::e());
     }
 
     void add(int x, const X& v) {
         assert(0 <= x && x < n);
         for (int i = x + 1; i <= n; i += i & -i) {
-            a[i - 1] = Abel::op(a[i - 1], v);
+            a[i - 1] = Mono::op(a[i - 1], v);
         }
     }
 
     X sum(int x) {
         assert(0 <= x && x <= n);
-        X res = Abel::e();
+        X res = Mono::e();
         for (int i = x; i > 0; i -= i & -i) {
-            res = Abel::op(a[i - 1], res);
+            res = Mono::op(a[i - 1], res);
         }
         return res;
     }
 
     X rangeSum(int l, int r) {
         assert(l <= r);
-        return Abel::op(Abel::inv(sum(l)), sum(r));
+        return Mono::op(Mono::inv(sum(l)), sum(r));
     }
 
     // lower_bound
@@ -45,19 +45,5 @@ struct Fenwick {
             }
         }
         return x;
-    }
-};
-
-template <typename T>
-struct Abel {
-    using Type = T;
-    static Type e() {
-        return {0};
-    }
-    static Type op(const Type& a, const Type& b) {
-        return {a + b};
-    }
-    static Type inv(const Type& a) {
-        return {-a};
     }
 };

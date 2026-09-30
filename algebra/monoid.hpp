@@ -27,6 +27,9 @@ struct AddMono {
     static Type from(const i64& x) {
         return {x};
     }
+    static Type inv(const Type& a) {
+        return {-a};
+    }
 };
 
 // 区间乘

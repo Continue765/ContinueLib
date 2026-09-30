@@ -30,7 +30,7 @@ void sieve(int n) {
 }
 
 // 求解单个数的欧拉函数
-int phi(int n) {
+int Phi(int n) {
     int res = n;
     for (int i = 2; i * i <= n; i++) {
         if (n % i == 0) {

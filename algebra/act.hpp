@@ -39,7 +39,7 @@ struct MinAdd {
     using Tag = AddMono<T>;
     using X = Mono::Type;
     using Y = Tag::Type;
-    static X act(const X& x, const Y&, y, int len) {
+    static X act(const X& x, const Y& y, int len) {
         return {x + y};
     }
 };
@@ -50,7 +50,7 @@ struct MaxAdd {
     using Tag = AddMono<T>;
     using X = Mono::Type;
     using Y = Tag::Type;
-    static X act(const X& x, const Y&, y, int len) {
+    static X act(const X& x, const Y& y, int len) {
         return {x + y};
     }
 };

@@ -54,6 +54,9 @@ struct SCC {
                 dfs(i);
             }
         }
+        for (auto& x : bel) {    // 把逆拓扑序转成拓扑序
+            x = cnt - 1 - x;
+        }
         return bel;
     }
 };

@@ -16,7 +16,7 @@ struct TwoSat {
             if (id[2 * i] == id[2 * i + 1]) {
                 return false;
             }
-            ans[i] = id[2 * i] > id[2 * i + 1];
+            ans[i] = id[2 * i] < id[2 * i + 1];
         }
         return true;
     }

@@ -110,18 +110,3 @@ struct SegmentTree {
         return findLast(1, 0, n, l, r, pred);
     }
 };
-
-struct Mono {
-    struct Type {
-        i64 v = 0;
-    };
-    static Type e() {
-        return {inf};
-    }
-    static Type op(const Type& a, const Type& b) {
-        return {min(a.v, b.v)};
-    }
-    static Type from(const i64& x) {
-        return {x};
-    }
-};

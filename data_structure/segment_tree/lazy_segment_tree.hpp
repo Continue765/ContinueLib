@@ -163,28 +163,3 @@ struct AddMono {
         return {x};
     }
 };
-
-template <typename T>
-struct AddMono {
-    using Type = T;
-    static Type e() {
-        return {0};
-    }
-    static Type op(const Type& a, const Type& b) {
-        return {a + b};
-    }
-    static Type from(const i64& x) {
-        return {x};
-    }
-};
-
-template <typename T>
-struct SumAdd {
-    using Mono = AddMono<T>;
-    using Tag = AddMono<T>;
-    using X =  Mono::Type;
-    using Y = Tag::Type;
-    static X act(const X& x, const Y& y, int len) {
-        return {x.v + y.k * len};
-    }
-};

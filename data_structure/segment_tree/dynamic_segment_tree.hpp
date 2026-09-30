@@ -171,25 +171,3 @@ struct SumMono {
         return {x};
     }
 };
-
-struct AddMono {
-    struct Type {
-        i64 k;
-    };
-    static Type e() {
-        return {0};
-    }
-    static Type op(const Type& a, const Type& b) {
-        return {a.k + b.k};
-    }
-};
-
-struct ActMono {
-    using Mono = SumMono;
-    using Tag = AddMono;
-    using X =  Mono::Type;
-    using Y = Tag::Type;
-    static X act(const X& x, const Y& y, int len) {
-        return {x.v + y.k * len};
-    }
-};

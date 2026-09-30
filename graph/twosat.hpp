@@ -1,0 +1,27 @@
+struct TwoSat {
+    int n;
+    SCC scc;
+    vector<bool> ans;
+
+    TwoSat(int n_) : n(n_), scc(2 * n), ans(n) {}
+
+    void addClause(int u, bool f, int v, bool g) {
+        scc.addEdge(2 * u + !f, 2 * v + g);
+        scc.addEdge(2 * v + !g, 2 * u + f);
+    }
+
+    bool satisfiable() {
+        auto id = scc.work();
+        for (int i = 0; i < n; i++) {
+            if (id[2 * i] == id[2 * i + 1]) {
+                return false;
+            }
+            ans[i] = id[2 * i] > id[2 * i + 1];
+        }
+        return true;
+    }
+
+    vector<bool> answer() {
+        return ans;
+    }
+};

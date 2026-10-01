@@ -1,0 +1,11 @@
+[[item]]
+name = "线段树"
+file = "segment_tree.hpp"
+
+[[item]]
+name = "懒标记线段树"
+file = "lazy_segment_tree.hpp"
+
+[[item]]
+name = "动态开点线段树"
+file = "dynamic_segment_tree.hpp"

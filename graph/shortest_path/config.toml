@@ -1,0 +1,15 @@
+[[item]]
+name = "Dijkstra"
+file = "dijkstra.hpp"
+
+[[item]]
+name = "Bellman-Ford"
+file = "bellman_ford.hpp"
+
+[[item]]
+name = "SPFA"
+file = "spfa.hpp"
+
+[[item]]
+name = "Floyd"
+file = "floyd.hpp"

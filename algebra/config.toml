@@ -1,0 +1,23 @@
+[[item]]
+name = "幺半群"
+file = "monoid.hpp"
+
+[[item]]
+name = "幺半群作用"
+file = "act.hpp"
+
+[[item]]
+name = "模整数"
+file = "modint.hpp"
+
+[[item]]
+name = "矩阵"
+file = "matrix.hpp"
+
+[[item]]
+name = "线性基"
+file = "basis.hpp"
+
+[[item]]
+name = "快速幂"
+file = "power.hpp"

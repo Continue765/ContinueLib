@@ -1,0 +1,19 @@
+[[item]]
+name = "组合数"
+file = "combination.hpp"
+
+[[item]]
+name = "康托展开"
+file = "cantor.hpp"
+
+[[item]]
+name = "逆序对"
+file = "inversions.hpp"
+
+[[item]]
+name = "容斥原理"
+file = "ie.hpp"
+
+[[item]]
+name = "zeta 变换"
+file = "zeta.hpp"

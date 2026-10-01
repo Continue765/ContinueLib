@@ -1,0 +1,19 @@
+莫比乌斯反演用来在「按约数求和」和「按倍数求和」之间互转。
+
+$\mu(n)$ 的定义：$n=1$ 时为 $1$；$n$ 是 $k$ 个互异素数之积时为 $(-1)^k$；含平方因子时为 $0$。一切从这条恒等式出发：
+\[ \sum_{d\mid n}\mu(d)=[n=1]. \]
+
+于是有两种方向的反演：
+\[
+f(n)=\sum_{d\mid n}g(d)\ \Longrightarrow\ g(n)=\sum_{d\mid n}\mu(d)\,f\!\left(\tfrac nd\right),
+\]
+\[
+f(n)=\sum_{n\mid d}g(d)\ \Longrightarrow\ g(n)=\sum_{n\mid d}\mu\!\left(\tfrac dn\right)f(d).
+\]
+
+实际做题更常用的是「换条件」的用法：把 $[\gcd(i,j)=1]$ 换成 $\sum_{d\mid\gcd(i,j)}\mu(d)$，再交换求和顺序，条件就从 $\gcd$ 挪到了 $d$：
+\[
+\sum_{i=1}^{n}\sum_{j=1}^{m}[\gcd(i,j)=1]=\sum_{d=1}^{\min(n,m)}\mu(d)\left\lfloor\frac nd\right\rfloor\left\lfloor\frac md\right\rfloor .
+\]
+
+右边只要 $\mu$ 的前缀和就能整除分块，$\mu$ 用下面的 \texttt{sieve()} 线性筛出来。

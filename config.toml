@@ -1,0 +1,35 @@
+# 仓库根配置：每个 [[item]] 是一个一级章节（\section）
+# name = PDF 里的标题；dir = 磁盘目录，该目录下必须有 config.toml
+# 字段含义见 AGENTS.md「Config 文件格式」
+
+[[item]]
+name = "代数结构"
+dir = "algebra"
+
+[[item]]
+name = "图论"
+dir = "graph"
+
+[[item]]
+name = "网络流"
+dir = "flow"
+
+[[item]]
+name = "数论"
+dir = "number_theory"
+
+[[item]]
+name = "组合数学"
+dir = "combinatorics"
+
+[[item]]
+name = "数据结构"
+dir = "data_structure"
+
+[[item]]
+name = "字符串"
+dir = "string"
+
+[[item]]
+name = "杂项"
+dir = "misc"

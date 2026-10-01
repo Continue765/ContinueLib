@@ -1,0 +1,101 @@
+% 静态骨架：导言区 + 文档开始 + \input{out/body}
+% out/body.tex 由 build.py 生成；本文件手写维护，改排版/字体就改这里。
+% 编译：python3 build.py   或   xelatex -output-directory=out out/main.tex
+
+\documentclass[10pt,a4paper,twoside]{article}
+
+% ---- 宏包 ----
+\usepackage{xeCJK}
+\usepackage{amsmath, amsthm}
+\usepackage{listings,xcolor}
+% 页边距。必须在下面的 \pagestyle{fancy} 之前定好：fancyhdr 是在 \pagestyle 那一刻把
+% \headwidth 快照成当时的 \textwidth，之后再改边距不会同步，页眉就会比正文窄一截。
+\usepackage[left=2cm,right=2cm,top=2.54cm,bottom=2.54cm]{geometry}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref} % 链接不染色也不加框（黑白打印友好，PDF 里仍可点）
+\usepackage{setspace}
+\usepackage{fancyhdr} % 自定义页眉页脚
+
+% ---- 字体 ----
+\setmainfont{TeX Gyre Termes} % 西文正文：Times 等价（论文标准）
+\setsansfont{Consolas} % 设置英文字体
+\setmonofont[Mapping={}]{Consolas} % 英文引号之类的正常显示，相当于设置英文字体
+% fandol 字体在 texmf-dist 里，fontconfig 不索引 texmf，只能按文件名引用
+\setCJKmainfont{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf] % 中文正文：宋体
+\setCJKsansfont{FandolHei-Regular.otf}[BoldFont=FandolHei-Bold.otf] % 中文标题：黑体
+\setCJKmonofont{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf] % 代码里的中文注释
+\setCJKfamilyfont{kai}{KaiTi} % 页眉用的楷体（~/.local/share/fonts/simkai.ttf）
+
+\linespread{1.2}
+
+% ---- 颜色 ----
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% ---- 页眉页脚（twoside：页码在装订外侧，校名在内侧）----
+\pagestyle{fancy}
+\fancyhead{} % 先清空
+\fancyhead[LE,RO]{\CJKfamily{kai} 第 \thepage 页} % 奇页右上、偶页左上
+\fancyhead[LO,RE]{\CJKfamily{kai} GuangDong University of Technology}
+\fancyfoot{} % 页脚留空，也不画横线
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ---- 代码样式 ----
+\lstset{
+    language    = c++,
+    numbers     = left,
+    numberstyle={                               % 设置行号格式
+        \small
+        \color{black}
+        \fontspec{Consolas}
+    },
+    commentstyle = \color[RGB]{0,128,0}\bfseries, %代码注释的颜色
+    keywordstyle={                              % 设置关键字格式
+        \color[RGB]{40,40,255}
+        \fontspec{Consolas Bold}
+    },
+    stringstyle={                               % 设置字符串格式
+        \color[RGB]{128,0,0}
+        \fontspec{Consolas}
+        \bfseries
+    },
+    basicstyle={                                % 设置代码格式
+        \fontspec{Consolas}
+        \small\ttfamily
+    },
+    emphstyle=\color[RGB]{112,64,160},          % 设置强调字格式
+    breaklines=true,                            % 设置自动换行
+    postbreak=\mbox{\textcolor{gray}{$\rightarrow$}\space}, % 折行处标个灰箭头，与真实换行区分
+    aboveskip=8pt, belowskip=8pt,               % 代码块上下留白收窄
+    tabsize     = 4,
+    frame       = single,%主题
+    columns     = fullflexible,
+    rulesepcolor = \color{red!20!green!20!blue!20}, %设置边框的颜色
+    showstringspaces = false, %不显示代码字符串中间的空格标记
+    escapeinside={\%*}{*)},
+}
+
+\begin{document}
+% ---- 封面（手排，不用 \maketitle；要改标题/作者就改这里）----
+\thispagestyle{empty} % 封面不编号
+\begin{center}
+\vspace*{\stretch{1}}
+{\Huge\bfseries XCPC Templates\par}
+\vspace{1.6em}
+{\rule{0.45\textwidth}{0.8pt}\par}
+\vspace{1.6em}
+{\LARGE Skyclad Observer\par} % 队名
+\vspace{1.2em}
+{\Large Continue\par}
+\vspace{0.9em}
+{\large \today\par}
+\vspace*{\stretch{1}}
+\end{center}
+\newpage % 封面独立成页，目录从下一页开始
+\tableofcontents
+\newpage
+\input{out/body}
+\end{document}

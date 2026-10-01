@@ -1,0 +1,17 @@
+[[item]]
+name = "扩展欧几里得算法"
+file = "exgcd.hpp"
+
+[[item]]
+name = "线性筛"
+file = "sieve.hpp"
+
+[[item]]
+name = "莫比乌斯反演"
+file = "mobius.hpp"
+tex = "莫比乌斯反演.tex"
+
+[[item]]
+name = "欧拉函数"
+file = "euler.hpp"
+tex = "欧拉函数.tex"

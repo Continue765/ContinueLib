@@ -1,6 +1,6 @@
 vector<int> toLehmer(vector<int>& p) {
     int n = p.size();
-    Fenwick<Abel<int>> fen(n);
+    Fenwick<AddMono<int>> fen(n);
     vector<int> c(n);
     for (int i = n - 1; i >= 0; i--) {
         c[i] = fen.sum(p[i]);
@@ -12,7 +12,7 @@ vector<int> toLehmer(vector<int>& p) {
 vector<int> fromLehmer(vector<int>& c) {
     int n = c.size();
     vector<int> p(n);
-    Fenwick<Abel<int>> fen(n);
+    Fenwick<AddMono<int>> fen(n);
     for (int i = 0; i < n; i++) {
         fen.add(i, 1);
     }

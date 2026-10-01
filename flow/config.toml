@@ -5,4 +5,4 @@ file = "max_flow.hpp"
 [[item]]
 name = "最小费用最大流"
 file = "min_cost_flow.hpp"
-tex = "mcf.tex"
+description = "mcf.typ"

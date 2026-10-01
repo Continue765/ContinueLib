@@ -6,7 +6,7 @@
 ./build.py
 ```
 
-产物是 `out/main.pdf`。需要 Python 3.11+ 和 XeLaTeX。
+产物是 `out/main.pdf`。需要 Python 3.11+ 和 typst。
 
 ## 添加模板
 
@@ -39,18 +39,23 @@ dir = "shortest_path"
 
 ## 加说明文字
 
-想在某节代码前面插一段说明，用 `tex`（相对同一个目录）：
+想在某节代码前面插一段说明，用 `description`（相对同一个目录，内容用 Typst 写）：
 
 ```toml
 [[item]]
 name = "莫比乌斯反演"
 file = "mobius.hpp"
-tex = "莫比乌斯反演.tex"
+description = "mobius.typ"
 ```
+
+说明文件是普通 Typst 片段，公式、`*强调*`、`` `行内代码` `` 都能直接用。
 
 ## 改排版
 
-改 `out/main.tex`，手写的，不会被覆盖。`out/body.tex` 是每次构建生成的，不要改。
+改 `out/main.typ`（骨架：字体、代码样式、页眉、封面、目录）和 `out/theme.tmTheme`
+（代码高亮的配色），都是手写的，不会被覆盖。
+
+字体：正文 TeX Gyre Termes + FandolSong，代码 Consolas，页眉中文楷体 KaiTi。
 
 ## VS Code Snippets
 

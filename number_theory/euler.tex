@@ -1,9 +1,0 @@
-$\varphi(n)$ 是 $1$ 到 $n$ 中与 $n$ 互质的数的个数。若 $n=p_1^{e_1}\cdots p_k^{e_k}$，则
-\[ \varphi(n)=n\prod_{i=1}^{k}\left(1-\frac1{p_i}\right). \]
-
-两条常用性质：它是积性的，即 $\gcd(a,b)=1$ 时 $\varphi(ab)=\varphi(a)\varphi(b)$；并且 $\sum_{d\mid n}\varphi(d)=n$，也即 $\varphi(n)=\sum_{d\mid n}\mu(d)\,\tfrac nd$。
-
-欧拉定理：$\gcd(a,m)=1$ 时 $a^{\varphi(m)}\equiv1\pmod m$。竞赛里更常用的是扩展欧拉定理，它给指数降幂——$b\ge\varphi(m)$ 时对任意 $a$ 都有
-\[ a^{b}\equiv a^{\,b\bmod\varphi(m)+\varphi(m)}\pmod m . \]
-
-线性筛求 $\varphi$ 的递推：素数的 $\varphi(p)=p-1$；对 $i\cdot p$，若 $p\mid i$ 则 $\varphi(ip)=p\,\varphi(i)$，否则 $\varphi(ip)=(p-1)\varphi(i)$。见下面的 \texttt{sieve()}；只求单个数用 \texttt{Phi()}，复杂度 $O(\sqrt n)$。

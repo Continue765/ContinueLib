@@ -9,9 +9,9 @@ file = "sieve.hpp"
 [[item]]
 name = "莫比乌斯反演"
 file = "mobius.hpp"
-tex = "莫比乌斯反演.tex"
+tex = "mobius.tex"
 
 [[item]]
 name = "欧拉函数"
 file = "euler.hpp"
-tex = "欧拉函数.tex"
+tex = "euler.tex"

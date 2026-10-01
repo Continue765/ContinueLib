@@ -6,7 +6,7 @@
 ./build.py
 ```
 
-在仓库根目录跑。产物是 `out/main.pdf`。需要 Python 3.11+ 和 XeLaTeX。
+产物是 `out/main.pdf`。需要 Python 3.11+ 和 XeLaTeX。
 
 ## 添加模板
 
@@ -15,7 +15,7 @@
 
 ```toml
 [[item]]
-name = "LCA"
+name = "LCA看
 file = "lca.hpp"
 ```
 

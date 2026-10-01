@@ -94,7 +94,11 @@
 {\large \today\par}
 \vspace*{\stretch{1}}
 \end{center}
-\newpage % 封面独立成页，目录从下一页开始
+\newpage
+\thispagestyle{empty} % 封面背面留白：也不带页眉页码
+\hbox{} % 空页必须有内容才会被输出（\newpage 不单独输出空页）
+\newpage % → 封面独占一张纸，双面打印时下一张纸的正面才是目录
+\setcounter{page}{1} % 封面和它的留白页不参与编号，目录从第 1 页开始
 \tableofcontents
 \newpage
 \input{out/body}

@@ -15,7 +15,7 @@
 
 ```toml
 [[item]]
-name = "LCA看
+name = "LCA"
 file = "lca.hpp"
 ```
 

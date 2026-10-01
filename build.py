@@ -1,30 +1,5 @@
 #!/usr/bin/env python3
-r"""生成并编译 ICPC 模板 PDF。用法：./build.py（或 python3 build.py）
-
-读层级 config.toml，生成 out/body.tex，再用 xelatex 编译 out/main.tex 到 .aux/.toc 稳定为止
-（目录可能自身跨页，页数一变所有页码都会挪，固定遍数会留下差 1 的目录）。
-必须在仓库根目录运行：\input / \lstinputlisting 的路径都相对当前工作目录解析。
-
-config.toml（用 Python 3.11+ 标准库 tomllib 解析，无需额外依赖）：
-
-    # 仓库根 config.toml：每个 [[item]] 是一个一级章节
-    [[item]]
-    name = "图论"
-    dir = "graph"
-
-    # graph/config.toml：每个 [[item]] 是一个二级章节
-    [[item]]
-    name = "最短路"
-    dir = "shortest_path"   # 容器：递归进入该目录的 config.toml
-
-    [[item]]
-    name = "树链剖分"
-    file = "hld.hpp"        # 叶子：直接 \lstinputlisting
-
-name 必填；file 与 dir 必须恰好给出其一；tex 可选（说明文件，在 spacing 环境里 \input）。
-章节级别由嵌套深度决定（section → subsection → subsubsection），最深三层。
-字段拼错、文件不存在、忘记给 file/dir 都会直接报错退出，不会静默漏掉章节。
-"""
+# 生成并编译 ICPC 模板 PDF 用法：./build.py
 import shutil
 import subprocess
 import sys

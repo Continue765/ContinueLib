@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-"""生成 VS Code 片段文件 template/cpp.json。
+# 生成 VS Code 片段文件 template/cpp.json。
 
-rules:
-    template/template.cpp  ->  acm
-    <dir>/<name>.hpp       ->  name  (全小写)
-"""
 import json
 import os
 import sys

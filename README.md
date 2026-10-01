@@ -35,7 +35,7 @@ dir = "shortest_path"
 
 再在 `graph/shortest_path/` 里放一个 `config.toml` 写它下面的条目。
 
-`file` 和 `dir` 二选一，都写或都不写会直接报错。根目录的 `config.toml` 就是这么列出 8 个一级章节的。
+`file` 和 `dir` 二选一。
 
 ## 加说明文字
 
@@ -58,4 +58,4 @@ tex = "莫比乌斯反演.tex"
 python3 generate_snippets.py
 ```
 
-快捷键就是文件名小写：`dijkstra.hpp` → 敲 `dijkstra`。
+快捷键就是文件名小写：如 `dijkstra.hpp` -> 敲 `dijkstra`。

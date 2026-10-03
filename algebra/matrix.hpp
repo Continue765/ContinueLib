@@ -35,7 +35,6 @@ Matrix<T>& operator*=(Matrix<T>& a, const Matrix<T>& b) {
 
 template <typename T, integral U>
 Matrix<T> power(Matrix<T> a, U b) {
-    assert(b >= 0);
     Matrix<T> res(a.n);
     for (; b > 0; b >>= 1) {
         if (b & 1) {

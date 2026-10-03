@@ -15,3 +15,15 @@ description = "mobius.typ"
 name = "欧拉函数"
 file = "euler.hpp"
 description = "euler.typ"
+
+[[item]]
+name = "Miller-Rabin"
+file = "miller_rabin.hpp"
+
+[[item]]
+name = "Pollard-Rho"
+file = "pollard.hpp"
+
+[[item]]
+name = "约数构造"
+file = "divisors.hpp"

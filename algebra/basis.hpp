@@ -1,7 +1,7 @@
 struct Basis {
     array<i64, 64> p{};
 
-    int size() const {
+    int size() {
         int r = 0;
         for (int i = 0; i < 64; i++) {
             r += p[i] != 0;
@@ -64,7 +64,7 @@ struct Basis {
         }
     }
 
-    i64 kth(i64 k) const {
+    i64 kth(i64 k) {
         vector<i64> b;
         for (int i = 0; i < 64; i++) {
             if (p[i]) {

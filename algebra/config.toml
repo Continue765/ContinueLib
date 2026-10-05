@@ -8,7 +8,7 @@ file = "act.hpp"
 
 [[item]]
 name = "模整数"
-file = "modint.hpp"
+file = "modint_short.hpp"
 
 [[item]]
 name = "矩阵"

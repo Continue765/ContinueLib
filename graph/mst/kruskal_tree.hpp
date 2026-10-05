@@ -1,10 +1,10 @@
-struct Kruskal {
+struct KruskalTree {
     int n, root;
     vector<i64> val;
     vector<Edge> edges;
     vector<vector<int>> adj;
 
-    Kruskal(int n_) {
+    KruskalTree(int n_) {
         init(n_);
     }
 

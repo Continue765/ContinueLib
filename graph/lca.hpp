@@ -1,6 +1,6 @@
 struct LCA {
-    int logn;
-    vector<int> dep;
+    int logn, cur;
+    vector<int> dep, dfn;
     vector<vector<int>> fa;
 
     LCA(vector<vector<int>>& adj, int root = 0) {
@@ -9,12 +9,15 @@ struct LCA {
 
     void init(vector<vector<int>>& adj, int root) {
         int n = adj.size();
+        cur = 0;
         logn = __lg(n);
         fa.assign(n, vector<int>(logn + 1, -1));
         dep.assign(n, 0);
+        dfn.assign(n, -1);
 
         auto dfs = [&](auto&& self, int u, int p) -> void {
             fa[u][0] = p;
+            dfn[u] = cur++;
             for (int i = 1; i <= logn; i++) {
                 fa[u][i] = fa[fa[u][i - 1]][i - 1];
             }

@@ -1,5 +1,9 @@
-bool spfa(int s, int n, vector<vector<pair<int, i64>>>& adj, vector<i64>& dist) {
-    dist.assign(n, inf);
+template <typename T>
+pair<vector<T>, vector<int>> spfa(vector<vector<pair<int, T>>>& adj, int s) {
+    int n = adj.size();
+    vector<T> dist(n, inf);
+    vector<int> pre(n, -1);
+
     dist[s] = 0;
 
     queue<int> q;
@@ -15,17 +19,18 @@ bool spfa(int s, int n, vector<vector<pair<int, i64>>>& adj, vector<i64>& dist) 
         for (auto& [v, w] : adj[u]) {
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;
+                pre[v] = u;
                 if (!inq[v]) {
                     q.push(v);
                     inq[v] = true;
                     cnt[v]++;
                     if (cnt[v] >= n) {
-                        return false;  // 有负环
+                        return {{}, {}};
                     }
                 }
             }
         }
     }
 
-    return true;
+    return {dist, pre};
 }

@@ -3,5 +3,13 @@ name = "Kruskal"
 file = "kruskal.hpp"
 
 [[item]]
+name = "Prim"
+file = "prim.hpp"
+
+[[item]]
+name = "Borůvka"
+file = "boruvka.hpp"
+
+[[item]]
 name = "Kruskal重构树"
 file = "kruskal_tree.hpp"

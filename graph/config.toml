@@ -1,6 +1,19 @@
 [[item]]
+name = "Base"
+file = "base.hpp"
+
+[[item]]
 name = "最短路"
 dir = "shortest_path"
+
+[[item]]
+name = "拓扑排序"
+file = "toposort.hpp"
+
+[[item]]
+name = "欧拉通路/回路"
+file = "eulerian.hpp"
+description = "eulerian.typ"
 
 [[item]]
 name = "最小生成树"
@@ -25,3 +38,4 @@ file = "virtual_tree.hpp"
 [[item]]
 name = "2-SAT"
 file = "twosat.hpp"
+description = "twosat.typ"

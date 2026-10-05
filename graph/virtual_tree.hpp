@@ -1,53 +1,39 @@
-void build(vector<vector<pair<int, i64>>>& vt, LCA& lca, vector<int> h, vector<int>& vis, int id) {
-    auto& dfn = lca.dfn;
-    auto& root = lca.root;
-    sort(h.begin(), h.end(), [&](int x, int y) { return dfn[x] < dfn[y]; });
-    h.erase(unique(h.begin(), h.end()), h.end());
+#include "lca.hpp"
 
-    vector<int> stk;
-    stk.push_back(root);
+template <typename T>
+struct VirtualTree {
+    using Graph = vector<vector<pair<int, T>>>;
 
-    auto addEdge = [&](int u, int v) -> void {
-        if (vis[u] != id) {
-            vt[u].clear();
-            vis[u] = id;
-        }
-        if (vis[v] != id) {
-            vt[v].clear();
-            vis[v] = id;
-        }
-        i64 w = lca.getW(u, v);
-        vt[u].emplace_back(v, w);
-        vt[v].emplace_back(u, w);
-    };
+    LCA& lca;
+    vector<int> nodes;
+    Graph adj;
 
-    for (auto& x : h) {
-        if (x == root) {
-            continue;
+    VirtualTree(LCA& lca) : lca(lca) {}
+
+    pair<vector<int>&, Graph&> build(const vector<int>& h) {
+        nodes = h;
+        auto cmp = [&](int u, int v) { return lca.dfn[u] < lca.dfn[v]; };
+        sort(nodes.begin(), nodes.end(), cmp);
+        int m = nodes.size();
+        for (int i = 1; i < m; i++) {
+            nodes.push_back(lca.get(nodes[i - 1], nodes[i]));
         }
-        int l = lca.get(x, stk.back());
-        if (l != stk.back()) {
-            while (stk.size() >= 2 && dfn[l] < dfn[stk[stk.size() - 2]]) {
-                int v = stk.back();
-                stk.pop_back();
-                int u = stk.back();
-                addEdge(u, v);
-            }
-            if (dfn[l] > dfn[stk[stk.size() - 2]]) {
-                int u = stk.back();
-                addEdge(u, l);
-                stk.back() = l;
-            } else {
-                int u = stk.back();
-                stk.pop_back();
-                addEdge(u, l);
-            }
+        sort(nodes.begin(), nodes.end(), cmp);
+        nodes.erase(unique(nodes.begin(), nodes.end()), nodes.end());
+        int n = nodes.size();
+        adj.resize(n);
+        for (auto& e : adj) {
+            e.clear();
         }
-        stk.push_back(x);
+        for (int i = 0; i < n - 1; i++) {
+            int p = lca.get(nodes[i], nodes[i + 1]);
+            int u = lower_bound(nodes.begin(), nodes.end(), p, cmp) - nodes.begin();
+            int v = i + 1;
+            T w = lca.dep[nodes[v]] - lca.dep[p];
+            adj[u].emplace_back(v, w);
+            adj[v].emplace_back(u, w);
+        }
+
+        return {nodes, adj};
     }
-
-    for (int i = 0; i < int(stk.size()) - 1; i++) {
-        int u = stk[i], v = stk[i + 1];
-        addEdge(u, v);
-    }
-}
+};

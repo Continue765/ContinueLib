@@ -1,16 +1,26 @@
-bool bellmanFord(int s, int n, const vector<Edge>& edges, vector<int>& dist) {
-    dist.assign(n, INF);
+template <typename T>
+pair<vector<T>, vector<int>> bellmanFord(vector<vector<pair<int, T>>>& adj, int s) {
+    int n = adj.size();
+    vector<T> dist(n, inf);
+    vector<int> pre(n, -1);
+
     dist[s] = 0;
 
-    for (int i = 0; i < n - 1; i++) {
+    for (int round = 1;; round++) {
         bool upd = false;
-        for (auto& [u, v, w] : edges) {
-            if (dist[u] == INF) {
+        for (int u = 0; u < n; u++) {
+            if (dist[u] == inf) {
                 continue;
             }
-            if (dist[v] > dist[u] + w) {
-                dist[v] = dist[u] + w;
-                upd = true;
+            for (auto& [v, w] : adj[u]) {
+                if (dist[v] > dist[u] + w) {
+                    dist[v] = dist[u] + w;
+                    pre[v] = u;
+                    upd = true;
+                    if (round >= n) {
+                        return {{}, {}};
+                    }
+                }
             }
         }
         if (!upd) {
@@ -18,14 +28,5 @@ bool bellmanFord(int s, int n, const vector<Edge>& edges, vector<int>& dist) {
         }
     }
 
-    for (auto& [u, v, w] : edges) {
-        if (dist[u] == INF) {
-            continue;
-        }
-        if (dist[v] > dist[u] + w) {
-            return false;  // 有负环，不存在最短路
-        }
-    }
-
-    return true;
+    return {dist, pre};
 }

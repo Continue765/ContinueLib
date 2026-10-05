@@ -3,6 +3,10 @@ name = "Dijkstra"
 file = "dijkstra.hpp"
 
 [[item]]
+name = "01-BFS"
+file = "bfs_01.hpp"
+
+[[item]]
 name = "Bellman-Ford"
 file = "bellman_ford.hpp"
 
@@ -13,3 +17,7 @@ file = "spfa.hpp"
 [[item]]
 name = "Floyd"
 file = "floyd.hpp"
+
+[[item]]
+name = "路径重建"
+file = "restore_path.hpp"

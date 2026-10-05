@@ -64,3 +64,11 @@ python3 generate_snippets.py
 ```
 
 快捷键就是文件名小写：如 `dijkstra.hpp` -> 敲 `dijkstra`。
+
+## TODO
+- 添加对横板双栏pdf的支持
+- 重写kruskal重构树
+- k短路
+- MST敏感性
+- 次小/严格次小生成树
+- Hierholzer

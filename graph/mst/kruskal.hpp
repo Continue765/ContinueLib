@@ -1,19 +1,25 @@
-vector<Edge> kruskal(vector<Edge>& edges, int n) {
-    ranges::sort(edges, [](Edge& x, Edge& y) {
-        return x.w < y.w;
+#include "../edge.hpp"
+#include "../../data_structure/dsu.hpp"
+
+template <typename T>
+pair<vector<Edge<T>>, T> kruskal(vector<Edge<T>>& edges, int n) {
+    T cost = 0;
+    vector<int> ord(edges.size());
+    iota(ord.begin(), ord.end(), 0);
+    sort(ord.begin(), ord.end(), [&](int i, int j) {
+        return edges[i].w < edges[j].w;
     });
 
     DSU dsu(n);
-    vector<Edge> res;
+    vector<Edge<T>> res;
 
-    for (auto& e : edges) {
+    for (auto& id : ord) {
+        auto& e = edges[id];
         if (dsu.merge(e.u, e.v)) {
             res.push_back(e);
-            if (res.size() == n - 1) {
-                break;
-            }
+            cost += e.w;
         }
     }
 
-    return res;
+    return {res, cost};
 }

@@ -1,4 +1,5 @@
-void floyd(vector<vector<int>>& dist) {
+template <typename T>
+void floyd(vector<vector<T>>& dist) {
     int n = dist.size();
     for (int k = 0; k < n; k++) {
         for (int i = 0; i < n; i++) {
@@ -9,4 +10,18 @@ void floyd(vector<vector<int>>& dist) {
             }
         }
     }
+}
+
+template <typename T>
+vector<vector<T>> floyd(vector<vector<pair<int, T>>>& adj) {
+    int n = adj.size();
+    vector dist(n, vector<T>(n, inf));
+    for (int u = 0; u < n; u++) {
+        dist[u][u] = 0;
+        for (auto& [v, w] : adj[u]) {
+            dist[u][v] = min(dist[u][v], w);
+        }
+    }
+    floyd(dist);
+    return dist;
 }

@@ -3,6 +3,10 @@ name = "debug"
 file = "debug.hpp"
 
 [[item]]
+name = "template"
+file = "template.hpp"
+
+[[item]]
 name = "i128"
 file = "i128.hpp"
 

@@ -62,14 +62,6 @@ description = "mobius.typ"
 
 字体：正文 TeX Gyre Termes + FandolSong，代码 Consolas，页眉中文楷体 KaiTi。
 
-## VS Code Snippets
-
-```
-python3 generate_snippets.py
-```
-
-快捷键就是文件名小写：如 `dijkstra.hpp` -> 敲 `dijkstra`。
-
 ## TODO
 - 重写kruskal重构树
 - k短路

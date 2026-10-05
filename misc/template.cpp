@@ -22,7 +22,6 @@ constexpr int inf<int> = 1e9;
 template <>
 constexpr i64 inf<i64> = 1e18;
 
-
 void solve();
 
 int main() {

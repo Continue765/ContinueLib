@@ -1,7 +1,10 @@
+#pragma once
+#include <common.hpp>
+
 template <typename T>
 pair<vector<T>, vector<int>> bfs_01(vector<vector<pair<int, T>>>& adj, int s) {
     int n = adj.size();
-    vector<T> dist(n, inf);
+    vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1);
     deque<int> que;
 
@@ -30,7 +33,7 @@ pair<vector<T>, vector<int>> bfs_01(vector<vector<pair<int, T>>>& adj, int s) {
 template <typename T>
 tuple<vector<T>, vector<int>, vector<int>> bfs_01(vector<vector<pair<int, T>>>& adj, vector<int>& s) {
     int n = adj.size();
-    vector<T> dist(n, inf);
+    vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1), root(n, -1);
     deque<int> que;
 

@@ -1,3 +1,8 @@
+#pragma once
+#include <common.hpp>
+#include <algebra/monoid.hpp>
+#include <data_structure/fenwick.hpp>
+
 vector<int> toLehmer(vector<int>& p) {
     int n = p.size();
     Fenwick<AddMono<int>> fen(n);

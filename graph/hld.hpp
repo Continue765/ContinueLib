@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 struct HLD {
     int n;
     vector<int> siz, top, dep, fa, in, out, seq;

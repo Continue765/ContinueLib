@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 template <typename T>
 vector<int> toposort(vector<vector<pair<int, T>>>& adj) {
     int n = adj.size();

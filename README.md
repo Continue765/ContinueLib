@@ -1,4 +1,4 @@
-# Continue's Library for Competitive Programming
+# ContinueLib
 
 ## 构建
 

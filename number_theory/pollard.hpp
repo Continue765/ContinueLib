@@ -1,3 +1,8 @@
+#pragma once
+#include <common.hpp>
+#include <number_theory/miller_rabin.hpp>
+#include <algebra/power.hpp>
+
 static mt19937_64 rng(static_cast<u32>(chrono::steady_clock::now().time_since_epoch().count()));
 
 i64 rho(i64 n, i64 c) {

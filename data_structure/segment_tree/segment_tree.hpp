@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 template <typename Mono>
 struct SegmentTree {
     using X = typename Mono::Type;

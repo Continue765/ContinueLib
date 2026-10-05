@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 vector<i64> buildDivisors(const vector<pair<i64, int>>& factors) {
     vector<i64> divisors = {1};
     for (auto& [p, e] : factors) {

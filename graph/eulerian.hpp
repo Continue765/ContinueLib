@@ -1,5 +1,8 @@
-#include "../data_structure/dsu.hpp"
-#include "base.hpp"
+#pragma once
+#include <common.hpp>
+
+#include <data_structure/dsu.hpp>
+#include <graph/base.hpp>
 
 // return:
 // 0 - isn't Eulerian path

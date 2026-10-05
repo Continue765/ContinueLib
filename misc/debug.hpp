@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 #ifndef DEBUG_H
 #define DEBUG_H
 

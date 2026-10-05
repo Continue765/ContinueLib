@@ -1,9 +1,12 @@
-#include "../edge.hpp"
+#pragma once
+#include <common.hpp>
+
+#include <graph/base.hpp>
 
 template <typename T, typename F>
 vector<Edge<T>> prim(int n, F cost) {
     vector<Edge<T>> res;
-    vector<T> weight(n, inf);
+    vector<T> weight(n, inf<T>);
     vector<int> pre(n);
 
     auto add = [&](int u) -> void {
@@ -17,7 +20,7 @@ vector<Edge<T>> prim(int n, F cost) {
                 pre[v] = u;
             }
         }
-        weight[u] = inf;
+        weight[u] = inf<T>;
         pre[u] = -1;
     };
 
@@ -35,7 +38,7 @@ template <typename T>
 vector<Edge<T>> prim(vector<vector<pair<int, T>>>& adj) {
     int n = adj.size();
     vector<Edge<T>> res;
-    vector<T> weight(n, inf);
+    vector<T> weight(n, inf<T>);
     vector<int> pre(n);
 
     auto add = [&](int u) -> void {
@@ -48,7 +51,7 @@ vector<Edge<T>> prim(vector<vector<pair<int, T>>>& adj) {
                 pre[v] = u;
             }
         }
-        weight[u] = inf;
+        weight[u] = inf<T>;
         pre[u] = -1;
     };
 

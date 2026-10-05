@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 struct DSU {
     vector<int> f, siz;
 

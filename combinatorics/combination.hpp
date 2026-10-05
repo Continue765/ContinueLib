@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 template <typename T>
 struct Combination {
     int n;
@@ -73,5 +76,3 @@ struct Combination {
         return binom(2 * n, n) * inv(n + 1);
     }
 };
-
-Combination<Fp> comb;

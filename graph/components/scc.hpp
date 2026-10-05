@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 struct SCC {
     int n;
     vector<vector<int>> adj;

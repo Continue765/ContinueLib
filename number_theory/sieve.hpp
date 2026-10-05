@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 vector<int> minp, primes;
 
 void sieve(int n) {
@@ -20,8 +23,4 @@ void sieve(int n) {
             }
         }
     }
-}
-
-bool isprime(int n) {
-    return minp[n] == n;
 }

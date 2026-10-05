@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 vector<int> minp, primes, phi;
 
 // 线性筛（用于求解全部数的欧拉函数）

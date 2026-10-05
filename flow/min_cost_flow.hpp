@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 template<typename T>
 struct MinCostFlow {
     struct Edge_ {

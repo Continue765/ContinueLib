@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 vector<int> Z(string s) {
     int n = s.size();
     vector<int> z(n + 1);

@@ -1,4 +1,7 @@
-#include "components/scc.hpp"
+#pragma once
+#include <common.hpp>
+
+#include <graph/components/scc.hpp>
 
 struct TwoSat {
     int n;

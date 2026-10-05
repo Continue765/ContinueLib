@@ -1,7 +1,10 @@
+#pragma once
+#include <common.hpp>
+
 template <typename T>
 pair<vector<T>, vector<int>> dijkstra(vector<vector<pair<int, T>>>& adj, int s) {
     int n = adj.size();
-    vector<T> dist(n, inf);
+    vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1);
     using P =  pair<T, int>;
     priority_queue<P, vector<P>, greater<P>> pq;
@@ -30,7 +33,7 @@ pair<vector<T>, vector<int>> dijkstra(vector<vector<pair<int, T>>>& adj, int s) 
 template <typename T>
 pair<vector<T>, vector<int>> dijkstraDense(vector<vector<pair<int, T>>>& adj, int s) {
     int n = adj.size();
-    vector<T> dist(n, inf);
+    vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1);
     vector<int> done(n, false);
 
@@ -43,7 +46,7 @@ pair<vector<T>, vector<int>> dijkstraDense(vector<vector<pair<int, T>>>& adj, in
                 u = v;
             }
         }
-        if (u == -1 || dist[u] == inf) {
+        if (u == -1 || dist[u] == inf<T>) {
             break;
         }
         done[u] = true;
@@ -61,7 +64,7 @@ pair<vector<T>, vector<int>> dijkstraDense(vector<vector<pair<int, T>>>& adj, in
 template <typename T>
 tuple<vector<T>, vector<int>, vector<int>> dijkstra(vector<vector<pair<int, T>>>& adj, vector<int>& s) {
     int n = adj.size();
-    vector<T> dist(n, inf);
+    vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1), root(n, -1);
     using P =  pair<T, int>;
     priority_queue<P, vector<P>, greater<P>> pq;

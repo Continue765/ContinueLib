@@ -1,13 +1,17 @@
+#pragma once
+#include <common.hpp>
+#include <algebra/monoid.hpp>
+
 // Template
-struct ActMono {
-    using Mono = Mono;
-    using Tag = Tag;
-    using X = Mono::Type;
-    using Y = Tag::Type;
-    static X act(const X& x, const Y& y, int len) {
-        return {};
-    }
-};
+// struct ActMono {
+//     using Mono = Mono;
+//     using Tag = Tag;
+//     using X = Mono::Type;
+//     using Y = Tag::Type;
+//     static X act(const X& x, const Y& y, int len) {
+//         return {};
+//     }
+// };
 
 // 区间和 + 区间加
 template <typename T>

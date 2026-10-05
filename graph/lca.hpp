@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 struct LCA {
     int logn, cur;
     vector<int> dep, dfn;

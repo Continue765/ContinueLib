@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 struct EBCC {
     int n;
     vector<vector<pair<int, int>>> adj;

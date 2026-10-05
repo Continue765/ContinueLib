@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 template <typename ActMono>
 struct LazySegmentTree {
     using Mono = typename ActMono::Mono;

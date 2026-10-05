@@ -1,7 +1,10 @@
+#pragma once
+#include <common.hpp>
+
 template <typename T>
 pair<vector<T>, vector<int>> bellmanFord(vector<vector<pair<int, T>>>& adj, int s) {
     int n = adj.size();
-    vector<T> dist(n, inf);
+    vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1);
 
     dist[s] = 0;
@@ -9,7 +12,7 @@ pair<vector<T>, vector<int>> bellmanFord(vector<vector<pair<int, T>>>& adj, int 
     for (int round = 1;; round++) {
         bool upd = false;
         for (int u = 0; u < n; u++) {
-            if (dist[u] == inf) {
+            if (dist[u] == inf<T>) {
                 continue;
             }
             for (auto& [v, w] : adj[u]) {

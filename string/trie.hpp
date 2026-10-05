@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 struct Trie {
     struct Node {
         array<int, 26> nxt;

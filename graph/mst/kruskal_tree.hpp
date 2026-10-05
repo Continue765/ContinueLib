@@ -1,7 +1,14 @@
+#pragma once
+#include <common.hpp>
+
+#include <graph/base.hpp>
+#include <data_structure/dsu.hpp>
+
+template <typename T>
 struct KruskalTree {
     int n, root;
     vector<i64> val;
-    vector<Edge> edges;
+    vector<Edge<T>> edges;
     vector<vector<int>> adj;
 
     KruskalTree(int n_) {
@@ -20,13 +27,16 @@ struct KruskalTree {
         edges.emplace_back(u, v, w);
     }
 
-    void reconstruction() {
+    void build() {
         DSU dsu(2 * n - 1);
-        sort(edges.begin(), edges.end(), [](Edge& x, Edge& y) {
-            return x.w < y.w;
+        vector<int> ord(2 * n - 1);
+        iota(ord.begin(), ord.end(), 0);
+        sort(ord.begin(), ord.end(), [&](int x, int y) {
+            return edges[x].w < edges[y].w;
         });
 
-        for (auto& e : edges) {
+        for (auto& id : ord) {
+            auto& e = edges[id];
             int u = e.u, v = e.v;
             i64 w = e.w;
 

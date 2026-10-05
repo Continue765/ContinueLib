@@ -40,8 +40,20 @@
 #show raw.where(block: false): set text(1em)     // 行内代码保持正文字号
 
 #let numw-of(n) = measure(text(font: mono, size: code-size, str(n))).width
+#let visible-code(path) = {
+  let lines = read(path).split("\n").filter(line => {
+    line.trim().matches(regex("^#\\s*(include\\b|pragma\\s+once\\b)")).len() == 0
+  })
+  while lines.len() > 0 and lines.first().trim() == "" {
+    lines = lines.slice(1)
+  }
+  while lines.len() > 0 and lines.last().trim() == "" {
+    lines = lines.slice(0, -1)
+  }
+  lines.join("\n")
+}
 #let code(path) = {
-  let src = read(path)
+  let src = visible-code(path)
   let numw = numw-of(src.matches("\n").len() + 1)
   block(
     width: 100%,

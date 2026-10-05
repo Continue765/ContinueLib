@@ -33,8 +33,20 @@
 #show raw: set text(font: mono, size: code-size)
 #show raw.where(block: false): set text(1em)
 
+#let visible-code(path) = {
+  let lines = read(path).split("\n").filter(line => {
+    line.trim().matches(regex("^#\\s*(include\\b|pragma\\s+once\\b)")).len() == 0
+  })
+  while lines.len() > 0 and lines.first().trim() == "" {
+    lines = lines.slice(1)
+  }
+  while lines.len() > 0 and lines.last().trim() == "" {
+    lines = lines.slice(0, -1)
+  }
+  lines.join("\n")
+}
 #let code(path) = {
-  let src = read(path)
+  let src = visible-code(path)
   let numw = measure(text(font: mono, size: number-size,
     str(src.matches("\n").len() + 1))).width
   block(

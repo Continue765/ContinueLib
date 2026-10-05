@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 vector<int> manacher(string s) {
     string t = "#";
     for (auto c : s) {

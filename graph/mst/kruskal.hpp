@@ -1,5 +1,8 @@
-#include "../edge.hpp"
-#include "../../data_structure/dsu.hpp"
+#pragma once
+#include <common.hpp>
+
+#include <graph/base.hpp>
+#include <data_structure/dsu.hpp>
 
 template <typename T>
 pair<vector<Edge<T>>, T> kruskal(vector<Edge<T>>& edges, int n) {

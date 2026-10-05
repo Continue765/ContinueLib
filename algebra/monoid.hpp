@@ -1,18 +1,21 @@
+#pragma once
+#include <common.hpp>
+
 // Template
-struct Monoid {
-    struct Type {
-        i64 v;
-    };
-    static Type e() {
-        return {};
-    }
-    static Type op(const Type& a, const Type& b) {
-        return {};
-    }
-    static Type from(const i64& x) {
-        return {x};
-    }
-};
+// struct Monoid {
+//     struct Type {
+//         i64 v;
+//     };
+//     static Type e() {
+//         return {};
+//     }
+//     static Type op(const Type& a, const Type& b) {
+//         return {};
+//     }
+//     static Type from(const i64& x) {
+//         return {x};
+//     }
+// };
 
 // 区间加
 template <typename T>
@@ -52,7 +55,7 @@ template <typename T>
 struct MinMono {
     using Type = T;
     static Type e() {
-        return {inf};
+        return {inf<T>};
     }
     static Type op(const Type& a, const Type& b) {
         return {min(a, b)};
@@ -67,7 +70,7 @@ template <typename T>
 struct MaxMono {
     using Type = T;
     static Type e() {
-        return {-inf};
+        return {-inf<T>};
     }
     static Type op(const Type& a, const Type& b) {
         return {max(a, b)};

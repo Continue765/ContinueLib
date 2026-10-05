@@ -1,7 +1,10 @@
+#pragma once
+#include <common.hpp>
+
 template <typename T>
 pair<vector<T>, vector<int>> spfa(vector<vector<pair<int, T>>>& adj, int s) {
     int n = adj.size();
-    vector<T> dist(n, inf);
+    vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1);
 
     dist[s] = 0;

@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 struct BinaryTrie {
     struct Node {
         array<int, 2> ch;

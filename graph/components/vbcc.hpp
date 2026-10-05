@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 struct VBCC {
     int n;
     vector<pair<int, int>> edges;

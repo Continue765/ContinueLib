@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 int build(const vector<int>& a, vector<int>& L, vector<int>& R) {
     int n = a.size();
     L.assign(n, -1);

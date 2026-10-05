@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 const int d[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 bool isLeap(int y) {

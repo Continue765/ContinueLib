@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 struct AhoCorasick {
     static constexpr int ALPHABET = 26;
     struct Node {

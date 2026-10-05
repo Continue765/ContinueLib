@@ -15,16 +15,17 @@ name = "数论"
 dir = "number_theory"
 
 [[item]]
-name = "线性代数"
-dir = "linear_algebra"
-
-[[item]]
 name = "组合数学"
 dir = "combinatorics"
 
 [[item]]
 name = "数据结构"
 dir = "data_structure"
+
+[[item]]
+name = "线性代数"
+dir = "linear_algebra"
+
 
 [[item]]
 name = "字符串"

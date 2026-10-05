@@ -1,3 +1,7 @@
+#pragma once
+#include <common.hpp>
+#include <number_theory/exgcd.hpp>
+
 template <u32 P>
 struct Mint {
     u32 v;

@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 // 子集和：f[mask] = sum_{sub ⊆ mask} f[sub]
 // 方向：小的 mask → 大的 mask（"吸收"不带的位）
 template <typename T>

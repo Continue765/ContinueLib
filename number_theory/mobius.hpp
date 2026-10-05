@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 vector<int> minp, primes, mu;
 
 void sieve(int n) {

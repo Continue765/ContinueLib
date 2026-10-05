@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 template <typename T>
 struct Edge {
     int u, v;

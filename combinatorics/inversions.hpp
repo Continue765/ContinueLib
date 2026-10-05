@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 i64 invCount(vector<i64>& a, int l, int r, vector<i64>& tmp) {
     if (r - l <= 1) return 0;
 

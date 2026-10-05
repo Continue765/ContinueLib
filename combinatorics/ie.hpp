@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 // cap(S) 表示 S 集合的交集大小
 
 // 交集形式

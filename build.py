@@ -11,7 +11,7 @@ CFG_NAME = "config.toml"
 ROOT_CFG = Path(CFG_NAME)
 BODY = Path("out/body.typ")
 BUILD_TARGETS = (
-    (Path("out/main.typ"), Path("out/portrait.pdf")),
+    (Path("out/portrait.typ"), Path("out/portrait.pdf")),
     (Path("out/landscape.typ"), Path("out/landscape.pdf")),
 )
 HEADINGS = ("=", "==", "===")

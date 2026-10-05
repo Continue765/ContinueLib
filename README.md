@@ -55,7 +55,7 @@ description = "mobius.typ"
 
 ## 改排版
 
-竖版改 `out/main.typ` 和 `out/portrait.tmTheme`，横版改 `out/landscape.typ` 和
+竖版改 `out/portrait.typ` 和 `out/portrait.tmTheme`，横版改 `out/landscape.typ` 和
 `out/landscape.tmTheme`。两个入口独立设置字体、代码样式、页眉、封面和目录，读取同一份
 `out/body.typ`；横版的目录与正文为双栏，长代码行自动换行，续行不重复行号。
 这四个文件都是入库的手写文件，不会被构建覆盖。

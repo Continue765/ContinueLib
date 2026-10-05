@@ -36,7 +36,7 @@
 
 #set raw(tab-size: 4)
 #show raw: set text(font: mono, size: code-size)
-#set raw(theme: "theme.tmTheme")
+#set raw(theme: "portrait.tmTheme")
 #show raw.where(block: false): set text(1em)     // 行内代码保持正文字号
 
 #let numw-of(n) = measure(text(font: mono, size: code-size, str(n))).width

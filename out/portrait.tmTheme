@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- 横版独立配色：黑色代码、洋红关键字、蓝色常量、灰绿注释。 -->
+<plist version="1.0">
+<dict>
+  <key>name</key><string>Landscape</string>
+  <key>settings</key>
+  <array>
+    <dict><key>settings</key><dict><key>foreground</key><string>#000000</string></dict></dict>
+    <dict><key>scope</key><string>keyword, storage, meta.preprocessor</string><key>settings</key><dict><key>foreground</key><string>#c000c0</string></dict></dict>
+    <dict><key>scope</key><string>constant.numeric, constant.language</string><key>settings</key><dict><key>foreground</key><string>#0000cc</string></dict></dict>
+    <dict><key>scope</key><string>string, constant.character</string><key>settings</key><dict><key>foreground</key><string>#a31515</string></dict></dict>
+    <dict><key>scope</key><string>comment</string><key>settings</key><dict><key>foreground</key><string>#3f6b46</string></dict></dict>
+  </array>
+</dict>
+</plist>

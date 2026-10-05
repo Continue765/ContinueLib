@@ -6,7 +6,10 @@
 ./build.py
 ```
 
-产物是 `out/main.pdf`。需要 Python 3.11+ 和 typst。
+在仓库根目录运行，需要 Python 3.11+ 和 Typst。每次生成一份共享章节内容，依次编译两份 PDF：
+
+- `out/portrait.pdf`：A4 竖版。
+- `out/landscape.pdf`：A4 横向双栏。
 
 ## 添加模板
 
@@ -23,7 +26,7 @@ file = "lca.hpp"
 
 `name` 是 PDF 里的标题，`file` 是同目录的代码文件。书写顺序就是 PDF 里的顺序。
 
-## 子目录（三级标题）
+## 子目录
 
 那一节写成：
 
@@ -52,8 +55,10 @@ description = "mobius.typ"
 
 ## 改排版
 
-改 `out/main.typ`（骨架：字体、代码样式、页眉、封面、目录）和 `out/theme.tmTheme`
-（代码高亮的配色），都是手写的，不会被覆盖。
+竖版改 `out/main.typ` 和 `out/portrait.tmTheme`，横版改 `out/landscape.typ` 和
+`out/landscape.tmTheme`。两个入口独立设置字体、代码样式、页眉、封面和目录，读取同一份
+`out/body.typ`；横版的目录与正文为双栏，长代码行自动换行，续行不重复行号。
+这四个文件都是入库的手写文件，不会被构建覆盖。
 
 字体：正文 TeX Gyre Termes + FandolSong，代码 Consolas，页眉中文楷体 KaiTi。
 
@@ -66,7 +71,6 @@ python3 generate_snippets.py
 快捷键就是文件名小写：如 `dijkstra.hpp` -> 敲 `dijkstra`。
 
 ## TODO
-- 添加对横板双栏pdf的支持
 - 重写kruskal重构树
 - k短路
 - MST敏感性

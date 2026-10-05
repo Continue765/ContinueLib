@@ -9,9 +9,11 @@ from pathlib import Path
 
 CFG_NAME = "config.toml"
 ROOT_CFG = Path(CFG_NAME)
-MAIN = Path("out/main.typ")
 BODY = Path("out/body.typ")
-PDF = Path("out/main.pdf")
+BUILD_TARGETS = (
+    (Path("out/main.typ"), Path("out/portrait.pdf")),
+    (Path("out/landscape.typ"), Path("out/landscape.pdf")),
+)
 HEADINGS = ("=", "==", "===")
 KEYS = {"name", "file", "dir", "description"}
 
@@ -42,7 +44,7 @@ def read_items(cfg):
 
 
 def marker(lang, path):
-    """生成器只写标记块，由 out/main.typ 的 show 规则接住，避免生成文件依赖 import。"""
+    """生成器只写标记块，由各 Typst 入口的 show 规则接住。"""
     return f"```{lang}\n{path}\n```\n\n"
 
 
@@ -72,25 +74,43 @@ def generate():
     print(f">> 生成 {BODY}")
 
 
-def build_pdf():
-    if not MAIN.is_file():
-        sys.exit(f"错误：找不到 {MAIN}。它是手写文件（不入库），不会被构建过程生成或删除。")
+def check_dependencies():
+    missing = [str(entry) for entry, _ in BUILD_TARGETS if not entry.is_file()]
+    if missing:
+        sys.exit(f"错误：找不到手写 Typst 入口：{', '.join(missing)}")
     if not shutil.which("typst"):
         sys.exit("错误：找不到 typst。安装方式：cargo install --locked typst-cli，"
                  "或从 github.com/typst/typst/releases 下预编译二进制放进 PATH。")
-    # 先删旧产物：编译失败时不会留下让人误以为是新结果的 PDF
-    PDF.unlink(missing_ok=True)
-    cmd = ["typst", "compile", "--root", ".", str(MAIN), str(PDF)]
-    print(">> 编译 " + " ".join(cmd))
-    if subprocess.run(cmd).returncode != 0:
-        sys.exit("错误：typst 编译失败（详见上面的报错）")
-    print(f">> 完成 {PDF}")
+
+
+def build_pdfs():
+    # 清除两个旧产物，避免任一编译失败时误用旧 PDF。
+    for _, pdf in BUILD_TARGETS:
+        pdf.unlink(missing_ok=True)
+
+    succeeded = []
+    failed = []
+    for entry, pdf in BUILD_TARGETS:
+        cmd = ["typst", "compile", "--root", ".", str(entry), str(pdf)]
+        print(">> 编译 " + " ".join(cmd))
+        if subprocess.run(cmd).returncode == 0:
+            succeeded.append(pdf)
+            print(f">> 完成 {pdf}")
+        else:
+            pdf.unlink(missing_ok=True)
+            failed.append((entry, pdf))
+
+    print(">> 成功：" + (", ".join(map(str, succeeded)) if succeeded else "无"))
+    if failed:
+        print(">> 失败：" + ", ".join(f"{entry} -> {pdf}" for entry, pdf in failed))
+        sys.exit("错误：一个或多个 Typst 目标编译失败")
 
 
 def main():
     t0 = time.time()
+    check_dependencies()
     generate()
-    build_pdf()
+    build_pdfs()
     print(f">> 用时 {time.time() - t0:.2f}s")
 
 

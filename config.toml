@@ -15,6 +15,10 @@ name = "数论"
 dir = "number_theory"
 
 [[item]]
+name = "线性代数"
+dir = "linear_algebra"
+
+[[item]]
 name = "组合数学"
 dir = "combinatorics"
 

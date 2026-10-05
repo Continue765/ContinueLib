@@ -11,13 +11,5 @@ name = "模整数"
 file = "modint_short.hpp"
 
 [[item]]
-name = "矩阵"
-file = "matrix.hpp"
-
-[[item]]
-name = "线性基"
-file = "basis.hpp"
-
-[[item]]
 name = "快速幂"
 file = "power.hpp"

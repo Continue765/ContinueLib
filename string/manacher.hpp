@@ -19,4 +19,3 @@ vector<int> manacher(string s) {
     }
     return r;
 }
-

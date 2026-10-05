@@ -185,7 +185,7 @@
       "    }",
       "};"
     ],
-    "description": "algebra/basis.hpp"
+    "description": "linear_algebra/basis.hpp"
   },
   "matrix": {
     "prefix": "matrix",
@@ -238,7 +238,7 @@
       "    return res;",
       "}"
     ],
-    "description": "algebra/matrix.hpp"
+    "description": "linear_algebra/matrix.hpp"
   },
   "modint": {
     "prefix": "modint",

@@ -5,12 +5,12 @@ struct Fenwick {
     int n;
     vector<X> a;
 
-    Fenwick(int _n) {
-        init(_n);
+    Fenwick(int n_) {
+        init(n_);
     }
 
-    void init(int _n) {
-        n = _n;
+    void init(int n_) {
+        n = n_;
         a.assign(n, Mono::e());
     }
 

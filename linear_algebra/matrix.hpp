@@ -3,7 +3,7 @@ struct Matrix {
     int n, m;
     vector<vector<T>> a;
 
-    Matrix() {}
+    Matrix() : n(0), m(0) {}
     Matrix(int n_, int m_, T v = T{}) : n(n_), m(m_), a(n, vector<T>(m, v)) {}
     Matrix(int n_) : Matrix(n_, n_) {
         for (int i = 0; i < n; i++) {

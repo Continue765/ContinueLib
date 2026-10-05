@@ -3,5 +3,17 @@ name = "矩阵"
 file = "matrix.hpp"
 
 [[item]]
+name = "高斯消元"
+file = "gauss.hpp"
+
+[[item]]
+name = "矩阵秩"
+file = "matrix_rank.hpp"
+
+[[item]]
+name = "逆矩阵"
+file = "inverse.hpp"
+
+[[item]]
 name = "异或线性基"
 file = "basis.hpp"

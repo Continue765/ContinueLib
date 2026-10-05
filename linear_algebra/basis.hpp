@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 struct Basis {
     array<i64, 64> p{};
 

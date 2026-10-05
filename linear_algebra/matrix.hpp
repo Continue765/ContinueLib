@@ -1,3 +1,6 @@
+#pragma once
+#include <common.hpp>
+
 template <typename T>
 struct Matrix {
     int n, m;
@@ -5,13 +8,22 @@ struct Matrix {
 
     Matrix() : n(0), m(0) {}
     Matrix(int n_, int m_, T v = T{}) : n(n_), m(m_), a(n, vector<T>(m, v)) {}
-    Matrix(int n_) : Matrix(n_, n_) {
+    Matrix(int n_) : Matrix(n_, n_) {}
+
+    static Matrix identity(int n) {
+        Matrix res(n);
         for (int i = 0; i < n; i++) {
-            a[i][i] = 1;
+            res[i][i] = T{1};
         }
+        return res;
     }
 
-    vector<T>& operator[](int i) { return a[i]; }
+    vector<T>& operator[](int i) {
+        return a[i];
+    }
+    const vector<T>& operator[](int i) const {
+        return a[i];
+    }
 };
 
 template <typename T>
@@ -35,12 +47,23 @@ Matrix<T>& operator*=(Matrix<T>& a, const Matrix<T>& b) {
 
 template <typename T, integral U>
 Matrix<T> power(Matrix<T> a, U b) {
-    Matrix<T> res(a.n);
+    Matrix<T> res = Matrix<T>::identity(a.n);
     for (; b > 0; b >>= 1) {
         if (b & 1) {
             res *= a;
         }
         a *= a;
+    }
+    return res;
+}
+
+template <typename T>
+Matrix<T> transpose(const Matrix<T>& a) {
+    Matrix<T> res(a.m, a.n);
+    for (int i = 0; i < a.n; i++) {
+        for (int j = 0; j < a.m; j++) {
+            res[j][i] = a[i][j];
+        }
     }
     return res;
 }

@@ -2,7 +2,7 @@
 #include <common.hpp>
 
 struct Basis {
-    array<i64, 64> p{};
+    array<u64, 64> p{};
 
     int size() {
         int r = 0;
@@ -12,7 +12,7 @@ struct Basis {
         return r;
     }
 
-    bool insert(i64 x) {
+    bool insert(u64 x) {
         for (int i = 63; i >= 0; i--) {
             if (!(x >> i & 1)) {
                 continue;
@@ -26,7 +26,7 @@ struct Basis {
         return false;
     }
 
-    bool check(i64 x) {
+    bool check(u64 x) {
         for (int i = 63; i >= 0; i--) {
             if (x >> i & 1) {
                 x ^= p[i];
@@ -35,23 +35,22 @@ struct Basis {
         return x == 0;
     }
 
-    i64 getMax(i64 start = 0) {
-        i64 res = start;
+    u64 getMax(u64 x = 0) {
         for (int i = 63; i >= 0; i--) {
-            if ((res ^ p[i]) > res) {
-                res ^= p[i];
+            if ((x ^ p[i]) > x) {
+                x ^= p[i];
             }
         }
-        return res;
+        return x;
     }
 
-    i64 getMin() {
-        for (int i = 0; i < 64; i++) {
-            if (p[i]) {
-                return p[i];
+    u64 getMin(u64 x = 0) {
+        for (int i = 63; i >= 0; i--) {
+            if ((x ^ p[i]) < x) {
+                x ^= p[i];
             }
         }
-        return 0;
+        return x;
     }
 
     void gauss() {
@@ -67,19 +66,20 @@ struct Basis {
         }
     }
 
-    i64 kth(i64 k) {
-        vector<i64> b;
+    u64 kth(u64 k) {
+        vector<u64> b;
         for (int i = 0; i < 64; i++) {
             if (p[i]) {
                 b.push_back(p[i]);
             }
         }
         int r = b.size();
-        if (k < 1 || (r < 63 && k > (1LL << r))) {
-            return -1;
+        if (r < 64) {
+            if (k < (1LL << r)) {
+                return -1;
+            }
         }
-        k--;
-        i64 res = 0;
+        u64 res = 0;
         for (int i = 0; i < r; i++) {
             if (k >> i & 1) {
                 res ^= b[i];

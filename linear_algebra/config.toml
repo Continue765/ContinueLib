@@ -7,17 +7,5 @@ name = "高斯消元"
 file = "gauss.hpp"
 
 [[item]]
-name = "矩阵秩"
-file = "matrix_rank.hpp"
-
-[[item]]
-name = "逆矩阵"
-file = "matrix_inv.hpp"
-
-[[item]]
-name = "线性方程组"
-file = "solve_linear.hpp"
-
-[[item]]
 name = "GF(2) 空间"
 dir = "gf2"

@@ -7,5 +7,5 @@ name = "幺半群作用"
 file = "act.hpp"
 
 [[item]]
-name = "幺半群快速幂"
+name = "半群快速幂"
 file = "power.hpp"

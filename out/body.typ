@@ -12,16 +12,30 @@
 /algebra/act.hpp
 ```
 
-== 模数类
-
-```cpp-ref
-/algebra/modint_short.hpp
-```
-
-== 快速幂
+== 半群快速幂
 
 ```cpp-ref
 /algebra/power.hpp
+```
+
+= 模运算
+
+== Barrett 模乘
+
+```cpp-ref
+/mod/barrett.hpp
+```
+
+== 模数类
+
+```cpp-ref
+/mod/modint_short.hpp
+```
+
+== 模快速幂
+
+```cpp-ref
+/mod/power.hpp
 ```
 
 = 图论
@@ -352,24 +366,6 @@
 
 ```cpp-ref
 /linear_algebra/gauss.hpp
-```
-
-== 矩阵秩
-
-```cpp-ref
-/linear_algebra/matrix_rank.hpp
-```
-
-== 逆矩阵
-
-```cpp-ref
-/linear_algebra/matrix_inv.hpp
-```
-
-== 线性方程组
-
-```cpp-ref
-/linear_algebra/solve_linear.hpp
 ```
 
 == GF(2) 空间

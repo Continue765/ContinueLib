@@ -1,5 +1,5 @@
 [[item]]
-name = "线性基"
+name = "异或线性基"
 file = "basis.hpp"
 
 [[item]]

@@ -67,3 +67,31 @@ Matrix<T> transpose(const Matrix<T>& a) {
     }
     return res;
 }
+
+template <typename T>
+Matrix<T> augment(const Matrix<T>& a, const Matrix<T>& b) {
+    assert(a.n == b.n);
+    Matrix<T> res(a.n, a.m + b.m);
+    for (int i = 0; i < a.n; i++) {
+        for (int j = 0; j < a.m; j++) {
+            res[i][j] = a[i][j];
+        }
+        for (int j = 0; j < b.m; j++) {
+            res[i][a.m + j] = b[i][j];
+        }
+    }
+    return res;
+}
+
+template <typename T>
+Matrix<T> augment(const Matrix<T>& a, const vector<T>& b) {
+    assert(a.n == int(b.size()));
+    Matrix<T> res(a.n, a.m + 1);
+    for (int i = 0; i < a.n; i++) {
+        for (int j = 0; j < a.m; j++) {
+            res[i][j] = a[i][j];
+        }
+        res[i][a.m] = b[i];
+    }
+    return res;
+}

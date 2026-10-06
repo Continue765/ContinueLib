@@ -3,9 +3,13 @@ name = "Barrett 模乘"
 file = "barrett.hpp"
 
 [[item]]
+name = "运算"
+file = "calc.hpp"
+
+[[item]]
 name = "模数类"
 file = "modint_short.hpp"
 
 [[item]]
-name = "模快速幂"
-file = "power.hpp"
+name = "all inverse"
+file = "all_inverse.hpp"

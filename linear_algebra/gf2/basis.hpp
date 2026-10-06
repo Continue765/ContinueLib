@@ -3,6 +3,7 @@
 
 struct Basis {
     array<u64, 64> p{};
+    bool norm = false;
 
     int size() {
         int r = 0;
@@ -19,6 +20,7 @@ struct Basis {
             }
             if (!p[i]) {
                 p[i] = x;
+                norm = false;
                 return true;
             }
             x ^= p[i];
@@ -26,7 +28,7 @@ struct Basis {
         return false;
     }
 
-    bool check(u64 x) {
+    bool contain(u64 x) {
         for (int i = 63; i >= 0; i--) {
             if (x >> i & 1) {
                 x ^= p[i];
@@ -53,7 +55,11 @@ struct Basis {
         return x;
     }
 
-    void gauss() {
+    void normalize() {
+        if (norm == true) {
+            return;
+        }
+        norm = true;
         for (int i = 63; i >= 0; i--) {
             if (!p[i]) {
                 continue;
@@ -67,6 +73,7 @@ struct Basis {
     }
 
     u64 kth(u64 k) {
+        normalize();
         vector<u64> b;
         for (int i = 0; i < 64; i++) {
             if (p[i]) {

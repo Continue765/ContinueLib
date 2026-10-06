@@ -16,3 +16,17 @@ i64 power(i64 a, i64 b, i64 m) {
     }
     return res;
 }
+
+template <typename T, std::integral U>
+constexpr T power(T a, U b) {
+    assert(b >= 0);
+    T res{1};
+    while (b) {
+        if (b & 1) {
+            res *= a;
+        }
+        b >>= 1;
+        a *= a;
+    }
+    return res;
+}

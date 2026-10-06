@@ -2,37 +2,6 @@
 #include <common.hpp>
 #include <mod/barrett.hpp>
 
-template <std::signed_integral T>
-constexpr std::pair<T, T> exgcd(T a, T m) {
-    assert(m > 0);
-    a %= m;
-    if (a < 0) {
-        a += m;
-    }
-
-    T u = 0, v = 1;
-    while (a != 0) {
-        T q = m / a;
-        m -= q * a, std::swap(a, m);
-        u -= q * v, std::swap(u, v);
-    }
-    return {m, u};
-}
-
-template <typename T, std::integral U>
-constexpr T power(T a, U b) {
-    assert(b >= 0);
-    T res{1};
-    while (b) {
-        if (b & 1) {
-            res *= a;
-        }
-        b >>= 1;
-        a *= a;
-    }
-    return res;
-}
-
 template <std::unsigned_integral U, U Mod>
 struct StaticMod {
     static constexpr U mod() {

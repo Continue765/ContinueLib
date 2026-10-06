@@ -26,16 +26,22 @@
 /mod/barrett.hpp
 ```
 
+== 运算
+
+```cpp-ref
+/mod/calc.hpp
+```
+
 == 模数类
 
 ```cpp-ref
 /mod/modint_short.hpp
 ```
 
-== 模快速幂
+== all inverse
 
 ```cpp-ref
-/mod/power.hpp
+/mod/all_inverse.hpp
 ```
 
 = 图论
@@ -370,7 +376,7 @@
 
 == GF(2) 空间
 
-=== 线性基
+=== 异或线性基
 
 ```cpp-ref
 /linear_algebra/gf2/basis.hpp
@@ -379,13 +385,19 @@
 === 逆矩阵
 
 ```cpp-ref
-/linear_algebra/gf2/xor_inverse.hpp
+/linear_algebra/gf2/inverse.hpp
 ```
 
 === 转置
 
 ```cpp-ref
-/linear_algebra/gf2/xor_transpose.hpp
+/linear_algebra/gf2/transpose.hpp
+```
+
+=== GF(2) 线性方程组
+
+```cpp-ref
+/linear_algebra/gf2/solve_linear.hpp
 ```
 
 = 字符串

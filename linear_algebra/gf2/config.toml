@@ -4,8 +4,12 @@ file = "basis.hpp"
 
 [[item]]
 name = "逆矩阵"
-file = "xor_inverse.hpp"
+file = "inverse.hpp"
 
 [[item]]
 name = "转置"
-file = "xor_transpose.hpp"
+file = "transpose.hpp"
+
+[[item]]
+name = "GF(2) 线性方程组"
+file = "solve_linear.hpp"

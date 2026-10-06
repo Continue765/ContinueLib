@@ -3,7 +3,7 @@
 #include <linear_algebra/matrix.hpp>
 
 template <typename T>
-pair<bool, Matrix<T>> inverse(Matrix<T> a) {
+pair<bool, Matrix<T>> matrixInv(Matrix<T> a) {
     if (a.n != a.m) {
         return {false, {}};
     }

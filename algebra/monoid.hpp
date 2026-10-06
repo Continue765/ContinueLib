@@ -17,7 +17,6 @@
 //     }
 // };
 
-// 区间加
 template <typename T>
 struct AddMono {
     using Type = T;
@@ -35,7 +34,6 @@ struct AddMono {
     }
 };
 
-// 区间乘
 template <typename T>
 struct MulMono {
     using Type = T;
@@ -50,7 +48,6 @@ struct MulMono {
     }
 };
 
-// 区间最小值
 template <typename T>
 struct MinMono {
     using Type = T;
@@ -65,7 +62,6 @@ struct MinMono {
     }
 };
 
-// 区间最大值
 template <typename T>
 struct MaxMono {
     using Type = T;
@@ -80,7 +76,6 @@ struct MaxMono {
     }
 };
 
-// 区间Gcd
 template <typename T>
 struct GcdMono {
     using Type = T;
@@ -95,7 +90,6 @@ struct GcdMono {
     }
 };
 
-// 区间Lcm
 template <typename T>
 struct LcmMono {
     using Type = T;

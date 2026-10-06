@@ -12,7 +12,7 @@ file = "matrix_rank.hpp"
 
 [[item]]
 name = "逆矩阵"
-file = "inverse.hpp"
+file = "matrix_inv.hpp"
 
 [[item]]
 name = "异或线性基"

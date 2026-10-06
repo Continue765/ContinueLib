@@ -1,3 +1,11 @@
 [[item]]
 name = "线性基"
 file = "basis.hpp"
+
+[[item]]
+name = "逆矩阵"
+file = "xor_inverse.hpp"
+
+[[item]]
+name = "转置"
+file = "xor_tranpose.hpp"

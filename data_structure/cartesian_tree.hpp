@@ -1,29 +1,41 @@
 #pragma once
 #include <common.hpp>
 
-int build(const vector<int>& a, vector<int>& L, vector<int>& R) {
-    int n = a.size();
-    L.assign(n, -1);
-    R.assign(n, -1);
+template <typename T, bool IS_MIN = false>
+struct CartesionTree {
+    int n;
+    vector<T>& a;
+    vector<int> L, R;
+    int root;
 
-    stack<int> stk;
-    for (int i = 0; i < n; i++) {
-        while (!stk.empty() && a[stk.top()] < a[i]) {
-            L[i] = stk.top();
-            stk.pop();
+    CartesionTree(vector<T>& a_) : n(a_.size()), a(a_) {
+        L.assign(n, -1);
+        R.assign(n, -1);
+        vector<int> stk;
+
+        auto cmp = [&](int i, int j) -> bool {
+            if constexpr (IS_MIN) {
+                return a[i] < a[j];
+            } else {
+                return a[j] < a[i];
+            }
+        };
+
+        for (int i = 0; i < n; i++) {
+            while (!stk.empty() && cmp(i, stk.back())) {
+                L[i] = stk.back();
+                stk.pop_back();
+            }
+            if (!stk.empty()) {
+                R[stk.back()] = i;
+            }
+
+            stk.push_back(i);
         }
-
-        if (!stk.empty()) {
-            R[stk.top()] = i;
+        int root = -1;
+        while (!stk.empty()) {
+            root = stk.back();
+            stk.pop_back();
         }
-
-        stk.push(i);
     }
-
-    int root = -1;
-    while (!stk.empty()) {
-        root = stk.top();
-        stk.pop();
-    }
-    return root;
-}
+};

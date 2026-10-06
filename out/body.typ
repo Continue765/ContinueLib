@@ -380,6 +380,18 @@
 /linear_algebra/gf2/basis.hpp
 ```
 
+=== 逆矩阵
+
+```cpp-ref
+/linear_algebra/gf2/xor_inverse.hpp
+```
+
+=== 转置
+
+```cpp-ref
+/linear_algebra/gf2/xor_tranpose.hpp
+```
+
 = 字符串
 
 == Manacher

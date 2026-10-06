@@ -8,4 +8,4 @@ file = "xor_inverse.hpp"
 
 [[item]]
 name = "转置"
-file = "xor_tranpose.hpp"
+file = "xor_transpose.hpp"

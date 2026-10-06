@@ -12,7 +12,7 @@
 /algebra/act.hpp
 ```
 
-== 模整数
+== 模数类
 
 ```cpp-ref
 /algebra/modint_short.hpp
@@ -389,7 +389,7 @@
 === 转置
 
 ```cpp-ref
-/linear_algebra/gf2/xor_tranpose.hpp
+/linear_algebra/gf2/xor_transpose.hpp
 ```
 
 = 字符串

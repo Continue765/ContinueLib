@@ -1,80 +1,34 @@
 # ContinueLib
 
-## 构建
+XCPC C++ 模板库
 
-```
+## 编译环境
+
+模板按 C++20 编写，并使用了 GNU 扩展（例如 `__int128` 和 `bits/stdc++.h`）。请使用支持这些扩展的编译器，并以 GNU C++20 模式编译，例如 GCC，或使用 libstdc++ 的 Clang。
+
+## build.py
+
+`build.py` 用来生成模板文档。需要 Python 3.11+ 和 Typst，在仓库根目录运行：
+
+```bash
 ./build.py
 ```
 
-在仓库根目录运行，需要 Python 3.11+ 和 Typst。每次生成一份共享章节内容，依次编译两份 PDF：
+生成的文件是 `out/portrait.pdf`（竖版）和 `out/landscape.pdf`（横向双栏）。添加模板时，把文件放到对应目录，再在同目录的 `config.toml` 里登记即可。
 
-- `out/portrait.pdf`：A4 竖版。
-- `out/landscape.pdf`：A4 横向双栏。
+## expander.py
 
-## 添加模板
-
-1. 把 `.hpp` 丢到对应的一级目录，比如 `graph/lca.hpp`；
-2. 在**同一个目录**的 `config.toml` 里加一条：
-
-```toml
-[[item]]
-name = "LCA"
-file = "lca.hpp"
-```
-
-3. `./build.py`。
-
-`name` 是 PDF 里的标题，`file` 是同目录的代码文件。书写顺序就是 PDF 里的顺序。
-
-## 子目录
-
-那一节写成：
-
-```toml
-[[item]]
-name = "最短路"
-dir = "shortest_path"
-```
-
-再在 `graph/shortest_path/` 里放一个 `config.toml` 写它下面的条目。
-
-`file` 和 `dir` 二选一。
-
-## 加说明文字
-
-想在某节代码前面插一段说明，用 `description`（相对同一个目录，内容用 Typst 写）：
-
-```toml
-[[item]]
-name = "莫比乌斯反演"
-file = "mobius.hpp"
-description = "mobius.typ"
-```
-
-说明文件是普通 Typst 片段，公式、`*强调*`、`` `行内代码` `` 都能直接用。
-
-## 生成 OJ 单文件
-
-题目源码可以继续引用模板库里的头文件。提交前在仓库环境运行：
+提交 Online Judge 前，可以把引用的模板展开成一个文件：
 
 ```bash
 ./expander.py solution.cpp > solution.submit.cpp
 ```
 
-`expander.py` 会递归展开仓库里的头文件（例如 `<common.hpp>`、`<algebra/monoid.hpp>`），每个文件只展开一次，移除失去作用的 `#pragma once`，再删除未被引用的顶层函数和简单的 `struct`/`class`。系统头文件（例如 `<bits/stdc++.h>`）和找不到的 include 会原样保留。双引号 include 会先相对当前文件查找，再按仓库根目录查找。同名重载作为一组保留；宏、别名、运算符重载、显式特化和不确定的声明不会裁剪。脚本只依赖 Python 标准库，不启动编译器，结果通过标准输出写出。
-
-## 改排版
-
-竖版改 `out/portrait.typ` 和 `out/portrait.tmTheme`，横版改 `out/landscape.typ` 和
-`out/landscape.tmTheme`。两个入口独立设置字体、代码样式、页眉、封面和目录，读取同一份
-`out/body.typ`；横版的目录与正文为双栏，长代码行自动换行，续行不重复行号。
-这四个文件都是入库的手写文件，不会被构建覆盖。
-
-字体：正文 TeX Gyre Termes + FandolSong，代码 Consolas，页眉中文楷体 KaiTi。
+脚本会递归展开仓库里的头文件、去掉重复的 `#pragma once`，并尝试删除没有用到的顶层函数和简单类。
 
 ## TODO
-- 重写kruskal重构树
-- k短路
-- MST敏感性
-- 次小/严格次小生成树
+
+- 重写 Kruskal 重构树
+- k 短路
+- 次小 / 严格次小生成树
 - Hierholzer

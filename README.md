@@ -4,7 +4,7 @@ XCPC C++ 模板库
 
 ## 编译环境
 
-模板按 C++20 编写，并使用了 GNU 扩展（例如 `__int128` 和 `bits/stdc++.h`）。请使用支持这些扩展的编译器，并以 GNU C++20 模式编译，例如 GCC，或使用 libstdc++ 的 Clang。
+模板按 C++20 编写，并使用了 GNU 扩展。请使用支持这些扩展的编译器，并以 GNU C++20 模式编译，例如 GCC，或使用 libstdc++ 的 Clang。
 
 ## build.py
 

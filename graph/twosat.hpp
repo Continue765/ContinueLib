@@ -1,6 +1,5 @@
 #pragma once
 #include <common.hpp>
-
 #include <graph/components/scc.hpp>
 
 struct TwoSat {

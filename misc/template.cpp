@@ -1,11 +1,5 @@
 #include <bits/stdc++.h>
 
-#ifdef LOCAL
-#include "debug.h"
-#else
-#define dbg(...)
-#endif
-
 using namespace std;
 
 using i64 = int64_t;

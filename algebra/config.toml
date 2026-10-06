@@ -1,6 +1,6 @@
 [[item]]
 name = "幺半群"
-file = "monoid.hpp"
+file = "monoid"
 
 [[item]]
 name = "幺半群作用"

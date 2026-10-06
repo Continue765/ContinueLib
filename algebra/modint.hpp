@@ -224,3 +224,6 @@ public:
 private:
     Type value_;
 };
+
+using ModInt998244353 = ModInt<StaticMod32<998244353>>;
+using ModInt100000007 = ModInt<StaticMod32<100000007>>;

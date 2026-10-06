@@ -1,6 +1,5 @@
 #pragma once
 #include <common.hpp>
-
 #include <data_structure/dsu.hpp>
 #include <graph/base.hpp>
 

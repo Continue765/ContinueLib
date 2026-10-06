@@ -53,6 +53,16 @@ description = "mobius.typ"
 
 说明文件是普通 Typst 片段，公式、`*强调*`、`` `行内代码` `` 都能直接用。
 
+## 生成 OJ 单文件
+
+题目源码可以继续引用模板库里的头文件。提交前在仓库环境运行：
+
+```bash
+./expander.py solution.cpp > solution.submit.cpp
+```
+
+`expander.py` 会递归展开仓库里的头文件（例如 `<common.hpp>`、`<algebra/monoid.hpp>`），每个文件只展开一次，移除失去作用的 `#pragma once`，再删除未被引用的顶层函数和简单的 `struct`/`class`。系统头文件（例如 `<bits/stdc++.h>`）和找不到的 include 会原样保留。双引号 include 会先相对当前文件查找，再按仓库根目录查找。同名重载作为一组保留；宏、别名、运算符重载、显式特化和不确定的声明不会裁剪。脚本只依赖 Python 标准库，不启动编译器，结果通过标准输出写出。
+
 ## 改排版
 
 竖版改 `out/portrait.typ` 和 `out/portrait.tmTheme`，横版改 `out/landscape.typ` 和

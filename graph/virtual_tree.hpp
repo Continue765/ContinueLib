@@ -1,6 +1,5 @@
 #pragma once
 #include <common.hpp>
-
 #include <graph/lca.hpp>
 
 template <typename T>

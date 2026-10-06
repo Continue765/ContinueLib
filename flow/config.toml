@@ -1,5 +1,5 @@
 [[item]]
-name = "最大流"
+name = "最大流最小割"
 file = "max_flow.hpp"
 
 [[item]]

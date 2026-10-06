@@ -1,0 +1,15 @@
+[[item]]
+name = "树状数组"
+file = "fenwick.hpp"
+
+[[item]]
+name = "区间加、单点查树状数组"
+file = "dual_fenwick.hpp"
+
+[[item]]
+name = "区间加、区间和树状数组"
+file = "fenwick_range_add.hpp"
+
+[[item]]
+name = "二维树状数组"
+file = "fenwick_2d.hpp"

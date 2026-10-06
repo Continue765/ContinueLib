@@ -11,10 +11,6 @@ name = "Trie"
 file = "trie.hpp"
 
 [[item]]
-name = "01-Trie"
-file = "01Trie.hpp"
-
-[[item]]
 name = "Z函数"
 file = "z_algo.hpp"
 

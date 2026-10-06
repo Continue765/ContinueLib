@@ -15,5 +15,9 @@ name = "逆矩阵"
 file = "matrix_inv.hpp"
 
 [[item]]
-name = "异或线性基"
-file = "basis.hpp"
+name = "线性方程组"
+file = "solve_linear.hpp"
+
+[[item]]
+name = "GF(2) 空间"
+dir = "gf2"

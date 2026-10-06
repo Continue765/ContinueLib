@@ -1,7 +1,7 @@
 #pragma once
 #include <common.hpp>
 #include <algebra/monoid.hpp>
-#include <data_structure/fenwick.hpp>
+#include <data_structure/fenwick/fenwick.hpp>
 
 vector<int> toLehmer(vector<int>& p) {
     int n = p.size();

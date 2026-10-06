@@ -4,7 +4,7 @@ file = "debug.hpp"
 
 [[item]]
 name = "template"
-file = "template.hpp"
+file = "template.cpp"
 
 [[item]]
 name = "i128"

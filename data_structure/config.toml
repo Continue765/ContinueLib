@@ -4,7 +4,7 @@ dir = "segment_tree"
 
 [[item]]
 name = "树状数组"
-file = "fenwick.hpp"
+dir = "fenwick"
 
 [[item]]
 name = "并查集"
@@ -13,6 +13,10 @@ file = "dsu.hpp"
 [[item]]
 name = "稀疏表"
 file = "sparse_table.hpp"
+
+[[item]]
+name = "01-Trie"
+file = "binary_trie.hpp"
 
 [[item]]
 name = "笛卡尔树"

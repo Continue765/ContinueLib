@@ -8,6 +8,7 @@ struct Fenwick {
     int n;
     vector<X> a;
 
+    Fenwick() : n(0) {}
     Fenwick(int n_) {
         init(n_);
     }

@@ -32,6 +32,9 @@ struct AddMono {
     static Type inv(const Type& a) {
         return {-a};
     }
+    static Type power(const Type& a, i64 k) {
+        return a * k;
+    }
 };
 
 template <typename T>

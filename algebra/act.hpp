@@ -13,7 +13,6 @@
 //     }
 // };
 
-// 区间和 + 区间加
 template <typename T>
 struct SumAdd {
     using Mono = AddMono<T>;
@@ -21,11 +20,10 @@ struct SumAdd {
     using X =  Mono::Type;
     using Y = Tag::Type;
     static X act(const X& x, const Y& y, int len) {
-        return {x.v + y.k * len};
+        return {x + y * len};
     }
 };
 
-// 区间和 + 区间乘
 template <typename T>
 struct SumMul {
     using Mono = AddMono<T>;
@@ -33,7 +31,7 @@ struct SumMul {
     using X = Mono::Type;
     using Y = Tag::Type;
     static X act(const X& x, const Y& y, int len) {
-        return {x.v * y.k};
+        return {x * y};
     }
 };
 

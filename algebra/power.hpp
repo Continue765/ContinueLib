@@ -1,18 +1,19 @@
 #pragma once
 #include <common.hpp>
 
-i64 mul(i64 a, i64 b, i64 m) {
-    return static_cast<i128>(a) * b % m;
-}
-
-i64 power(i64 a, i64 b, i64 m) {
-    i64 res = 1 % m;
-    while (b > 0) {
-        if (b & 1) {
-            res = mul(res, a, m);
+template <typename Mono>
+typename Mono::Type power(typename Mono::Type a, i64 b) {
+    if constexpr (requires { Mono::pow(a, b); }) {
+        return Mono::pow(a, b);
+    } else {
+        auto res = Mono::e();
+        while (b > 0) {
+            if (b & 1) {
+                res = Mono::op(res, a);
+            }
+            a = Mono::op(a, a);
+            b >>= 1;
         }
-        a = mul(a, a, m);
-        b >>= 1;
+        return res;
     }
-    return res;
 }

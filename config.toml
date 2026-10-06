@@ -3,6 +3,10 @@ name = "代数结构"
 dir = "algebra"
 
 [[item]]
+name = "模运算"
+dir = "mod"
+
+[[item]]
 name = "图论"
 dir = "graph"
 

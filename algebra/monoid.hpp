@@ -32,7 +32,7 @@ struct AddMono {
     static Type inv(const Type& a) {
         return {-a};
     }
-    static Type power(const Type& a, i64 k) {
+    static Type pow(const Type& a, i64 k) {
         return a * k;
     }
 };
@@ -49,6 +49,9 @@ struct MulMono {
     static Type from(const i64& x) {
         return {x};
     }
+    static Type inv(const Type& a) {
+        return T{1} / a;
+    }
 };
 
 template <typename T>
@@ -62,6 +65,9 @@ struct MinMono {
     }
     static Type from(const i64& x) {
         return {x};
+    }
+    static Type pow(const Type& a, i64 k) {
+        return (k == 0 ? e() : a);
     }
 };
 
@@ -77,6 +83,9 @@ struct MaxMono {
     static Type from(const i64& x) {
         return {x};
     }
+    static Type pow(const Type& a, i64 k) {
+        return (k == 0 ? e() : a);
+    }
 };
 
 template <typename T>
@@ -91,6 +100,9 @@ struct GcdMono {
     static Type from(const i64& x) {
         return {x};
     }
+    static Type pow(const Type& a, i64 k) {
+        return (k == 0 ? e() : a);
+    }
 };
 
 template <typename T>
@@ -104,5 +116,25 @@ struct LcmMono {
     }
     static Type from(const i64& x) {
         return {x};
+    }
+    static Type pow(const Type& a, i64 k) {
+        return (k == 0 ? e() : a);
+    }
+};
+
+template <typename T>
+struct XorMono {
+    using Type = T;
+    static Type e() {
+        return {0};
+    }
+    static Type op(const Type& a, const Type& b) {
+        return {a ^ b};
+    }
+    static Type inv(const Type& a) {
+        return {a};
+    }
+    static Type power(const Type& a, i64 k) {
+        return (k & 1) ? a : e();
     }
 };

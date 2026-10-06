@@ -1,0 +1,15 @@
+[[item]]
+name = "Barrett 模乘"
+file = "barrett.hpp"
+
+[[item]]
+name = "模整数（Policy）"
+file = "modint.hpp"
+
+[[item]]
+name = "模整数（固定模）"
+file = "modint_short.hpp"
+
+[[item]]
+name = "模快速幂"
+file = "power.hpp"

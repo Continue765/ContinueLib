@@ -7,9 +7,5 @@ name = "幺半群作用"
 file = "act.hpp"
 
 [[item]]
-name = "模数类"
-file = "modint_short.hpp"
-
-[[item]]
-name = "快速幂"
+name = "幺半群快速幂"
 file = "power.hpp"

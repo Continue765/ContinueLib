@@ -1,12 +1,12 @@
 #pragma once
 #include <data_structure/fenwick/fenwick.hpp>
 
-template <typename Mono>
+template <typename Abel>
 struct DualFenwick {
-    using X = typename Mono::Type;
+    using X = typename Abel::Type;
 
     int n;
-    Fenwick<Mono> fen;
+    Fenwick<Abel> fen;
 
     DualFenwick() : n(0), fen(0) {}
     DualFenwick(int n_) {
@@ -22,7 +22,7 @@ struct DualFenwick {
         assert(0 <= l && l <= r && r <= n);
         fen.add(l, v);
         if (r < n) {
-            fen.add(r, Mono::inv(v));
+            fen.add(r, Abel::inv(v));
         }
     }
 

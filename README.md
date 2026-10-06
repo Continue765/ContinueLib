@@ -28,6 +28,7 @@ XCPC C++ 模板库
 
 ## TODO
 
+- FFT/NTT
 - 重写 Kruskal 重构树
 - k 短路
 - 次小 / 严格次小生成树

@@ -4,15 +4,13 @@
 
 template <typename T>
 struct VirtualTree {
-    using Graph = vector<vector<pair<int, T>>>;
-
     LCA& lca;
     vector<int> nodes;
-    Graph adj;
+    vector<vector<pair<int, T>>> adj;
 
     VirtualTree(LCA& lca) : lca(lca) {}
 
-    pair<vector<int>&, Graph&> build(const vector<int>& h) {
+    pair<vector<int>&, vector<vector<pair<int, T>>>&> build(const vector<int>& h) {
         nodes = h;
         auto cmp = [&](int u, int v) { return lca.dfn[u] < lca.dfn[v]; };
         sort(nodes.begin(), nodes.end(), cmp);

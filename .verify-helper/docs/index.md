@@ -6,20 +6,20 @@
 
 ## 验证情况
 
-使用 [verification-helper (https://github.com/online-judge-tools/verification-helper)](<https://github.com/online-judge-tools/verification-helper>)
+使用 [verification-helper](<https://github.com/online-judge-tools/verification-helper>)
 自动验证，测试主要来自
-[Library Checker (https://judge.yosupo.jp/)](<https://judge.yosupo.jp/>)。
+[Library Checker](<https://judge.yosupo.jp/>)。
 
 ## 维护说明
 
 模板会随练习和比赛需求调整，接口可能发生变化。
 
 如果发现错误，可以在
-[GitHub Issues (https://github.com/Continue765/ContinueLib/issues)](<https://github.com/Continue765/ContinueLib/issues>)
+[GitHub Issues](<https://github.com/Continue765/ContinueLib/issues>)
 中提供复现代码或题目链接。
 
 ## 参考
 
-- [maspy (https://maspypy.github.io/library/)](<https://maspypy.github.io/library/>)
+- [maspy (https://github.com/maspypy/library/)](<https://maspypy.github.io/library/>)
 - [tourist (https://github.com/the-tourist/algo/)](<https://github.com/the-tourist/algo/>)
 - [atcoder (https://github.com/atcoder/ac-library/)](<https://github.com/atcoder/ac-library/>)

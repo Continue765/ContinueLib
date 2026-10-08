@@ -32,6 +32,10 @@ name = "LCA"
 file = "lca.hpp"
 
 [[item]]
+name = "树上倍增"
+file = "tree_lifting.hpp"
+
+[[item]]
 name = "虚树"
 file = "virtual_tree.hpp"
 

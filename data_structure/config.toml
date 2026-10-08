@@ -7,6 +7,10 @@ name = "树状数组"
 dir = "fenwick"
 
 [[item]]
+name = "倍增"
+file = "binary_lifting.hpp"
+
+[[item]]
 name = "并查集"
 file = "dsu.hpp"
 

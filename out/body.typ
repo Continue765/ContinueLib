@@ -294,6 +294,12 @@
 /combinatorics/zeta.hpp
 ```
 
+== Polyomino
+
+```cpp-ref
+/combinatorics/polyomino.hpp
+```
+
 = 数据结构
 
 == 线段树

@@ -17,3 +17,7 @@ file = "ie.hpp"
 [[item]]
 name = "zeta 变换"
 file = "zeta.hpp"
+
+[[item]]
+name = "Polyomino"
+file = "polyomino.hpp"

@@ -1,0 +1,11 @@
+title: ContinueLib
+url: https://continue765.github.io
+baseurl: /ContinueLib
+repository: Continue765/ContinueLib
+exclude:
+  - build.py
+  - expander.py
+  - generate_snippets.py
+  - out
+  - template
+  - .venv

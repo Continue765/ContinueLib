@@ -58,13 +58,13 @@ struct MinCostFlow {
         e.emplace_back(u, 0, -cost);
     }
 
-    pair<T, T> flow(int s, int t, T need = numeric_limits<T>::max(), vector<T> potential = {}) {
+    void set(const vector<T>& potential) {
+        h = potential;
+    }
+
+    pair<T, T> flow(int s, int t, T need = numeric_limits<T>::max()) {
         T flow = 0;
         T cost = 0;
-        if (potential.empty()) {
-            potential.assign(n, 0);
-        }
-        h = potential;
         while (flow < need && dijkstra(s, t)) {
             for (int i = 0; i < n; ++i) {
                 h[i] += dist[i];

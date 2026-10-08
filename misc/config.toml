@@ -7,6 +7,10 @@ name = "template"
 file = "template.cpp"
 
 [[item]]
+name = "二分答案"
+file = "binary_search.hpp"
+
+[[item]]
 name = "i128"
 file = "i128.hpp"
 

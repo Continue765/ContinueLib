@@ -155,7 +155,7 @@
 === 圆方树
 
 ```cpp-ref
-/graph/components/bct.hpp
+/graph/components/block_cut_tree.hpp
 ```
 
 == 树链剖分
@@ -168,6 +168,12 @@
 
 ```cpp-ref
 /graph/lca.hpp
+```
+
+== 树上倍增
+
+```cpp-ref
+/graph/tree_lifting.hpp
 ```
 
 == 虚树
@@ -336,6 +342,12 @@
 /data_structure/fenwick/fenwick_2d.hpp
 ```
 
+== 倍增
+
+```cpp-ref
+/data_structure/binary_lifting.hpp
+```
+
 == 并查集
 
 ```cpp-ref
@@ -444,6 +456,12 @@
 
 ```cpp-ref
 /misc/template.cpp
+```
+
+== 二分答案
+
+```cpp-ref
+/misc/binary_search.hpp
 ```
 
 == i128

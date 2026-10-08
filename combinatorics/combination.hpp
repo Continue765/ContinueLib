@@ -36,30 +36,35 @@ struct Combination {
         }
         return fact_[k];
     }
+
     T invfact(int k) {
         if (k > n) {
             init(2 * k);
         }
         return invfact_[k];
     }
+
     T inv(int k) {
         if (k > n) {
             init(2 * k);
         }
         return inv_[k];
     }
+
     T binom(int n, int m) {
         if (n < m || m < 0) {
             return 0;
         }
         return fact(n) * invfact(m) * invfact(n - m);
     }
+
     T perm(int n, int m) {
         if (n < m || m < 0) {
             return 0;
         }
         return fact(n) * invfact(n - m);
     }
+
     T multicomb(int n, int m) {
         if (n < 0 || m < 0) {
             return 0;
@@ -69,6 +74,7 @@ struct Combination {
         }
         return binom(n + m - 1, m);
     }
+
     T Catalan(int n) {
         if (n < 0) {
             return 0;

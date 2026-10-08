@@ -12,6 +12,11 @@ struct TreeLifting {
 
     template<typename T>
     TreeLifting(vector<vector<pair<int, T>>>& adj, int root = 0) {
+        init(adj, root);
+    }
+
+    template <typename T>
+    void init(vector<vector<pair<int, T>>>& adj, int root) {
         int n = adj.size();
         dep.assign(n, 0);
         lift.init(n);

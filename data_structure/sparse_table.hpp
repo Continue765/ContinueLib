@@ -8,6 +8,7 @@ struct SparseTable {
     int n;
     vector<vector<X>> st;
 
+    SparseTable() : n(0) {}
     SparseTable(const vector<X>& a) {
         init(a);
     }

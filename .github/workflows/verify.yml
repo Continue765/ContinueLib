@@ -1,4 +1,4 @@
-name: Verify and Publish Library
+name: verify
 
 on:
   push:

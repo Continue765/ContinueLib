@@ -82,7 +82,7 @@ struct Basis {
         }
         int r = b.size();
         if (r < 64) {
-            if (k < (1LL << r)) {
+            if (k >= (1ULL << r)) {
                 return -1;
             }
         }

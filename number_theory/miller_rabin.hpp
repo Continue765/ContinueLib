@@ -1,6 +1,6 @@
 #pragma once
 #include <common.hpp>
-#include <mod/power.hpp>
+#include <mod/calc.hpp>
 
 bool isPrime(i64 n) {
     if (n < 2) {

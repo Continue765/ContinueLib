@@ -1,7 +1,7 @@
 #pragma once
 #include <common.hpp>
 
-template<typename T>
+template <typename T>
 struct MinCostFlow {
     struct Edge_ {
         int to;
@@ -17,7 +17,7 @@ struct MinCostFlow {
     vector<int> pre;
 
     bool dijkstra(int s, int t) {
-        dist.assign(n, numeric_limits<T>::max());
+        dist.assign(n, inf<T>);
         pre.assign(n, -1);
         priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> que;
         dist[s] = 0;
@@ -37,7 +37,7 @@ struct MinCostFlow {
                 }
             }
         }
-        return dist[t] != numeric_limits<T>::max();
+        return dist[t] != inf<T>;
     }
 
     MinCostFlow() {}
@@ -49,6 +49,7 @@ struct MinCostFlow {
         n = n_;
         e.clear();
         adj.assign(n, {});
+        h.assign(n, {});
     }
 
     void addEdge(int u, int v, T cap, T cost) {
@@ -62,14 +63,16 @@ struct MinCostFlow {
         h = potential;
     }
 
-    pair<T, T> flow(int s, int t, T need = numeric_limits<T>::max()) {
+    pair<T, T> flow(int s, int t, T need = inf<T>) {
         T flow = 0;
         T cost = 0;
         while (flow < need && dijkstra(s, t)) {
-            for (int i = 0; i < n; ++i) {
-                h[i] += dist[i];
+            for (int i = 0; i < n; i++) {
+                if (dist[i] != inf<T>) {
+                    h[i] += dist[i];
+                }
             }
-            T aug = numeric_limits<T>::max();
+            T aug = need - flow;
             for (int i = t; i != s; i = e[pre[i] ^ 1].to) {
                 aug = min(aug, e[pre[i]].cap);
             }

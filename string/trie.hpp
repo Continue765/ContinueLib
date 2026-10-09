@@ -5,7 +5,6 @@ struct Trie {
     struct Node {
         array<int, 26> nxt;
         int pass, end;
-
         Node() {
             nxt.fill(-1);
             end = 0;
@@ -21,7 +20,7 @@ struct Trie {
     }
 
     void init(int n) {
-        tr.resize(n);
+        tr.assign(n, {});
         tot = 0;
     }
 

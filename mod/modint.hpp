@@ -2,6 +2,23 @@
 #include <common.hpp>
 #include <mod/barrett.hpp>
 
+template <std::signed_integral T>
+constexpr std::pair<T, T> invGcd(T a, T m) {
+    assert(m > 0);
+    a %= m;
+    if (a < 0) {
+        a += m;
+    }
+
+    T u = 0, v = 1;
+    while (a != 0) {
+        T q = m / a;
+        m -= q * a, std::swap(a, m);
+        u -= q * v, std::swap(u, v);
+    }
+    return {m, u};
+}
+
 template <std::unsigned_integral U, U Mod>
 struct StaticMod {
     static constexpr U mod() {
@@ -79,7 +96,7 @@ public:
 
     constexpr ModInt inverse() const {
         assert(value_ != 0);
-        auto [g, x] = exgcd<std::make_signed_t<Type>>(value_, mod());
+        auto [g, x] = invGcd<std::make_signed_t<Type>>(value_, mod());
         assert(g == 1);
         return normalize(x);
     }

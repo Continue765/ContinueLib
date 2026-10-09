@@ -29,7 +29,7 @@ struct KruskalTree {
 
     void build() {
         DSU dsu(2 * n - 1);
-        vector<int> ord(2 * n - 1);
+        vector<int> ord(int(edges.size()));
         iota(ord.begin(), ord.end(), 0);
         sort(ord.begin(), ord.end(), [&](int x, int y) {
             return edges[x].w < edges[y].w;

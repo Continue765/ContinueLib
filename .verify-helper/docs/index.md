@@ -20,6 +20,6 @@
 
 ## 参考
 
-- [maspy (https://github.com/maspypy/library/)](<https://maspypy.github.io/library/>)
-- [tourist (https://github.com/the-tourist/algo/)](<https://github.com/the-tourist/algo/>)
-- [atcoder (https://github.com/atcoder/ac-library/)](<https://github.com/atcoder/ac-library/>)
+- [maspy (https://github.com/maspypy/library/)]
+- [tourist (https://github.com/the-tourist/algo/)]
+- [atcoder (https://github.com/atcoder/ac-library/)]

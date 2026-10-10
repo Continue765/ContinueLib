@@ -5,12 +5,12 @@ template <typename Mono>
 struct TreeLifting {
     using X = typename Mono::Type;
 
-    vector<int> dep;
+    vector<int> dep, dfn;
     BinaryLifting<Mono> lift;
 
     TreeLifting() {}
 
-    template<typename T>
+    template <typename T>
     TreeLifting(vector<vector<pair<int, T>>>& adj, int root = 0) {
         init(adj, root);
     }
@@ -18,9 +18,12 @@ struct TreeLifting {
     template <typename T>
     void init(vector<vector<pair<int, T>>>& adj, int root) {
         int n = adj.size();
+        int cur = 0;
         dep.assign(n, 0);
+        dfn.assign(n, 0);
         lift.init(n);
         auto dfs = [&](auto&& self, int u, int p) -> void {
+            dfn[u] = cur++;
             for (auto& [v, w] : adj[u]) {
                 if (v == p) {
                     continue;

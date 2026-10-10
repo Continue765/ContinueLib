@@ -32,7 +32,7 @@ int main() {
     TreeLifting<AddMono<i64>> lift(weighted);
     assert((lift.lca(3, 6) == 0 && lift.query(3, 6) == pair<int, i64>(0, 34)));
     assert((lift.query(3, 4) == pair<int, i64>(1, 10)));
-    VirtualTree<int> vt(lca);
+    VirtualTree<int> vt(lift);
     auto [nodes1, adj1] = vt.build(vector<int>{3, 4, 6});
     assert(nodes1.size() == 5 && adj1.size() == 5);
     int degree_sum = 0;

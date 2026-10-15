@@ -45,4 +45,8 @@ struct Tree {
         };
         dfs(dfs, root);
     }
+
+    vector<int> subtree(int u) {
+        return vector<int>(seq.begin() + in[u], seq.begin() + out[u]);
+    }
 };

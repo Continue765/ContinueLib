@@ -1,5 +1,4 @@
 #pragma once
-#include <common.hpp>
 #include <graph/graph.hpp>
 
 template <typename T>

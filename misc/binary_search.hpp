@@ -2,10 +2,10 @@
 #include <common.hpp>
 
 template <typename T, typename F>
-T firstTrue(T lo, T hi, F&& pred) {
+T firstTrue(T lo, T hi, F&& check) {
     while (lo < hi) {
         T mid = (lo + hi) / 2;
-        if (pred(mid)) {
+        if (check(mid)) {
             hi = mid;
         } else {
             lo = mid + 1;
@@ -15,13 +15,13 @@ T firstTrue(T lo, T hi, F&& pred) {
 }
 
 template <typename T, typename F>
-T lastTrue(T lo, T hi, F&& pred) {
-    while (hi - lo > 1) {
-        T mid = (lo + hi) / 2;
-        if (pred(mid)) {
+T lastTrue(T lo, T hi, F&& check) {
+    while (lo < hi) {
+        T mid = (lo + hi + 1) / 2;
+        if (check(mid)) {
             lo = mid;
         } else {
-            hi = mid;
+            hi = mid - 1;
         }
     }
     return lo;

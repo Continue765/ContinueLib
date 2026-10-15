@@ -46,10 +46,16 @@
 
 = 图论
 
-== Base
+== Graph类
 
 ```cpp-ref
 /graph/graph.hpp
+```
+
+== Tree类
+
+```cpp-ref
+/graph/tree.hpp
 ```
 
 == 最短路
@@ -158,16 +164,20 @@
 /graph/components/block_cut_tree.hpp
 ```
 
-== 树基础
-
-```cpp-ref
-/graph/tree.hpp
-```
-
 == 树链剖分
 
 ```cpp-ref
 /graph/hld.hpp
+```
+
+== 树上启发式合并
+
+```typ-prose
+/graph/dsu_on_tree.typ
+```
+
+```cpp-ref
+/graph/dsu_on_tree.hpp
 ```
 
 == LCA

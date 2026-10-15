@@ -32,6 +32,11 @@ name = "树链剖分"
 file = "hld.hpp"
 
 [[item]]
+name = "树上启发式合并"
+file = "dsu_on_tree.hpp"
+description = "dsu_on_tree.typ"
+
+[[item]]
 name = "LCA"
 file = "lca.hpp"
 

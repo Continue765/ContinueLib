@@ -7,8 +7,8 @@ int main() {
     cin.tie(nullptr);
     int n, m;
     cin >> n >> m;
-    BlockCutTree bct(n);
-    while (m--) { int u, v; cin >> u >> v; bct.addEdge(u, v); }
-    bct.build();
+    Graph<int, false> g(n);
+    while (m--) { int u, v; cin >> u >> v; g.add(u, v); }
+    BlockCutTree bct(g);
     for (int u = 0; u < n; ++u) if (bct.cut[u]) cout << u << '\n';
 }

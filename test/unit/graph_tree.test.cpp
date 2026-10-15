@@ -6,40 +6,115 @@
 #include "graph/tree_lifting.hpp"
 #include "graph/virtual_tree.hpp"
 
-int main() {
-    vector<vector<int>> tree(7);
-    auto edge = [&](int u, int v) { tree[u].push_back(v); tree[v].push_back(u); };
-    edge(0, 1); edge(0, 2); edge(1, 3); edge(1, 4); edge(2, 5); edge(5, 6);
+void checkTree(Graph<int, false>& g, int root) {
+    // 各套算法独立使用 Tree。
+    Tree tree(g, root), hldTree(g, root);
     LCA lca(tree);
     FastLCA fast(tree);
-    HLD hld(7);
-    for (int u = 0; u < 7; ++u) for (int v : tree[u]) if (u < v) hld.addEdge(u, v);
-    hld.work();
-    vector<int> par{0, 0, 0, 1, 1, 2, 5};
-    auto naive_lca = [&](int u, int v) { vector<bool> seen(7); for (int x = u;; x = par[x]) { seen[x] = true; if (x == 0) break; } while (!seen[v]) v = par[v]; return v; };
-    for (int u = 0; u < 7; ++u) for (int v = 0; v < 7; ++v) {
-        int w = naive_lca(u, v);
-        assert(lca.get(u, v) == w && fast.query(u, v) == w && hld.lca(u, v) == w);
-        int d = lca.dep[u] + lca.dep[v] - 2 * lca.dep[w];
-        assert(lca.dist(u, v) == d && fast.dist(u, v) == d && hld.dist(u, v) == d);
+    HLD hld(hldTree);
+    TreeLifting<AddMono<i64>, int> lift(tree);
+    int n = g.n;
+    vector<int> par(n, -1), dep(n), siz(n, 1), order{root};
+    vector<i64> dist(n);
+    for (int i = 0; i < n; ++i) {
+        int u = order[i];
+        for (auto [v, id] : g.adj[u]) if (v != par[u]) {
+            par[v] = u;
+            dep[v] = dep[u] + 1;
+            dist[v] = dist[u] + g.edges[id].w;
+            order.push_back(v);
+        }
     }
-    assert(hld.jump(6, 2) == 2 && hld.jump(6, 4) == -1);
-    assert(hld.isAncester(1, 4) && !hld.isAncester(2, 4));
-    assert(hld.rootedLca(3, 4, 6) == 1);
-    vector<vector<pair<int, int>>> weighted(7);
-    auto wedge = [&](int u, int v, int w) { weighted[u].emplace_back(v, w); weighted[v].emplace_back(u, w); };
-    wedge(0, 1, 2); wedge(0, 2, 5); wedge(1, 3, 3); wedge(1, 4, 7); wedge(2, 5, 11); wedge(5, 6, 13);
-    TreeLifting<AddMono<i64>> lift(weighted);
-    assert((lift.lca(3, 6) == 0 && lift.query(3, 6) == pair<int, i64>(0, 34)));
-    assert((lift.query(3, 4) == pair<int, i64>(1, 10)));
+    for (int i = n - 1; i > 0; --i) siz[par[order[i]]] += siz[order[i]];
+    assert(tree.fa == par && tree.dep == dep && tree.siz == siz);
+    for (int u = 0; u < n; ++u) {
+        assert(tree.dist[u] == dist[u]);
+        assert(tree.seq[tree.in[u]] == u && tree.out[u] - tree.in[u] == siz[u]);
+        if (u == root) assert(tree.pe[u] == -1);
+        else {
+            auto e = g.edges[tree.pe[u]];
+            assert((e.u == u && e.v == par[u]) || (e.v == u && e.u == par[u]));
+        }
+        int p = u;
+        for (int k = 0; k <= dep[u] + 1; ++k) {
+            assert(hld.jump(u, k) == p);
+            if (p != -1) p = par[p];
+        }
+    }
+    auto naiveLca = [&](int u, int v) {
+        while (dep[u] > dep[v]) u = par[u];
+        while (dep[v] > dep[u]) v = par[v];
+        while (u != v) { u = par[u]; v = par[v]; }
+        return u;
+    };
+    for (int u = 0; u < n; ++u) for (int v = 0; v < n; ++v) {
+        int p = naiveLca(u, v);
+        assert(lca.get(u, v) == p && fast.query(u, v) == p && hld.lca(u, v) == p);
+        int d = dep[u] + dep[v] - 2 * dep[p];
+        assert(lca.dist(u, v) == d && fast.dist(u, v) == d && hld.dist(u, v) == d);
+        assert(lift.lca(u, v) == p && lift.query(u, v).second == dist[u] + dist[v] - 2 * dist[p]);
+        assert(hld.isAncester(u, v) == (p == u));
+        vector<int> path, tail;
+        for (int x = u; x != p; x = par[x]) path.push_back(x);
+        path.push_back(p);
+        for (int x = v; x != p; x = par[x]) tail.push_back(x);
+        reverse(tail.begin(), tail.end());
+        path.insert(path.end(), tail.begin(), tail.end());
+        for (int k = 0; k <= int(path.size()); ++k) {
+            assert(hld.jump(u, v, k) == (k == int(path.size()) ? -1 : path[k]));
+        }
+        for (bool edge : {false, true}) {
+            vector<int> got;
+            hld.forPath(u, v, edge, [&](int l, int r, bool rev) {
+                if (rev) for (int i = r - 1; i >= l; --i) got.push_back(hldTree.seq[i]);
+                else for (int i = l; i < r; ++i) got.push_back(hldTree.seq[i]);
+            });
+            auto expected = path;
+            if (edge) expected.erase(find(expected.begin(), expected.end(), p));
+            assert(got == expected);
+        }
+    }
+    for (int rt = 0; rt < n; ++rt) {
+        Tree rerooted(g, rt);
+        LCA rooted(rerooted);
+        for (int u = 0; u < n; ++u) {
+            assert(hld.rootedParent(rt, u) == (rt == u ? u : rerooted.fa[u]));
+            assert(hld.rootedSize(rt, u) == rerooted.siz[u]);
+            for (int v = 0; v < n; ++v) assert(hld.rootedLca(rt, u, v) == rooted.get(u, v));
+        }
+    }
+}
+
+int main() {
+    Graph<int, false> g(7);
+    g.add(0, 1, 2); g.add(0, 2, 5); g.add(1, 3, 3);
+    g.add(1, 4, 7); g.add(2, 5, 11); g.add(5, 6, 13);
+    for (int root = 0; root < 7; ++root) checkTree(g, root);
+    mt19937 rng(765);
+    for (int it = 0; it < 30; ++it) {
+        int n = 1 + rng() % 15;
+        Graph<int, false> random(n);
+        for (int v = 1; v < n; ++v) random.add(v, rng() % v, int(rng() % 21) - 10);
+        checkTree(random, rng() % n);
+    }
+
+    Tree tree(g);
+    TreeLifting<AddMono<i64>, int> lift(tree);
     VirtualTree<int> vt(lift);
-    auto [nodes1, adj1] = vt.build(vector<int>{3, 4, 6});
-    assert(nodes1.size() == 5 && adj1.size() == 5);
-    int degree_sum = 0;
-    for (auto& row : adj1) degree_sum += row.size();
-    assert(degree_sum == 8);
-    auto [nodes2, adj2] = vt.build(vector<int>{6});
-    assert(nodes2 == vector<int>{6} && adj2.size() == 1 && adj2[0].empty());
+    vector<int> h{6, 3, 4, 3};
+    auto original = h;
+    auto [nodes, adj] = vt.build(h);
+    assert(h == original && nodes.size() == 5 && adj.size() == 5);
+    vector<tuple<int, int, int>> edges;
+    for (int u = 0; u < int(nodes.size()); ++u) {
+        for (auto [v, w] : adj[u]) if (nodes[u] < nodes[v]) edges.emplace_back(nodes[u], nodes[v], w);
+    }
+    sort(edges.begin(), edges.end());
+    // 虚树边权为原树上的边数。
+    assert((edges == vector<tuple<int, int, int>>{{0, 1, 1}, {0, 6, 3}, {1, 3, 1}, {1, 4, 1}}));
+    vector<int> single{6};
+    auto [nodes2, adj2] = vt.build(single);
+    assert(nodes2 == single && adj2.size() == 1 && adj2[0].empty());
     int a, b;
     if (cin >> a >> b) cout << a + b << '\n';
 }

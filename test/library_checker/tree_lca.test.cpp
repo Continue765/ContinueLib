@@ -7,8 +7,9 @@ int main() {
     cin.tie(nullptr);
     int n, q;
     cin >> n >> q;
-    vector<vector<int>> adj(n);
-    for (int v = 1; v < n; ++v) { int p; cin >> p; adj[p].push_back(v); adj[v].push_back(p); }
-    LCA lca(adj);
+    Graph<int, false> g(n);
+    for (int v = 1; v < n; ++v) { int p; cin >> p; g.add(p, v); }
+    Tree tree(g);
+    LCA lca(tree);
     while (q--) { int u, v; cin >> u >> v; cout << lca.get(u, v) << '\n'; }
 }

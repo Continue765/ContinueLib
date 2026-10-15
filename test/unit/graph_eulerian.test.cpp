@@ -2,27 +2,64 @@
 #include <common.hpp>
 #include "graph/eulerian.hpp"
 
+template <bool Directed>
+void checkWalk(Graph<int, Directed>& g, int start = -1) {
+    auto [vs, es] = findEulerian(g, start);
+    int m = g.edges.size();
+    assert(int(vs.size()) == m + 1 && int(es.size()) == m);
+    if (start != -1) assert(vs.front() == start);
+    vector<int> seen(m);
+    for (int i = 0; i < m; ++i) {
+        int id = es[i];
+        assert(0 <= id && id < m && !seen[id]++);
+        auto e = g.edges[id];
+        bool ok = e.u == vs[i] && e.v == vs[i + 1];
+        if constexpr (!Directed) ok |= e.v == vs[i] && e.u == vs[i + 1];
+        assert(ok);
+    }
+}
+
 int main() {
-    vector<vector<pair<int, int>>> directed(4);
-    directed[0].emplace_back(1, 1); directed[1].emplace_back(0, 1);
+    Graph<> directed(4);
+    directed.add(0, 1); directed.add(1, 0);
     assert(isEulerian(directed) == 2 && isEulerianPath(directed) && isEulerianCircuit(directed));
-    directed[0].emplace_back(2, 1); directed[2].emplace_back(0, 1);
-    assert(isEulerian(directed) == 2 && isEulerian(directed, true, 0) == 2);
-    vector<vector<pair<int, int>>> path(4);
-    path[0].emplace_back(1, 1); path[1].emplace_back(2, 1);
-    assert(isEulerian(path) == 1 && isEulerianPath(path, true, 0));
-    assert(!isEulerianPath(path, true, 2) && isEulerian(path, true, 3) == 0);
-    path[2].emplace_back(0, 1);
-    assert(isEulerianCircuit(path) && isEulerian(path, true, 1) == 2);
-    vector<vector<pair<int, int>>> undirected(4);
-    auto ue = [&](int u, int v) { undirected[u].emplace_back(v, 0); undirected[v].emplace_back(u, 0); };
-    ue(0, 1); ue(1, 2);
-    assert(isEulerian(undirected, false) == 1 && isEulerianPath(undirected, false, 0));
-    assert(!isEulerianPath(undirected, false, 3));
-    ue(2, 0);
-    assert(isEulerianCircuit(undirected, false) && isEulerian(undirected, false, 3) == 0);
-    undirected[3].emplace_back(3, 0);
-    assert(isEulerian(undirected, false) == 0);
+    directed.add(0, 2); directed.add(2, 0);
+    assert(isEulerian(directed, 0) == 2);
+    checkWalk(directed);
+    checkWalk(directed, 2);
+    Graph<> path(4);
+    path.add(0, 1); path.add(1, 2);
+    assert(isEulerian(path) == 1 && isEulerianPath(path, 0));
+    assert(!isEulerianPath(path, 2) && isEulerian(path, 3) == 0);
+    checkWalk(path);
+    checkWalk(path, 0);
+    assert(findEulerian(path, 2).first.empty());
+    path.add(2, 0);
+    assert(isEulerianCircuit(path) && isEulerian(path, 1) == 2);
+    checkWalk(path, 1);
+
+    Graph<int, false> undirected(4);
+    undirected.add(0, 1); undirected.add(1, 2);
+    assert(isEulerian(undirected) == 1 && isEulerianPath(undirected, 0));
+    assert(!isEulerianPath(undirected, 3));
+    checkWalk(undirected);
+    checkWalk(undirected, 2);
+    undirected.add(2, 0);
+    assert(isEulerianCircuit(undirected) && isEulerian(undirected, 3) == 0);
+    checkWalk(undirected);
+    undirected.add(3, 3);
+    assert(isEulerian(undirected) == 0);
+    assert(findEulerian(undirected).first.empty());
+
+    Graph<int, false> parallel(2);
+    parallel.add(0, 1, 9); parallel.add(0, 1, 3); parallel.add(0, 0, 5);
+    assert(isEulerianCircuit(parallel));
+    checkWalk(parallel);
+    Graph<> directedParallel(2);
+    directedParallel.add(0, 1); directedParallel.add(0, 1);
+    directedParallel.add(1, 0); directedParallel.add(0, 0);
+    assert(isEulerian(directedParallel) == 1);
+    checkWalk(directedParallel);
     int a, b;
     if (cin >> a >> b) cout << a + b << '\n';
 }

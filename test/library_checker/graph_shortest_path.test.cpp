@@ -8,8 +8,8 @@ int main() {
     cin.tie(nullptr);
     int n, m, s, t;
     cin >> n >> m >> s >> t;
-    vector<vector<pair<int, i64>>> adj(n);
-    while (m--) { int u, v; i64 w; cin >> u >> v >> w; adj[u].emplace_back(v, w); }
+    Graph<i64> adj(n);
+    while (m--) { int u, v; i64 w; cin >> u >> v >> w; adj.add(u, v, w); }
     auto [dist, pre] = dijkstra(adj, s);
     if (dist[t] == inf<i64>) { cout << -1 << '\n'; return 0; }
     auto path = restorePath(pre, t);

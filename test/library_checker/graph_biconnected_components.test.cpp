@@ -7,13 +7,14 @@ int main() {
     cin.tie(nullptr);
     int n, m;
     cin >> n >> m;
-    BlockCutTree bct(n);
+    Graph<int, false> g(n);
     vector<int> degree(n);
-    while (m--) { int u, v; cin >> u >> v; bct.addEdge(u, v); ++degree[u]; ++degree[v]; }
-    bct.build();
+    while (m--) { int u, v; cin >> u >> v; g.add(u, v); ++degree[u]; ++degree[v]; }
+    BlockCutTree bct(g);
     vector<vector<int>> blocks;
     for (int k = n; k < bct.tot; ++k) {
-        vector<int> block = bct.tree[k];
+        vector<int> block;
+        for (auto [v, id] : bct.tree.adj[k]) block.push_back(v);
         sort(block.begin(), block.end());
         blocks.push_back(move(block));
     }

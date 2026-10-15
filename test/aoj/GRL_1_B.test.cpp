@@ -7,8 +7,8 @@ int main() {
     cin.tie(nullptr);
     int n, m, s;
     cin >> n >> m >> s;
-    vector<vector<pair<int, i64>>> adj(n);
-    while (m--) { int u, v; i64 w; cin >> u >> v >> w; adj[u].emplace_back(v, w); }
+    Graph<i64> adj(n);
+    while (m--) { int u, v; i64 w; cin >> u >> v >> w; adj.add(u, v, w); }
     auto [dist, pre] = bellmanFord(adj, s);
     if (dist.empty()) { cout << "NEGATIVE CYCLE\n"; return 0; }
     for (auto d : dist) { if (d == inf<i64>) cout << "INF\n"; else cout << d << '\n'; }

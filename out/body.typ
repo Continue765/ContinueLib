@@ -49,7 +49,7 @@
 == Base
 
 ```cpp-ref
-/graph/base.hpp
+/graph/graph.hpp
 ```
 
 == 最短路
@@ -156,6 +156,12 @@
 
 ```cpp-ref
 /graph/components/block_cut_tree.hpp
+```
+
+== 树基础
+
+```cpp-ref
+/graph/tree.hpp
 ```
 
 == 树链剖分

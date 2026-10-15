@@ -7,10 +7,10 @@ int main() {
     cin.tie(nullptr);
     int n, m;
     cin >> n >> m;
-    EBCC ebcc(n);
+    Graph<int, false> g(n);
     vector<pair<int, int>> edges(m);
-    for (auto& [u, v] : edges) { cin >> u >> v; ebcc.addEdge(u, v); }
-    auto id = ebcc.work();
+    for (auto& [u, v] : edges) { cin >> u >> v; g.add(u, v); }
+    auto [count, id] = EBCC(g);
     vector<pair<int, int>> bridges;
     for (auto [u, v] : edges) if (id[u] != id[v]) { if (u > v) swap(u, v); bridges.emplace_back(u, v); }
     sort(bridges.begin(), bridges.end());

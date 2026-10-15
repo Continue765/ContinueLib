@@ -7,11 +7,9 @@ int main() {
     cin.tie(nullptr);
     int n, m;
     cin >> n >> m;
-    SCC scc(n);
-    while (m--) { int u, v; cin >> u >> v; scc.addEdge(u, v); }
-    auto id = scc.work();
-    int count = 0;
-    for (int x : id) count = max(count, x + 1);
+    Graph<> g(n);
+    while (m--) { int u, v; cin >> u >> v; g.add(u, v); }
+    auto [count, id] = SCC(g);
     vector<vector<int>> comp(count);
     for (int u = 0; u < n; ++u) comp[id[u]].push_back(u);
     cout << count << '\n';

@@ -33,7 +33,7 @@ struct CartesianTree {
                 L[i] = stk.back();
                 stk.pop_back();
             }
-            range[i].first = stk.empty() ? 0 : stk.back() + 1;
+            range[i].first = (stk.empty() ? 0 : stk.back() + 1);
             if (!stk.empty()) {
                 R[stk.back()] = i;
             }

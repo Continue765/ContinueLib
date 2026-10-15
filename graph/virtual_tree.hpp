@@ -1,19 +1,18 @@
 #pragma once
 #include <algebra/monoid.hpp>
-#include <common.hpp>
 #include <graph/tree_lifting.hpp>
 
 template <typename T>
 struct VirtualTree {
-    TreeLifting<AddMono<i64>>& tree;
+    TreeLifting<AddMono<i64>, T>& tree;
     vector<int> nodes;
     vector<vector<pair<int, T>>> adj;
 
-    VirtualTree(TreeLifting<AddMono<i64>>& t) : tree(t) {}
+    VirtualTree(TreeLifting<AddMono<i64>, T>& t) : tree(t) {}
 
-    pair<vector<int>&, vector<vector<pair<int, T>>>&> build(const vector<int>& h) {
+    pair<vector<int>&, vector<vector<pair<int, T>>>&> build(vector<int>& h) {
         nodes = h;
-        auto cmp = [&](int u, int v) { return tree.dfn[u] < tree.dfn[v]; };
+        auto cmp = [&](int u, int v) { return tree.tree.in[u] < tree.tree.in[v]; };
         sort(nodes.begin(), nodes.end(), cmp);
         int m = nodes.size();
         for (int i = 1; i < m; i++) {
@@ -30,7 +29,7 @@ struct VirtualTree {
             int p = tree.lca(nodes[i], nodes[i + 1]);
             int u = lower_bound(nodes.begin(), nodes.end(), p, cmp) - nodes.begin();
             int v = i + 1;
-            T w = tree.dep[nodes[v]] - tree.dep[p];
+            T w = tree.tree.dep[nodes[v]] - tree.tree.dep[p];
             adj[u].emplace_back(v, w);
             adj[v].emplace_back(u, w);
         }

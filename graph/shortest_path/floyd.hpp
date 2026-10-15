@@ -1,5 +1,5 @@
 #pragma once
-#include <common.hpp>
+#include <graph/graph.hpp>
 
 template <typename T>
 void floyd(vector<vector<T>>& dist) {
@@ -15,13 +15,14 @@ void floyd(vector<vector<T>>& dist) {
     }
 }
 
-template <typename T>
-vector<vector<T>> floyd(vector<vector<pair<int, T>>>& adj) {
-    int n = adj.size();
+template <typename T, bool directed>
+vector<vector<T>> floyd(const Graph<T, directed>& g) {
+    int n = g.n;
     vector dist(n, vector<T>(n, inf<T>));
     for (int u = 0; u < n; u++) {
         dist[u][u] = 0;
-        for (auto& [v, w] : adj[u]) {
+        for (auto [v, id] : g.adj[u]) {
+            T w = g.edges[id].w;
             dist[u][v] = min(dist[u][v], w);
         }
     }

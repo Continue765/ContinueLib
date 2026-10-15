@@ -1,54 +1,37 @@
 #pragma once
-#include <common.hpp>
+#include <graph/tree.hpp>
 #include <data_structure/sparse_table.hpp>
 
+template <typename T>
 struct LCA {
-    int logn, cur;
-    vector<int> dep, dfn;
+    Tree<T>& tree;
+    int logn;
     vector<vector<int>> fa;
 
-    LCA(vector<vector<int>>& adj, int root = 0) {
-        init(adj, root);
+    LCA(Tree<T>& tree) : tree(tree) {
+        init();
     }
 
-    void init(vector<vector<int>>& adj, int root) {
-        int n = adj.size();
-        cur = 0;
+    void init() {
+        int n = tree.n;
         logn = __lg(n);
-        fa.assign(n, vector<int>(logn + 1, -1));
-        dep.assign(n, 0);
-        dfn.assign(n, -1);
-
-        auto dfs = [&](auto&& self, int u, int p) -> void {
-            fa[u][0] = p;
-            dfn[u] = cur++;
-            for (int i = 1; i <= logn; i++) {
-                fa[u][i] = fa[fa[u][i - 1]][i - 1];
-            }
-            for (auto& v : adj[u]) {
-                if (v == p) {
-                    continue;
-                }
-                dep[v] = dep[u] + 1;
-                self(self, v, u);
-            }
-        };
-
-        dfs(dfs, root, root);
-
-        for (int i = n - 1; i >= 0; i--) {
-            if (fa[i][0] == -1) {
-                dfs(dfs, i, i);
+        fa.assign(n, vector<int>(logn + 1));
+        for (int u = 0; u < n; u++) {
+            fa[u][0] = (tree.fa[u] == -1 ? u : tree.fa[u]);
+        }
+        for (int k = 1; k <= logn; k++) {
+            for (int u = 0; u < n; u++) {
+                fa[u][k] = fa[fa[u][k - 1]][k - 1];
             }
         }
     }
 
     int get(int u, int v) {
-        if (dep[u] < dep[v]) {
+        if (tree.dep[u] < tree.dep[v]) {
             swap(u, v);
         }
         for (int i = logn; i >= 0; i--) {
-            if (dep[fa[u][i]] >= dep[v]) {
+            if (tree.dep[fa[u][i]] >= tree.dep[v]) {
                 u = fa[u][i];
             }
         }
@@ -65,11 +48,12 @@ struct LCA {
     }
 
     int dist(int u, int v) {
-        int res = dep[u] + dep[v] - 2 * dep[get(u, v)];
+        int res = tree.dep[u] + tree.dep[v] - 2 * tree.dep[get(u, v)];
         return res;
     }
 };
 
+template <typename T>
 struct FastLCA {
     struct DfnMin {
         struct Type {
@@ -80,39 +64,19 @@ struct FastLCA {
         }
     };
 
-    int cur;
-    vector<int> dep, dfn, fa;
+    Tree<T>& tree;
     SparseTable<DfnMin> st;
 
-    FastLCA() {}
-    FastLCA(vector<vector<int>>& adj, int root = 0) {
-        init(adj, root);
+    FastLCA(Tree<T>& tree) : tree(tree) {
+        init();
     }
 
-    void init(vector<vector<int>>& adj, int root) {
-        int n = adj.size();
-        cur = 0;
-        dep.assign(n, 0);
-        dfn.assign(n, -1);
-        fa.assign(n, -1);
-        vector<DfnMin::Type> seq(n);
-        auto dfs = [&](auto&& self, int u, int p) -> void {
-            fa[u] = p;
-            dfn[u] = cur++;
-            seq[dfn[u]] = {dfn[p], p};
-            for (auto& v : adj[u]) {
-                if (v == p) {
-                    continue;
-                }
-                dep[v] = dep[u] + 1;
-                self(self, v, u);
-            }
-        };
-        dfs(dfs, root, root);
-        for (int i = n - 1; i >= 0; i--) {
-            if (fa[i] == -1) {
-                dfs(dfs, i, i);
-            }
+    void init() {
+        int n = tree.n;
+        vector<typename DfnMin::Type> seq(n);
+        for (int u = 0; u < n; u++) {
+            int p = tree.fa[u] == -1 ? u : tree.fa[u];
+            seq[tree.in[u]] = {tree.in[p], p};
         }
         st.init(seq);
     }
@@ -121,13 +85,13 @@ struct FastLCA {
         if (u == v) {
             return u;
         }
-        if (dfn[u] > dfn[v]) {
+        if (tree.in[u] > tree.in[v]) {
             swap(u, v);
         }
-        return st.query(dfn[u] + 1, dfn[v] + 1).fa;
+        return st.query(tree.in[u] + 1, tree.in[v] + 1).fa;
     }
 
     int dist(int u, int v) {
-        return dep[u] + dep[v] - 2 * dep[query(u, v)];
+        return tree.dep[u] + tree.dep[v] - 2 * tree.dep[query(u, v)];
     }
 };

@@ -1,119 +1,146 @@
 #pragma once
-#include <common.hpp>
+#include <graph/tree.hpp>
 
+template <typename T>
 struct HLD {
-    int n;
-    vector<int> siz, top, dep, fa, in, out, seq;
-    vector<vector<int>> adj;
-    int cur;
+    Tree<T>& tree;
+    vector<int> heavy, top;
 
-    HLD() {}
-    HLD(int n_) {
-        n = n_;
-        siz.resize(n);
+    HLD(Tree<T>& tree) : tree(tree) {
+        build();
+    }
+
+    void build() {
+        int n = tree.n;
+        heavy.assign(n, -1);
         top.resize(n);
-        dep.resize(n);
-        fa.resize(n);
-        in.resize(n);
-        out.resize(n);
-        seq.resize(n);
-        cur = 0;
-        adj.assign(n, {});
-    }
-
-    void addEdge(int u, int v) {
-        adj[u].push_back(v);
-        adj[v].push_back(u);
-    }
-
-    void work(int root = 0) {
-        top[root] = root;
-        dep[root] = 0;
-        fa[root] = -1;
-        dfs1(root);
-        dfs2(root);
-    }
-
-    void dfs1(int u) {
-        if (fa[u] != -1) {
-            adj[u].erase(find(adj[u].begin(), adj[u].end(), fa[u]));
-        }
-
-        siz[u] = 1;
-        for (auto& v : adj[u]) {
-            fa[v] = u;
-            dep[v] = dep[u] + 1;
-            dfs1(v);
-            siz[u] += siz[v];
-            if (siz[v] > siz[adj[u][0]]) {
-                swap(v, adj[u][0]);
+        vector<vector<int>> child(n);
+        for (int v = 0; v < n; v++) {
+            int u = tree.fa[v];
+            if (u == -1) {
+                continue;
+            }
+            child[u].push_back(v);
+            if (heavy[u] == -1 || tree.siz[v] > tree.siz[heavy[u]]) {
+                heavy[u] = v;
             }
         }
-    }
-
-    void dfs2(int u) {
-        in[u] = cur++;
-        seq[in[u]] = u;
-        for (auto& v : adj[u]) {
-            top[v] = (v == adj[u][0] ? top[u] : v);
-            dfs2(v);
-        }
-        out[u] = cur;
+        int cur = 0;
+        auto dfs = [&](auto&& self, int u) -> void {
+            tree.in[u] = cur;
+            tree.seq[cur++] = u;
+            if (heavy[u] != -1) {
+                top[heavy[u]] = top[u];
+                self(self, heavy[u]);
+            }
+            for (int v : child[u]) {
+                if (v == heavy[u]) {
+                    continue;
+                }
+                top[v] = v;
+                self(self, v);
+            }
+            tree.out[u] = cur;
+        };
+        top[tree.root] = tree.root;
+        dfs(dfs, tree.root);
     }
 
     int lca(int u, int v) {
         while (top[u] != top[v]) {
-            if (dep[top[u]] > dep[top[v]]) {
-                u = fa[top[u]];
+            if (tree.dep[top[u]] > tree.dep[top[v]]) {
+                u = tree.fa[top[u]];
             } else {
-                v = fa[top[v]];
+                v = tree.fa[top[v]];
             }
         }
-        return dep[u] < dep[v] ? u : v;
+        return tree.dep[u] < tree.dep[v] ? u : v;
     }
 
     int dist(int u, int v) {
-        return dep[u] + dep[v] - 2 * dep[lca(u, v)];
+        return tree.dep[u] + tree.dep[v] - 2 * tree.dep[lca(u, v)];
     }
 
     int jump(int u, int k) {
-        if (dep[u] < k) {
+        if (k > tree.dep[u]) {
             return -1;
         }
-        int d = dep[u] - k;
-        while (dep[top[u]] > d) {
-            u = fa[top[u]];
+        int d = tree.dep[u] - k;
+        while (tree.dep[top[u]] > d) {
+            u = tree.fa[top[u]];
         }
-        return seq[in[u] - dep[u] + d];
+        return tree.seq[tree.in[u] - tree.dep[u] + d];
+    }
+
+    int jump(int u, int v, int k) {
+        int p = lca(u, v);
+        int a = tree.dep[u] - tree.dep[p];
+        int b = tree.dep[v] - tree.dep[p];
+        if (k > a + b) {
+            return -1;
+        }
+        if (k <= a) {
+            return jump(u, k);
+        }
+        return jump(v, a + b - k);
     }
 
     bool isAncester(int u, int v) {
-        return in[u] <= in[v] && in[v] < out[u];
+        return tree.in[u] <= tree.in[v] && tree.in[v] < tree.out[u];
     }
 
-    int rootedParent(int u, int v) {
-        swap(u, v);
-        if (u == v) {
-            return u;
+    int rootedParent(int root, int v) {
+        if (root == v) {
+            return v;
         }
-        if (!isAncester(u, v)) {
-            return fa[u];
+        if (!isAncester(v, root)) {
+            return tree.fa[v];
         }
-        auto it = upper_bound(adj[u].begin(), adj[u].end(), v, [&](int x, int y) { return in[x] < in[y]; }) - 1;
-        return *it;
+        return jump(root, tree.dep[root] - tree.dep[v] - 1);
     }
 
-    int rootedSize(int u, int v) {
-        if (u == v) {
-            return n;
+    int rootedSize(int root, int v) {
+        if (root == v) {
+            return tree.n;
         }
-        if (!isAncester(v, u)) {
-            return siz[v];
+        if (!isAncester(v, root)) {
+            return tree.siz[v];
         }
-        return n - siz[rootedParent(u, v)];
+        return tree.n - tree.siz[rootedParent(root, v)];
     }
 
-    int rootedLca(int a, int b, int c) {
-        return lca(a, b) ^ lca(b, c) ^ lca(c, a);
+    int rootedLca(int root, int u, int v) {
+        return lca(root, u) ^ lca(root, v) ^ lca(u, v);
+    }
+
+    template <typename F>
+    void forPath(int u, int v, bool edge, F f) {
+        vector<pair<int, int>> down;
+        while (top[u] != top[v]) {
+            if (tree.dep[top[u]] > tree.dep[top[v]]) {
+                f(tree.in[top[u]], tree.in[u] + 1, true);
+                u = tree.fa[top[u]];
+            } else {
+                down.emplace_back(tree.in[top[v]], tree.in[v] + 1);
+                v = tree.fa[top[v]];
+            }
+        }
+        if (tree.dep[u] > tree.dep[v]) {
+            int l = tree.in[v] + edge;
+            int r = tree.in[u] + 1;
+            if (l < r) {
+                f(l, r, true);
+            }
+        } else {
+            int l = tree.in[u] + edge;
+            int r = tree.in[v] + 1;
+            if (l < r) {
+                down.emplace_back(l, r);
+            }
+        }
+        for (int i = int(down.size()) - 1; i >= 0; i--) {
+            auto [l, r] = down[i];
+            f(l, r, false);
+        }
     }
 };

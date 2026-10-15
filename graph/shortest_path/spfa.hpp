@@ -1,9 +1,9 @@
 #pragma once
-#include <common.hpp>
+#include <graph/graph.hpp>
 
-template <typename T>
-pair<vector<T>, vector<int>> spfa(vector<vector<pair<int, T>>>& adj, int s) {
-    int n = adj.size();
+template <typename T, bool directed>
+pair<vector<T>, vector<int>> spfa(const Graph<T, directed>& g, int s) {
+    int n = g.n;
     vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1);
 
@@ -19,7 +19,8 @@ pair<vector<T>, vector<int>> spfa(vector<vector<pair<int, T>>>& adj, int s) {
         int u = q.front();
         q.pop();
         inq[u] = false;
-        for (auto& [v, w] : adj[u]) {
+        for (auto [v, id] : g.adj[u]) {
+            T w = g.edges[id].w;
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;
                 pre[v] = u;

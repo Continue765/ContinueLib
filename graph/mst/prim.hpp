@@ -1,12 +1,10 @@
 #pragma once
-#include <common.hpp>
-
-#include <graph/base.hpp>
+#include <graph/graph.hpp>
 
 template <typename T, typename F>
 vector<Edge<T>> prim(int n, F cost) {
     vector<Edge<T>> res;
-    vector<T> weight(n, inf<T>);
+    vector<T> wei(n, inf<T>);
     vector<int> pre(n);
 
     auto add = [&](int u) -> void {
@@ -15,19 +13,19 @@ vector<Edge<T>> prim(int n, F cost) {
                 continue;
             }
             T w = cost(u, v);
-            if (weight[v] > w) {
-                weight[v] = w;
+            if (wei[v] > w) {
+                wei[v] = w;
                 pre[v] = u;
             }
         }
-        weight[u] = inf<T>;
+        wei[u] = inf<T>;
         pre[u] = -1;
     };
 
     add(0);
     for (int i = 0; i < n - 1; i++) {
-        int u = min_element(weight.begin(), weight.end()) - weight.begin();
-        res.emplace_back(pre[u], u, weight[u]);
+        int u = min_element(wei.begin(), wei.end()) - wei.begin();
+        res.emplace_back(pre[u], u, wei[u]);
         add(u);
     }
 
@@ -35,32 +33,34 @@ vector<Edge<T>> prim(int n, F cost) {
 }
 
 template <typename T>
-vector<Edge<T>> prim(vector<vector<pair<int, T>>>& adj) {
-    int n = adj.size();
-    vector<Edge<T>> res;
-    vector<T> weight(n, inf<T>);
-    vector<int> pre(n);
-
+pair<vector<int>, T> prim(Graph<T, false>& g) {
+    int n = g.n;
+    vector<int> res, pre(n, -2);
+    vector<T> wei(n, inf<T>);
+    T cost = 0;
     auto add = [&](int u) -> void {
-        for (auto& [v, w] : adj[u]) {
+        for (auto& [v, id] : g.adj[u]) {
             if (pre[v] == -1) {
                 continue;
             }
-            if (weight[v] > w) {
-                weight[v] = w;
-                pre[v] = u;
+            T w = g.edges[id].w;
+            if (wei[v] > w) {
+                wei[v] = w;
+                pre[v] = id;
             }
         }
-        weight[u] = inf<T>;
+        wei[u] = inf<T>;
         pre[u] = -1;
     };
-
     add(0);
     for (int i = 0; i < n - 1; i++) {
-        int u = min_element(weight.begin(), weight.end()) - weight.begin();
-        res.emplace_back(pre[u], u, weight[u]);
+        int u = min_element(wei.begin(), wei.end()) - wei.begin();
+        if (wei[u] == inf<T>) {
+            break;
+        }
+        res.push_back(pre[u]);
+        cost += wei[u];
         add(u);
     }
-
-    return res;
+    return {res, cost};
 }

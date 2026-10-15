@@ -1,6 +1,10 @@
 [[item]]
-name = "Base"
-file = "base.hpp"
+name = "Graph类"
+file = "graph.hpp"
+
+[[item]]
+name = "Tree类"
+file = "tree.hpp"
 
 [[item]]
 name = "最短路"

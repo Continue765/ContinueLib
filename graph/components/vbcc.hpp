@@ -1,80 +1,58 @@
 #pragma once
-#include <common.hpp>
+#include <graph/graph.hpp>
 
-struct VBCC {
-    int n;
-    vector<pair<int, int>> edges;
-    vector<vector<pair<int, int>>> adj;
-    vector<int> stk;
-    vector<int> dfn, low, cut;
+template <typename T>
+pair<vector<vector<int>>, vector<int>> VBCC(const Graph<T, false>& g) {
+    int n = g.n;
+    vector<int> stk, dfn(n, -1), low(n), cut(n, false);
     vector<vector<int>> comp;
-    int cur;
-
-    VBCC() {}
-    VBCC(int n_) {
-        init(n_);
-    }
-
-    void init(int n_) {
-        n = n_;
-        adj.assign(n, {});
-        edges.clear();
-        dfn.assign(n, -1);
-        low.resize(n);
-        stk.clear();
-        comp.clear();
-        cut.assign(n, false);
-        cur = 0;
-    }
-
-    void addEdge(int u, int v) {
-        adj[u].emplace_back(v, edges.size());
-        adj[v].emplace_back(u, edges.size());
-        edges.emplace_back(u, v);
-    }
-
-    void dfs(int u, int p) {
+    int cur = 0;
+    auto dfs = [&](auto&& self, int u, int p) -> void {
         dfn[u] = low[u] = cur++;
         int child = 0;
-        for (auto& [v, eid] : adj[u]) {
-            if (eid == p) {
+        for (auto [v, id] : g.adj[u]) {
+            if (id == p) {
                 continue;
             }
             if (dfn[v] == -1) {
                 child++;
-                stk.push_back(eid);
-                dfs(v, eid);
+                stk.push_back(id);
+                self(self, v, id);
                 low[u] = min(low[u], low[v]);
                 if (low[v] >= dfn[u]) {
                     if (p != -1) {
                         cut[u] = true;
                     }
-                    vector<int> b;
+                    vector<int> block;
                     while (true) {
-                        int e = stk.back();
+                        int eid = stk.back();
                         stk.pop_back();
-                        b.push_back(e);
-                        if (e == eid) {
+                        block.push_back(eid);
+                        if (eid == id) {
                             break;
                         }
                     }
-                    comp.push_back(b);
+                    comp.push_back(block);
                 }
             } else if (dfn[v] < dfn[u]) {
-                stk.push_back(eid);        
+                stk.push_back(id);
                 low[u] = min(low[u], dfn[v]);
             }
         }
         if (p == -1 && child >= 2) {
             cut[u] = true;
         }
-    }
-
-    void work() {
-        for (int i = 0; i < n; i++) {
-            if (dfn[i] == -1) {
-                dfs(i, -1);
-            }
+    };
+    for (int u = 0; u < n; u++) {
+        if (dfn[u] == -1) {
+            dfs(dfs, u, -1);
         }
     }
-};
+    for (int id = 0; id < int(g.edges.size()); id++) {
+        auto& e = g.edges[id];
+        if (e.u == e.v) {
+            comp.push_back({id});
+        }
+    }
+    return {comp, cut};
+}

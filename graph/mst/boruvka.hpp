@@ -1,13 +1,13 @@
 #pragma once
-#include <common.hpp>
-
-#include <graph/base.hpp>
+#include <graph/graph.hpp>
 #include <data_structure/dsu.hpp>
 
 template <typename T>
-pair<vector<Edge<T>>, T> boruvka(vector<Edge<T>>& edges, int n) {
+pair<vector<int>, T> boruvka(Graph<T, false>& g) {
+    auto& edges = g.edges;
+    int n = g.n;
     T cost = 0;
-    vector<Edge<T>> res;
+    vector<int> res;
     DSU dsu(n);
     int cnt = n;
 
@@ -37,7 +37,7 @@ pair<vector<Edge<T>>, T> boruvka(vector<Edge<T>>& edges, int n) {
             }
             auto& e = edges[best[u]];
             if (dsu.merge(e.u, e.v)) {
-                res.push_back(e);
+                res.push_back(best[u]);
                 cost += e.w;
                 cnt--;
                 upd = true;

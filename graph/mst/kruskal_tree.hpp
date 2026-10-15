@@ -1,7 +1,5 @@
 #pragma once
-#include <common.hpp>
-
-#include <graph/base.hpp>
+#include <graph/graph.hpp>
 #include <data_structure/dsu.hpp>
 
 template <typename T>
@@ -11,20 +9,17 @@ struct KruskalTree {
     vector<Edge<T>> edges;
     vector<vector<int>> adj;
 
-    KruskalTree(int n_) {
-        init(n_);
+    KruskalTree() : n(0) {}
+    KruskalTree(Graph<T, false>& g) {
+        init(g);
     }
 
-    void init(int n_) {
-        n = n_;
+    void init(Graph<T, false>& g) {
+        n = g.n;
         root = n - 1;
         val.assign(2 * n - 1, 0);
         adj.assign(2 * n - 1, vector<int>{});
-        edges.clear();
-    }
-
-    void addEdge(int u, int v, i64 w) {
-        edges.emplace_back(u, v, w);
+        edges = g.edges;
     }
 
     void build() {

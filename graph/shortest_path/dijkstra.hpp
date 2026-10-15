@@ -1,9 +1,9 @@
 #pragma once
-#include <common.hpp>
+#include <graph/graph.hpp>
 
-template <typename T>
-pair<vector<T>, vector<int>> dijkstra(vector<vector<pair<int, T>>>& adj, int s) {
-    int n = adj.size();
+template <typename T, bool directed>
+pair<vector<T>, vector<int>> dijkstra(const Graph<T, directed>& g, int s) {
+    int n = g.n;
     vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1);
     using P =  pair<T, int>;
@@ -18,7 +18,8 @@ pair<vector<T>, vector<int>> dijkstra(vector<vector<pair<int, T>>>& adj, int s) 
         if (d != dist[u]) {
             continue;
         }
-        for (auto& [v, w] : adj[u]) {
+        for (auto [v, id] : g.adj[u]) {
+            T w = g.edges[id].w;
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;
                 pre[v] = u;
@@ -30,9 +31,9 @@ pair<vector<T>, vector<int>> dijkstra(vector<vector<pair<int, T>>>& adj, int s) 
     return {dist, pre};
 }
 
-template <typename T>
-pair<vector<T>, vector<int>> dijkstraDense(vector<vector<pair<int, T>>>& adj, int s) {
-    int n = adj.size();
+template <typename T, bool directed>
+pair<vector<T>, vector<int>> dijkstraDense(const Graph<T, directed>& g, int s) {
+    int n = g.n;
     vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1);
     vector<int> done(n, false);
@@ -50,7 +51,8 @@ pair<vector<T>, vector<int>> dijkstraDense(vector<vector<pair<int, T>>>& adj, in
             break;
         }
         done[u] = true;
-        for (auto [v, w] : adj[u]) {
+        for (auto [v, id] : g.adj[u]) {
+            T w = g.edges[id].w;
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;
                 pre[v] = u;
@@ -61,9 +63,9 @@ pair<vector<T>, vector<int>> dijkstraDense(vector<vector<pair<int, T>>>& adj, in
     return {dist, pre};
 }
 
-template <typename T>
-tuple<vector<T>, vector<int>, vector<int>> dijkstra(vector<vector<pair<int, T>>>& adj, vector<int>& s) {
-    int n = adj.size();
+template <typename T, bool directed>
+tuple<vector<T>, vector<int>, vector<int>> dijkstra(const Graph<T, directed>& g, vector<int>& s) {
+    int n = g.n;
     vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1), root(n, -1);
     using P =  pair<T, int>;
@@ -81,7 +83,8 @@ tuple<vector<T>, vector<int>, vector<int>> dijkstra(vector<vector<pair<int, T>>>
         if (d != dist[u]) {
             continue;
         }
-        for (auto& [v, w] : adj[u]) {
+        for (auto [v, id] : g.adj[u]) {
+            T w = g.edges[id].w;
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;
                 pre[v] = u;

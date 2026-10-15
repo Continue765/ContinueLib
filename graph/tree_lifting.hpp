@@ -1,48 +1,36 @@
 #pragma once
 #include <data_structure/binary_lifting.hpp>
+#include <graph/tree.hpp>
 
-template <typename Mono>
+template <typename Mono, typename T>
 struct TreeLifting {
     using X = typename Mono::Type;
 
-    vector<int> dep, dfn;
+    Tree<T>& tree;
     BinaryLifting<Mono> lift;
 
-    TreeLifting() {}
-
-    template <typename T>
-    TreeLifting(vector<vector<pair<int, T>>>& adj, int root = 0) {
-        init(adj, root);
+    TreeLifting(Tree<T>& tree) : tree(tree) {
+        init();
     }
 
-    template <typename T>
-    void init(vector<vector<pair<int, T>>>& adj, int root) {
-        int n = adj.size();
-        int cur = 0;
-        dep.assign(n, 0);
-        dfn.assign(n, 0);
+    void init() {
+        int n = tree.n;
         lift.init(n);
-        auto dfs = [&](auto&& self, int u, int p) -> void {
-            dfn[u] = cur++;
-            for (auto& [v, w] : adj[u]) {
-                if (v == p) {
-                    continue;
-                }
-                dep[v] = dep[u] + 1;
-                lift.add(v, u, Mono::from(w));
-                self(self, v, u);
+        for (int v = 0; v < n; v++) {
+            if (v == tree.root) {
+                lift.add(v, -1, Mono::e());
+            } else {
+                lift.add(v, tree.fa[v], Mono::from(tree.g.edges[tree.pe[v]].w));
             }
-        };
-        lift.add(root, -1, Mono::e());
-        dfs(dfs, root, -1);
+        }
         lift.build();
     }
 
     int lca(int u, int v) {
-        if (dep[u] < dep[v]) {
+        if (tree.dep[u] < tree.dep[v]) {
             swap(u, v);
         }
-        u = lift.jump(u, dep[u] - dep[v]);
+        u = lift.jump(u, tree.dep[u] - tree.dep[v]);
         if (u == v) {
             return u;
         }
@@ -57,7 +45,7 @@ struct TreeLifting {
 
     pair<int, X> query(int u, int v) {
         int l = lca(u, v);
-        X res = Mono::op(lift.query(u, dep[u] - dep[l]).second, lift.query(v, dep[v] - dep[l]).second);
+        X res = Mono::op(lift.query(u, tree.dep[u] - tree.dep[l]).second, lift.query(v, tree.dep[v] - tree.dep[l]).second);
         return {l, res};
     }
 };

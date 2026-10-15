@@ -1,67 +1,42 @@
 #pragma once
-#include <common.hpp>
+#include <graph/graph.hpp>
 
-struct EBCC {
-    int n;
-    vector<vector<pair<int, int>>> adj;
+template <typename T>
+pair<int, vector<int>> EBCC(Graph<T, false>& g) {
+    int n = g.n;
     vector<int> stk;
-    vector<int> dfn, low, bel;
-    int cur, cnt, ecnt;
-
-    EBCC() {}
-    EBCC(int n_) {
-        init(n_);
-    }
-
-    void init(int n_) {
-        n = n_;
-        adj.assign(n, {});
-        dfn.assign(n, -1);
-        low.resize(n);
-        bel.assign(n, -1);
-        stk.clear();
-        cur = cnt = ecnt = 0;
-    }
-
-    void addEdge(int u, int v) {
-        adj[u].emplace_back(v, ecnt);
-        adj[v].emplace_back(u, ecnt);
-        ecnt++;
-    }
-
-    void dfs(int u, int p) {
+    vector<int> dfn(n, -1), low(n), comp(n, -1);
+    int cur = 0, cnt = 0;
+    auto dfs = [&](auto&& self, int u, int parentEdge) -> void {
         dfn[u] = low[u] = cur++;
         stk.push_back(u);
-
-        for (auto& [v, eid] : adj[u]) {
-            if (eid == p) {
+        for (auto [v, id] : g.adj[u]) {
+            if (id == parentEdge) {
                 continue;
             }
             if (dfn[v] == -1) {
-                dfs(v, eid);
+                self(self, v, id);
                 low[u] = min(low[u], low[v]);
             } else {
                 low[u] = min(low[u], dfn[v]);
             }
         }
-
         if (dfn[u] == low[u]) {
-            int y;
-            do {
-                y = stk.back();
-                bel[y] = cnt;
+            while (true) {
+                int v = stk.back();
                 stk.pop_back();
-            } while (y != u);
+                comp[v] = cnt;
+                if (v == u) {
+                    break;
+                }
+            }
             cnt++;
         }
-    }
-
-    vector<int> work() {
-        for (int i = 0; i < n; i++) {
-            if (dfn[i] == -1) {
-                dfs(i, -1);
-            }
+    };
+    for (int u = 0; u < n; u++) {
+        if (dfn[u] == -1) {
+            dfs(dfs, u, -1);
         }
-        return bel;
     }
-};
+    return {cnt, comp};
+}

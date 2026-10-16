@@ -1,5 +1,5 @@
 #pragma once
-#include <graph/tree.hpp>
+#include <graph/tree/tree.hpp>
 
 // f(fa, vt, off)，局部编号 0 为重心，各分支占连续区间。
 template <typename T, typename F>

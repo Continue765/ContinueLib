@@ -52,12 +52,6 @@
 /graph/graph.hpp
 ```
 
-== Tree类
-
-```cpp-ref
-/graph/tree.hpp
-```
-
 == 最短路
 
 === Dijkstra
@@ -164,48 +158,56 @@
 /graph/components/block_cut_tree.hpp
 ```
 
-== 树链剖分
+== 树上问题
+
+=== Tree类
 
 ```cpp-ref
-/graph/hld.hpp
+/graph/tree/tree.hpp
 ```
 
-== 树上启发式合并
+=== 树链剖分
+
+```cpp-ref
+/graph/tree/hld.hpp
+```
+
+=== 树上启发式合并
 
 ```typ-prose
-/graph/dsu_on_tree.typ
+/graph/tree/dsu_on_tree.typ
 ```
 
 ```cpp-ref
-/graph/dsu_on_tree.hpp
+/graph/tree/dsu_on_tree.hpp
 ```
 
-== 点分治
+=== 点分治
 
 ```typ-prose
-/graph/centroid_decomposition.typ
+/graph/tree/centroid.typ
 ```
 
 ```cpp-ref
-/graph/centroid_decomposition.hpp
+/graph/tree/centroid.hpp
 ```
 
-== LCA
+=== LCA
 
 ```cpp-ref
-/graph/lca.hpp
+/graph/tree/lca.hpp
 ```
 
-== 树上倍增
+=== 树上倍增
 
 ```cpp-ref
-/graph/tree_lifting.hpp
+/graph/tree/tree_lifting.hpp
 ```
 
-== 虚树
+=== 虚树
 
 ```cpp-ref
-/graph/virtual_tree.hpp
+/graph/tree/virtual_tree.hpp
 ```
 
 == 2-SAT

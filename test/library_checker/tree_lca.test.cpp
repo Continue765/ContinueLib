@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/lca"
 #include <common.hpp>
-#include "graph/lca.hpp"
+#include "graph/tree/lca.hpp"
 
 int main() {
     ios::sync_with_stdio(false);

@@ -1,5 +1,5 @@
 #pragma once
-#include <graph/tree.hpp>
+#include <graph/tree/tree.hpp>
 #include <data_structure/sparse_table.hpp>
 
 template <typename T>

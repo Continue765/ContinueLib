@@ -1,6 +1,6 @@
 #pragma once
 #include <algebra/monoid.hpp>
-#include <graph/tree_lifting.hpp>
+#include <graph/tree/tree_lifting.hpp>
 
 template <typename T>
 struct VirtualTree {

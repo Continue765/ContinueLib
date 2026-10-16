@@ -5,7 +5,14 @@
 #include "string/z_algo.hpp"
 
 void test() {
-    for (string s : {string(), string("a"), string("aaaaa"), string("abacaba"), string("abacaa")}) {
+    vector<string> cases{"", "a", "aaaaa", "abacaba", "abacaa", "abba", "#a##a#"};
+    mt19937 rng(765);
+    for (int it = 0; it < 1000; it++) {
+        string s(rng() % 60, 'a');
+        for (char& c : s) c += rng() % 3;
+        cases.push_back(s);
+    }
+    for (const string& s : cases) {
         auto z = Z(s);
         assert(z.size() == s.size() + 1 && z[0] == static_cast<int>(s.size()));
         auto f = kmp(s);

@@ -3,10 +3,6 @@ name = "Graph类"
 file = "graph.hpp"
 
 [[item]]
-name = "Tree类"
-file = "tree.hpp"
-
-[[item]]
 name = "最短路"
 dir = "shortest_path"
 
@@ -28,30 +24,8 @@ name = "连通性"
 dir = "components"
 
 [[item]]
-name = "树链剖分"
-file = "hld.hpp"
-
-[[item]]
-name = "树上启发式合并"
-file = "dsu_on_tree.hpp"
-description = "dsu_on_tree.typ"
-
-[[item]]
-name = "点分治"
-file = "centroid.hpp"
-description = "centroid.typ"
-
-[[item]]
-name = "LCA"
-file = "lca.hpp"
-
-[[item]]
-name = "树上倍增"
-file = "tree_lifting.hpp"
-
-[[item]]
-name = "虚树"
-file = "virtual_tree.hpp"
+name = "树上问题"
+dir = "tree"
 
 [[item]]
 name = "2-SAT"

@@ -1,6 +1,6 @@
 #pragma once
 #include <data_structure/binary_lifting.hpp>
-#include <graph/tree.hpp>
+#include <graph/tree/tree.hpp>
 
 template <typename Mono, typename T>
 struct TreeLifting {

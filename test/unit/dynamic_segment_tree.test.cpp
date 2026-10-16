@@ -3,7 +3,65 @@
 #include "algebra/act.hpp"
 #include "data_structure/segment_tree/dynamic_segment_tree.hpp"
 
+struct AffineTag {
+    using Type = pair<i64, i64>;
+    static Type e() { return {1, 0}; }
+    static Type op(Type a, Type b) {
+        return {b.first * a.first, b.first * a.second + b.second};
+    }
+};
+
+struct SumAffine {
+    using Mono = AddMono<i64>;
+    using Tag = AffineTag;
+    using X = i64;
+    using Y = Tag::Type;
+    static X act(X x, Y f, int len) { return f.first * x + f.second * len; }
+};
+
+void randomTest() {
+    mt19937 rng(4178765);
+    DynamicSegmentTree<SumAffine> seg;
+    for (int it = 0; it < 100; it++) {
+        int n = 1 + rng() % 80;
+        seg.init(n);
+        vector<i64> a(n);
+        assert(seg.rangeQuery(0, n) == 0 && seg.info.size() == 1);
+        for (int q = 0; q < 1000; q++) {
+            int l = rng() % (n + 1), r = rng() % (n + 1);
+            if (l > r) swap(l, r);
+            int op = rng() % 4;
+            i64 x = rng() % 20;
+            if (op == 0) {
+                // 赋值与加法的复合不交换，必须验证标记顺序。
+                i64 mul = rng() % 2;
+                seg.rangeApply(l, r, {mul, x});
+                for (int j = l; j < r; j++) a[j] = a[j] * mul + x;
+            } else if (op == 1 && l < n) {
+                seg.modify(l, x);
+                a[l] = x;
+            } else if (op == 2) {
+                assert(seg.rangeQuery(l, r) == accumulate(a.begin() + l, a.begin() + r, 0LL));
+            } else {
+                int first = -1, last = -1;
+                for (int j = l; j < r; j++) if (a[j] > 0) {
+                    if (first == -1) first = j;
+                    last = j;
+                }
+                auto pred = [](i64 sum) { return sum > 0; };
+                assert(seg.findFirst(l, r, pred) == first);
+                assert(seg.findLast(l, r, pred) == last);
+            }
+        }
+    }
+    seg.init(1000000000);
+    seg.rangeApply(123456789, 987654321, {1, 2});
+    assert(seg.rangeQuery(0, 1000000000) == 2LL * (987654321 - 123456789));
+    assert(seg.info.size() < 1000);
+}
+
 int main() {
+    randomTest();
     constexpr int n = 19;
     DynamicSegmentTree<SumAdd<long long>> seg(n);
     vector<long long> a(n);

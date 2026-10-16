@@ -9,7 +9,7 @@ struct BlockCutTree {
 
     BlockCutTree() {}
     template <typename T>
-    BlockCutTree(Graph<T, false>& g) {
+    BlockCutTree(const Graph<T, false>& g) {
         init(g);
     }
 

@@ -66,6 +66,41 @@ int main() {
     tree.init(single);
     tree.build();
     assert(tree.root == 0 && tree.adj.size() == 1 && tree.edges.empty());
+    mt19937 rng(765);
+    for (int it = 0; it < 300; it++) {
+        int n = 1 + rng() % 25;
+        Graph<int, false> random(n);
+        vector<vector<int>> best(n, vector<int>(n, inf<int>));
+        auto add = [&](int u, int v, int w) {
+            random.add(u, v, w);
+            best[u][v] = best[v][u] = min(best[u][v], w);
+        };
+        for (int v = 1; v < n; v++) add(v, rng() % v, int(rng() % 11) - 5);
+        for (int j = 0; j < n * 3; j++) add(rng() % n, rng() % n, int(rng() % 11) - 5);
+        for (int i = 0; i < n; i++) best[i][i] = -inf<int>;
+        for (int k = 0; k < n; k++) for (int u = 0; u < n; u++) for (int v = 0; v < n; v++) {
+            best[u][v] = min(best[u][v], max(best[u][k], best[k][v]));
+        }
+        KruskalTree<int> kt(random);
+        kt.build();
+        vector<int> par(2 * n - 1, -1), dep(2 * n - 1), order{kt.root};
+        for (int i = 0; i < int(order.size()); i++) {
+            int u = order[i];
+            for (int v : kt.adj[u]) if (v != par[u]) {
+                par[v] = u;
+                dep[v] = dep[u] + 1;
+                order.push_back(v);
+            }
+        }
+        assert(int(order.size()) == 2 * n - 1);
+        for (int u = 0; u < n; u++) for (int v = u + 1; v < n; v++) {
+            int x = u, y = v;
+            while (dep[x] > dep[y]) x = par[x];
+            while (dep[y] > dep[x]) y = par[y];
+            while (x != y) { x = par[x]; y = par[y]; }
+            assert(kt.val[x] == best[u][v]);
+        }
+    }
     int a, b;
     if (cin >> a >> b) cout << a + b << '\n';
 }

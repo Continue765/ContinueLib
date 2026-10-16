@@ -2,7 +2,7 @@
 #include <graph/graph.hpp>
 
 template <typename T>
-pair<int, vector<int>> SCC(Graph<T, true>& g) {
+pair<int, vector<int>> SCC(const Graph<T, true>& g) {
     int n = g.n;
     vector<int> stk, dfn(n, -1), low(n), comp(n, -1);
     int cur = 0, cnt = 0;

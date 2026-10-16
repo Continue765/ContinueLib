@@ -13,6 +13,18 @@ void test() {
     assert(fromRank(4, 13) == p);
     vector<int> empty;
     assert(toRank(empty) == 0 && fromRank(0, 0).empty());
+    for (int n = 1; n <= 8; n++) {
+        vector<int> perm(n);
+        iota(perm.begin(), perm.end(), 0);
+        i64 rank = 0;
+        do {
+            assert(toRank(perm) == rank);
+            assert(fromRank(n, rank) == perm);
+            auto code = toLehmer(perm);
+            assert(fromLehmer(code) == perm);
+            rank++;
+        } while (next_permutation(perm.begin(), perm.end()));
+    }
 
     for (int n = 0; n <= 8; n++) {
         vector<i64> a(n), tmp(n);

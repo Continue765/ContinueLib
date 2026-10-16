@@ -1,4 +1,4 @@
-#include <graph/centroid_decomposition.hpp>
+#include <graph/tree/centroid.hpp>
 
 int main() {
     ios::sync_with_stdio(false);
@@ -16,7 +16,7 @@ int main() {
     vector<vector<pair<int, int>>> anc(n);
     centroidDecompsition(tree, [&](const vector<int>& fa,
                                  const vector<int>& vt,
-                                 const vector<int>& off) {
+                                 const vector<int>&) {
         int m = vt.size();
         vector<int> d(m);
         for (int i = 1; i < m; i++) {
@@ -52,4 +52,5 @@ int main() {
             cout << query(u) << '\n';
         }
     }
+    return 0;
 }

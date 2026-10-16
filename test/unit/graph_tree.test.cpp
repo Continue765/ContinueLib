@@ -1,10 +1,10 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
 #include <common.hpp>
 #include "algebra/monoid.hpp"
-#include "graph/lca.hpp"
-#include "graph/hld.hpp"
-#include "graph/tree_lifting.hpp"
-#include "graph/virtual_tree.hpp"
+#include "graph/tree/lca.hpp"
+#include "graph/tree/hld.hpp"
+#include "graph/tree/tree_lifting.hpp"
+#include "graph/tree/virtual_tree.hpp"
 
 void checkTree(Graph<int, false>& g, int root) {
     // 各套算法独立使用 Tree。

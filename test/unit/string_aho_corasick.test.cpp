@@ -25,6 +25,31 @@ void test() {
     }
     assert(hits == expected);
     assert(hits == vector<int>({3, 0, 1, 2}));
+    mt19937 rng(765);
+    for (int it = 0; it < 500; it++) {
+        ac.init();
+        vector<string> patterns{"a", "aa", "aaa", "a"};
+        for (int j = 0; j < 12; j++) {
+            string s(1 + rng() % 8, 'a');
+            for (char& c : s) c += rng() % 3;
+            patterns.push_back(s);
+        }
+        vector<int> ends;
+        for (const auto& s : patterns) ends.push_back(ac.add(s));
+        ac.work();
+        string text(100, 'a');
+        for (char& c : text) c += rng() % 3;
+        int state = 1;
+        for (int pos = 0; pos < int(text.size()); pos++) {
+            state = ac.next(state, text[pos] - 'a');
+            for (int j = 0; j < int(patterns.size()); j++) {
+                bool got = false;
+                for (int u = state; u > 1; u = ac.link(u)) got |= u == ends[j];
+                bool want = text.substr(0, pos + 1).ends_with(patterns[j]);
+                assert(got == want);
+            }
+        }
+    }
     ac.init();
     ac.work();
     assert(ac.size() == 2 && ac.next(1, 'a' - 'a') == 1);

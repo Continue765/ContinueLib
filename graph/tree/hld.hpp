@@ -1,5 +1,5 @@
 #pragma once
-#include <graph/tree.hpp>
+#include <graph/tree/tree.hpp>
 
 template <typename T>
 struct HLD {

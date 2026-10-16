@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
-#include <graph/centroid_decomposition.hpp>
-#include <graph/hld.hpp>
+#include <graph/tree/centroid.hpp>
+#include <graph/tree/hld.hpp>
 
 void checkTree(Graph<i64, false>& g, int root, bool heavy) {
     Tree tree(g, root);
@@ -43,7 +43,7 @@ void checkTree(Graph<i64, false>& g, int root, bool heavy) {
         }
         return res;
     };
-    centroidDecomposition(tree, [&](const vector<int>& par,
+    centroidDecompsition(tree, [&](const vector<int>& par,
                                    const vector<int>& vs,
                                    const vector<int>& indptr) {
         int m = vs.size(), c = vs[0];

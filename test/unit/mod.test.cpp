@@ -15,6 +15,13 @@ void test() {
         uint32_t b = rng() % bt.mod();
         assert(bt.multiply(a, b) == static_cast<uint64_t>(a) * b % bt.mod());
     }
+    for (uint32_t mod : {1U, 2U, 998244353U, 2147483647U, 4294967291U, 4294967295U}) {
+        Barrett b(mod);
+        for (int i = 0; i < 10000; i++) {
+            uint32_t x = rng() % mod, y = rng() % mod;
+            assert(b.multiply(x, y) == uint64_t(x) * y % mod);
+        }
+    }
     using M = ModInt998244353;
     assert(M(-1).value() == 998244352);
     assert(M(998244354).value() == 1);

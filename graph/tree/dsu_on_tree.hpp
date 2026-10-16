@@ -1,5 +1,5 @@
 #pragma once
-#include <graph/hld.hpp>
+#include <graph/tree/hld.hpp>
 
 template <typename T, typename F1, typename F2, typename F3>
 void dsuOnTree(const HLD<T>& hld, F1 add, F2 query, F3 reset) {

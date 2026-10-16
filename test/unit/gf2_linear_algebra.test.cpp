@@ -71,6 +71,49 @@ int main() {
     assert(basis.kth(index) == numeric_limits<u64>::max());
     assert(!basis.insert(0));
 
+    for (int n : {1, 31, 32, 63, 64}) {
+        vector<u64> identity(n);
+        for (int i = 0; i < n; i++) identity[i] = u64{1} << i;
+        assert(gf2::transpose(n, n, identity) == identity);
+        assert(gf2::inverse(n, identity) == identity);
+        u64 mask = n == 64 ? ~u64{0} : (u64{1} << n) - 1;
+        assert(gf2::solveLinear(n, n, identity, mask) == vector<u64>{mask});
+    }
+    Basis full;
+    for (int i = 63; i >= 0; i--) assert(full.insert(u64{1} << i));
+    assert(full.size() == 64 && full.getMax() == ~u64{0});
+    for (u64 x : {u64{0}, u64{1}, u64{1} << 63, ~u64{0}}) {
+        assert(full.contain(x) && full.kth(x) == x);
+    }
+    mt19937_64 rng(765);
+    for (int n : {31, 32, 63, 64}) {
+        vector<u64> mat(n);
+        for (int i = 0; i < n; i++) mat[i] = u64{1} << i;
+        for (int i = 0; i < 1000; i++) {
+            int u = rng() % n, v = rng() % n;
+            if (u != v) mat[u] ^= mat[v];
+        }
+        auto inv = gf2::inverse(n, mat);
+        assert(int(inv.size()) == n);
+        auto cols = gf2::transpose(n, n, inv);
+        for (int i = 0; i < n; i++) for (int j = 0; j < n; j++) {
+            assert(__builtin_parityll(mat[i] & cols[j]) == (i == j));
+        }
+        u64 rhs = rng() & (n == 64 ? ~u64{0} : (u64{1} << n) - 1);
+        auto sol = gf2::solveLinear(n, n, mat, rhs);
+        assert(sol.size() == 1);
+        for (int i = 0; i < n; i++) {
+            assert(__builtin_parityll(mat[i] & sol[0]) == ((rhs >> i) & 1));
+        }
+        mat.back() = mat.front();
+        assert(gf2::inverse(n, mat).empty());
+    }
+    for (int it = 0; it < 500; it++) {
+        int n = rng() % 7, m = rng() % 7;
+        vector<u64> a(n);
+        for (auto& x : a) x = rng() & ((u64{1} << m) - 1);
+        checkSolve(n, m, a, rng() & ((u64{1} << n) - 1));
+    }
     int a, b;
     if (cin >> a >> b) cout << a + b << '\n';
 }

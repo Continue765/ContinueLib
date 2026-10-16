@@ -1,5 +1,7 @@
+#ifndef PROBLEM
 #define PROBLEM "https://www.luogu.com.cn/problem/P4178"
-#include <graph/centroid_decomposition.hpp>
+#endif
+#include <graph/tree/centroid.hpp>
 
 i64 countPairs(vector<i64> d, i64 k) {
     sort(d.begin(), d.end());
@@ -27,27 +29,31 @@ int main() {
         int u, v;
         i64 w;
         cin >> u >> v >> w;
-        g.add(u - 1, v - 1, w);
+        u--, v--;
+        g.add(u, v, w);
     }
+
     i64 k;
     cin >> k;
+
     Tree tree(g);
     i64 ans = 0;
-    centroidDecomposition(tree, [&](const vector<int>& par,
-                                   const vector<int>& vs,
-                                   const vector<int>& indptr) {
-        int m = vs.size();
+
+    centroidDecompsition(tree, [&](const vector<int>& fa, const vector<int>& vt, const vector<int>& off) {
+        int m = vt.size();
         vector<i64> d(m);
         for (int i = 1; i < m; i++) {
-            int u = vs[i], v = vs[par[i]];
-            int x = tree.fa[u] == v ? u : v;
-            d[i] = d[par[i]] + g.edges[tree.pe[x]].w;
+            int u = vt[i], v = vt[fa[i]];
+            int x = (tree.fa[u] == v ? u : v);
+            d[i] = d[fa[i]] + g.edges[tree.pe[x]].w;
         }
         ans += countPairs(d, k);
-        for (int b = 1; b + 1 < int(indptr.size()); b++) {
-            vector<i64> part(d.begin() + indptr[b], d.begin() + indptr[b + 1]);
+        for (int b = 1; b + 1 < int(off.size()); b++) {
+            vector<i64> part(d.begin() + off[b], d.begin() + off[b + 1]);
             ans -= countPairs(part, k);
         }
     });
     cout << ans << '\n';
+
+    return 0;
 }

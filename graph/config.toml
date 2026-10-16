@@ -37,6 +37,11 @@ file = "dsu_on_tree.hpp"
 description = "dsu_on_tree.typ"
 
 [[item]]
+name = "点分治"
+file = "centroid.hpp"
+description = "centroid.typ"
+
+[[item]]
 name = "LCA"
 file = "lca.hpp"
 

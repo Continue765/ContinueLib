@@ -180,6 +180,16 @@
 /graph/dsu_on_tree.hpp
 ```
 
+== 点分治
+
+```typ-prose
+/graph/centroid_decomposition.typ
+```
+
+```cpp-ref
+/graph/centroid_decomposition.hpp
+```
+
 == LCA
 
 ```cpp-ref

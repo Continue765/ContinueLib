@@ -16,15 +16,15 @@ struct RangeGraph {
         tot = 3 * n;
         edges.clear();
         for (int i = 2; i < 2 * n; i++) {
-            add(outId(i / 2), outId(i), T{});
-            add(inId(i), inId(i / 2), T{});
+            add(out(i / 2), out(i), T{});
+            add(in(i), in(i / 2), T{});
         }
     }
 
-    int outId(int i) {
+    int out(int i) {
         return (i >= n ? i - n : n + i);
     }
-    int inId(int i) {
+    int in(int i) {
         return (i >= n ? i - n : 2 * n + i);
     }
 
@@ -37,10 +37,10 @@ struct RangeGraph {
     void toRange(int u, int l, int r, T w = {1}) {
         for (l += n, r += n; l < r; l >>= 1, r >>= 1) {
             if (l & 1) {
-                add(u, outId(l++), w);
+                add(u, out(l++), w);
             }
             if (r & 1) {
-                add(u, outId(--r), w);
+                add(u, out(--r), w);
             }
         }
     }
@@ -48,10 +48,10 @@ struct RangeGraph {
     void fromRange(int l, int r, int v, T w = {1}) {
         for (l += n, r += n; l < r; l >>= 1, r >>= 1) {
             if (l & 1) {
-                add(inId(l++), v, w);
+                add(in(l++), v, w);
             }
             if (r & 1) {
-                add(inId(--r), v, w);
+                add(in(--r), v, w);
             }
         }
     }

@@ -11,6 +11,10 @@ name = "最短路"
 dir = "shortest_path"
 
 [[item]]
+name = "差分约束"
+file = "difference_constraints.hpp"
+
+[[item]]
 name = "拓扑排序"
 file = "toposort.hpp"
 

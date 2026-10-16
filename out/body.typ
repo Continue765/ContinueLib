@@ -52,6 +52,12 @@
 /graph/graph.hpp
 ```
 
+== 线段树优化建图
+
+```cpp-ref
+/graph/range_graph.hpp
+```
+
 == 最短路
 
 === Dijkstra
@@ -88,6 +94,12 @@
 
 ```cpp-ref
 /graph/shortest_path/restore_path.hpp
+```
+
+== 差分约束
+
+```cpp-ref
+/graph/difference_constraints.hpp
 ```
 
 == 拓扑排序
@@ -158,6 +170,16 @@
 /graph/components/block_cut_tree.hpp
 ```
 
+== 2-SAT
+
+```typ-prose
+/graph/twosat.typ
+```
+
+```cpp-ref
+/graph/twosat.hpp
+```
+
 == 树上问题
 
 === Tree类
@@ -208,16 +230,6 @@
 
 ```cpp-ref
 /graph/tree/virtual_tree.hpp
-```
-
-== 2-SAT
-
-```typ-prose
-/graph/twosat.typ
-```
-
-```cpp-ref
-/graph/twosat.hpp
 ```
 
 = 网络流

@@ -3,6 +3,10 @@ name = "Graph类"
 file = "graph.hpp"
 
 [[item]]
+name = "线段树优化建图"
+file = "range_graph.hpp"
+
+[[item]]
 name = "最短路"
 dir = "shortest_path"
 
@@ -24,10 +28,10 @@ name = "连通性"
 dir = "components"
 
 [[item]]
-name = "树上问题"
-dir = "tree"
-
-[[item]]
 name = "2-SAT"
 file = "twosat.hpp"
 description = "twosat.typ"
+
+[[item]]
+name = "树上问题"
+dir = "tree"

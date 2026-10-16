@@ -75,3 +75,12 @@ Graph<T, directed> induced(const Graph<T, directed>& g, const vector<int>& a) {
     }
     return res;
 }
+
+template <typename T>
+Graph<T, false> toUndigraph(const Graph<T, true>& g) {
+    Graph<T, false> res(g.n);
+    for (auto& e : g.edges) {
+        res.add(e.u, e.v, e.w);
+    }
+    return res;
+}

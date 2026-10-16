@@ -4,7 +4,7 @@
 
 // 0: no Eulerian walk, 1: Eulerian path, 2: Eulerian circuit
 template <typename T, bool directed>
-int isEulerian(Graph<T, directed>& g, int s = -1) {
+int isEulerian(const Graph<T, directed>& g, int s = -1) {
     int n = g.n;
     vector<int> deg(n);
     DSU dsu(n);
@@ -39,16 +39,16 @@ int isEulerian(Graph<T, directed>& g, int s = -1) {
 }
 
 template <typename T, bool directed>
-bool isEulerianPath(Graph<T, directed>& g, int s = -1) {
+bool isEulerianPath(const Graph<T, directed>& g, int s = -1) {
     return isEulerian(g, s) >= 1;
 }
 template <typename T, bool directed>
-bool isEulerianCircuit(Graph<T, directed>& g, int s = -1) {
+bool isEulerianCircuit(const Graph<T, directed>& g, int s = -1) {
     return isEulerian(g, s) == 2;
 }
 
 template <typename T, bool directed>
-pair<vector<int>, vector<int>> findEulerian(Graph<T, directed>& g, int s = -1) {
+pair<vector<int>, vector<int>> findEulerian(const Graph<T, directed>& g, int s = -1) {
     int n = g.n;
     int m = g.edges.size();
     assert(n > 0);

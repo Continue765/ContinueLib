@@ -39,7 +39,7 @@ int main() {
     Tree tree(g);
     i64 ans = 0;
 
-    centroidDecompsition(tree, [&](const vector<int>& fa, const vector<int>& vt, const vector<int>& off) {
+    centroidDecompsition(tree, [&](const vector<int>& fa, const vector<int>& vt, const vector<int>& pos) {
         int m = vt.size();
         vector<i64> d(m);
         for (int i = 1; i < m; i++) {
@@ -48,11 +48,12 @@ int main() {
             d[i] = d[fa[i]] + g.edges[tree.pe[x]].w;
         }
         ans += countPairs(d, k);
-        for (int b = 1; b + 1 < int(off.size()); b++) {
-            vector<i64> part(d.begin() + off[b], d.begin() + off[b + 1]);
+        for (int b = 1; b + 1 < int(pos.size()); b++) {
+            vector<i64> part(d.begin() + pos[b], d.begin() + pos[b + 1]);
             ans -= countPairs(part, k);
         }
     });
+
     cout << ans << '\n';
 
     return 0;

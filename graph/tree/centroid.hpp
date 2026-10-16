@@ -1,11 +1,11 @@
 #pragma once
 #include <graph/tree/tree.hpp>
 
-// f(fa, vt, off)，局部编号 0 为重心，各分支占连续区间。
+// f(fa, vt, pos)，局部编号 0 为重心，各分支占连续区间。
 template <typename T, typename F>
 void centroidDecompsition(const Tree<T>& tree, F f) {
     const auto& g = tree.g;
-    vector<int> siz(tree.n), dead(tree.n), fa, vt, off;
+    vector<int> siz(tree.n), dead(tree.n), fa, vt, pos;
     auto collect = [&](int u, int p) {
         int l = vt.size();
         vt.push_back(u);
@@ -40,14 +40,14 @@ void centroidDecompsition(const Tree<T>& tree, F f) {
         dead[c] = true;
         vt = {c};
         fa = {-1};
-        off = {0, 1};
+        pos = {0, 1};
         for (auto [v, id] : g.adj[c]) {
             if (!dead[v]) {
                 collect(v, 0);
-                off.push_back(vt.size());
+                pos.push_back(vt.size());
             }
         }
-        f(fa, vt, off);
+        f(fa, vt, pos);
         for (auto [v, id] : g.adj[c]) {
             if (!dead[v]) {
                 self(self, v);

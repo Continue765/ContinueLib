@@ -19,7 +19,7 @@ pair<vector<T>, vector<int>> spfa(const Graph<T, directed>& g, int s) {
         int u = q.front();
         q.pop();
         inq[u] = false;
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             T w = g.edges[id].w;
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;

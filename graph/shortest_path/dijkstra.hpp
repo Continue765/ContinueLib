@@ -18,7 +18,7 @@ pair<vector<T>, vector<int>> dijkstra(const Graph<T, directed>& g, int s) {
         if (d != dist[u]) {
             continue;
         }
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             T w = g.edges[id].w;
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;
@@ -51,7 +51,7 @@ pair<vector<T>, vector<int>> dijkstraDense(const Graph<T, directed>& g, int s) {
             break;
         }
         done[u] = true;
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             T w = g.edges[id].w;
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;
@@ -83,7 +83,7 @@ tuple<vector<T>, vector<int>, vector<int>> dijkstra(const Graph<T, directed>& g,
         if (d != dist[u]) {
             continue;
         }
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             T w = g.edges[id].w;
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;

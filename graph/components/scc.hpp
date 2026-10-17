@@ -9,7 +9,7 @@ pair<int, vector<int>> SCC(const Graph<T, true>& g) {
     auto dfs = [&](auto&& self, int u) -> void {
         dfn[u] = low[u] = cur++;
         stk.push_back(u);
-        for (auto& [v, id] : g.adj[u]) {
+        for (auto& [v, id] : g[u]) {
             if (dfn[v] == -1) {
                 self(self, v);
                 low[u] = min(low[u], low[v]);

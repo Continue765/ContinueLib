@@ -10,7 +10,7 @@ pair<vector<vector<int>>, vector<int>> VBCC(const Graph<T, false>& g) {
     auto dfs = [&](auto&& self, int u, int p) -> void {
         dfn[u] = low[u] = cur++;
         int child = 0;
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             if (id == p) {
                 continue;
             }

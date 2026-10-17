@@ -6,7 +6,7 @@ vector<int> toposort(const Graph<T, directed>& g) {
     int n = g.n;
     vector<int> topo, deg(n, 0);
     for (int u = 0; u < n; u++) {
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             deg[v]++;
         }
     }
@@ -17,7 +17,7 @@ vector<int> toposort(const Graph<T, directed>& g) {
     }
     for (int i = 0; i < int(topo.size()); i++) {
         int u = topo[i];
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             if (--deg[v] == 0) {
                 topo.push_back(v);
             }
@@ -31,7 +31,7 @@ vector<int> lexMinToposort(const Graph<T, directed>& g) {
     int n = g.n;
     vector<int> topo, deg(n, 0);
     for (int u = 0; u < n; u++) {
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             deg[v]++;
         }
     }
@@ -45,7 +45,7 @@ vector<int> lexMinToposort(const Graph<T, directed>& g) {
         int u = pq.top();
         pq.pop();
         topo.push_back(u);
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             if (--deg[v] == 0) {
                 pq.push(v);
             }

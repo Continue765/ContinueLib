@@ -21,7 +21,7 @@ vector<vector<T>> floyd(const Graph<T, directed>& g) {
     vector dist(n, vector<T>(n, inf<T>));
     for (int u = 0; u < n; u++) {
         dist[u][u] = 0;
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             T w = g.edges[id].w;
             dist[u][v] = min(dist[u][v], w);
         }

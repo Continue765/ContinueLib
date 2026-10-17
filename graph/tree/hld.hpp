@@ -114,7 +114,7 @@ struct HLD {
     }
 
     template <typename F>
-    void forPath(int u, int v, bool edge, F f) {
+    void forPath(int u, int v, bool edge, F&& f) {
         vector<pair<int, int>> down;
         while (top[u] != top[v]) {
             if (tree.dep[top[u]] > tree.dep[top[v]]) {

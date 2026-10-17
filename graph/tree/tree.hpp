@@ -30,7 +30,7 @@ struct Tree {
         auto dfs = [&](auto&& self, int u) -> void {
             in[u] = cur;
             seq[cur++] = u;
-            for (auto [v, id] : g.adj[u]) {
+            for (auto [v, id] : g[u]) {
                 if (v == fa[u]) {
                     continue;
                 }

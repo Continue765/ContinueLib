@@ -2,7 +2,7 @@
 #include <graph/graph.hpp>
 
 template <typename T, typename F>
-vector<Edge<T>> prim(int n, F cost) {
+vector<Edge<T>> prim(int n, F&& cost) {
     vector<Edge<T>> res;
     vector<T> wei(n, inf<T>);
     vector<int> pre(n);
@@ -39,7 +39,7 @@ pair<vector<int>, T> prim(Graph<T, false>& g) {
     vector<T> wei(n, inf<T>);
     T cost = 0;
     auto add = [&](int u) -> void {
-        for (auto& [v, id] : g.adj[u]) {
+        for (auto& [v, id] : g[u]) {
             if (pre[v] == -1) {
                 continue;
             }

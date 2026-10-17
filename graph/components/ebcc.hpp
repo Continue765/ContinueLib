@@ -10,7 +10,7 @@ pair<int, vector<int>> EBCC(const Graph<T, false>& g) {
     auto dfs = [&](auto&& self, int u, int parentEdge) -> void {
         dfn[u] = low[u] = cur++;
         stk.push_back(u);
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             if (id == parentEdge) {
                 continue;
             }

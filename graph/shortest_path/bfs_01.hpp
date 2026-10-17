@@ -14,7 +14,7 @@ pair<vector<T>, vector<int>> bfs_01(const Graph<T, directed>& g, int s) {
     while (!que.empty()) {
         auto u = que.front();
         que.pop_front();
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             T w = g.edges[id].w;
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;
@@ -47,7 +47,7 @@ tuple<vector<T>, vector<int>, vector<int>> bfs_01(const Graph<T, directed>& g, v
     while (!que.empty()) {
         auto u = que.front();
         que.pop_front();
-        for (auto [v, id] : g.adj[u]) {
+        for (auto [v, id] : g[u]) {
             T w = g.edges[id].w;
             if (dist[v] > dist[u] + w) {
                 dist[v] = dist[u] + w;

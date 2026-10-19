@@ -112,4 +112,30 @@ struct SegmentTree {
     int findLast(int l, int r, F&& pred) {
         return findLast(1, 0, n, l, r, pred);
     }
+
+    template <typename F>
+    int maxRight(int l, F&& pred, X& sum) {
+        int p = findFirst(l, n, [&](const X& x) {
+            X v = Mono::op(sum, x);
+            if (!pred(v)) {
+                return true;
+            }
+            sum = v;
+            return false;
+        });
+        return p == -1 ? n : p;
+    }
+
+    template <typename F>
+    int minLeft(int r, F&& pred, X& sum) {
+        int p = findLast(0, r, [&](const X& x) {
+            X v = Mono::op(x, sum);
+            if (!pred(v)) {
+                return true;
+            }
+            sum = v;
+            return false;
+        });
+        return p + 1;
+    }
 };

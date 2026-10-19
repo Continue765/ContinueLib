@@ -193,4 +193,4 @@ private:
 };
 
 using ModInt998244353 = ModInt<StaticMod32<998244353>>;
-using ModInt100000007 = ModInt<StaticMod32<100000007>>;
+using ModInt1000000007 = ModInt<StaticMod32<1000000007>>;

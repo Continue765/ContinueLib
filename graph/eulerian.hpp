@@ -6,6 +6,9 @@
 template <typename T, bool directed>
 int isEulerian(const Graph<T, directed>& g, int s = -1) {
     int n = g.n;
+    if (g.edges.empty()) {
+        return 2;  // 无边：任意点都有一条长度 0 的平凡欧拉回路
+    }
     vector<int> deg(n);
     DSU dsu(n);
     for (auto& e : g.edges) {

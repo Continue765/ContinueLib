@@ -17,6 +17,17 @@
 //     }
 // };
 
+template <typename Mono>
+struct ReverseMono {
+    using Type = typename Mono::Type;
+    static Type e() {
+        return Mono::e();
+    }
+    static Type op(const Type& a, const Type& b) {
+        return Mono::op(b, a);
+    }
+};
+
 template <typename T>
 struct AddMono {
     using Type = T;

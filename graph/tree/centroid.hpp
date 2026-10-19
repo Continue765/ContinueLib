@@ -5,7 +5,7 @@
 template <typename T, typename F>
 void centroidDecompsition(const Tree<T>& tree, F&& f) {
     const auto& g = tree.g;
-    vector<int> siz(tree.n), dead(tree.n), fa, vt, pos;
+    vector<int> dead(tree.n), siz, fa, vt, pos;
     auto collect = [&](int u, int p) {
         int l = vt.size();
         vt.push_back(u);
@@ -21,21 +21,19 @@ void centroidDecompsition(const Tree<T>& tree, F&& f) {
             }
         }
     };
-    auto divide = [&](auto&& self, int u) -> void {
+    vector<int> roots{tree.root};
+    for (int t = 0; t < int(roots.size()); t++) {
         vt.clear();
         fa.clear();
-        collect(u, -1);
+        collect(roots[t], -1);
         int m = vt.size(), c = -1;
-        for (int v : vt) {
-            siz[v] = 1;
-        }
+        siz.assign(m, 1);
         for (int i = m - 1; i >= 0; i--) {
-            int v = vt[i];
-            if (siz[v] >= (m + 1) / 2) {
-                c = v;
+            if (siz[i] >= (m + 1) / 2) {
+                c = vt[i];
                 break;
             }
-            siz[vt[fa[i]]] += siz[v];
+            siz[fa[i]] += siz[i];
         }
         dead[c] = true;
         vt = {c};
@@ -43,16 +41,11 @@ void centroidDecompsition(const Tree<T>& tree, F&& f) {
         pos = {0, 1};
         for (auto [v, id] : g[c]) {
             if (!dead[v]) {
+                roots.push_back(v);
                 collect(v, 0);
                 pos.push_back(vt.size());
             }
         }
         f(fa, vt, pos);
-        for (auto [v, id] : g[c]) {
-            if (!dead[v]) {
-                self(self, v);
-            }
-        }
-    };
-    divide(divide, tree.root);
+    }
 }

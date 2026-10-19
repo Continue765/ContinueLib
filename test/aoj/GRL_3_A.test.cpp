@@ -10,5 +10,9 @@ int main() {
     Graph<int, false> g(n);
     while (m--) { int u, v; cin >> u >> v; g.add(u, v); }
     BlockCutTree bct(g);
-    for (int u = 0; u < n; ++u) if (bct.cut[u]) cout << u << '\n';
+    for (int u = 0; u < n; ++u) {
+        if (bct.isCut(u)) {
+            cout << u << '\n';
+        }
+    }
 }

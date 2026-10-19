@@ -70,7 +70,7 @@ Graph<T, directed> induced(const Graph<T, directed>& g, const vector<int>& a) {
     Graph<T, directed> res(n);
     for (auto& e : g.edges) {
         if (id[e.u] != -1 && id[e.v] != -1) {
-            res.add(e.u, e.v, e.w);
+            res.add(id[e.u], id[e.v], e.w);
         }
     }
     return res;

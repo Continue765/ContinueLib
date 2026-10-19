@@ -47,9 +47,8 @@ struct LazySegmentTree {
     }
 
     void push(int p, int len) {
-        int llen = len / 2;
-        apply(2 * p, llen, tag[p]);
-        apply(2 * p + 1, len - llen, tag[p]);
+        apply(2 * p, len / 2, tag[p]);
+        apply(2 * p + 1, (len + 1) / 2, tag[p]);
         tag[p] = Tag::e();
     }
 
@@ -150,5 +149,33 @@ struct LazySegmentTree {
     template <typename F>
     int findLast(int l, int r, F&& pred) {
         return findLast(1, 0, n, l, r, pred);
+    }
+
+    template <typename F>
+    int maxRight(int l, F&& pred) {
+        X sum = Mono::e();
+        int p = findFirst(l, n, [&](const X& x) {
+            X v = Mono::op(sum, x);
+            if (!pred(v)) {
+                return true;
+            }
+            sum = v;
+            return false;
+        });
+        return p == -1 ? n : p;
+    }
+
+    template <typename F>
+    int minLeft(int r, F&& pred) {
+        X sum = Mono::e();
+        int p = findLast(0, r, [&](const X& x) {
+            X v = Mono::op(x, sum);
+            if (!pred(v)) {
+                return true;
+            }
+            sum = v;
+            return false;
+        });
+        return p + 1;
     }
 };

@@ -27,3 +27,11 @@ file = "tree_lifting.hpp"
 [[item]]
 name = "虚树"
 file = "virtual_tree.hpp"
+
+[[item]]
+name = "树上阿贝尔群"
+file = "tree_abel.hpp"
+
+[[item]]
+name = "树上幺半群"
+file = "tree_mono.hpp"

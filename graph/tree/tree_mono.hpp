@@ -11,7 +11,7 @@ struct TreeMono {
     HLD<T>& hld;
     Tree<T>& tree;
     SegmentTree<Mono> seg;
-    SegmentTree<ReverseMono<Mono>> rev;
+    SegmentTree<ReverseMono<Mono>> rseg;
 
     TreeMono(HLD<T>& hld) : n(hld.tree.n), hld(hld), tree(hld.tree) {
         build(vector<X>(n - edge, Mono::e()));
@@ -24,45 +24,32 @@ struct TreeMono {
         assert(int(init.size()) == n - edge);
         vector<X> a(n, Mono::e());
         for (int i = 0; i < int(init.size()); i++) {
-            int u = i;
-            if constexpr (edge) {
-                u = tree.eToV(i);
-            }
-            a[tree.in[u]] = init[i];
+            a[id(i)] = init[i];
         }
         seg.init(a);
-        rev.init(a);
+        rseg.init(a);
     }
 
     void modify(int i, const X& x) {
-        int u = i;
-        if constexpr (edge) {
-            u = tree.eToV(i);
-        }
-        int p = tree.in[u];
+        int p = id(i);
         seg.modify(p, x);
-        rev.modify(p, x);
+        rseg.modify(p, x);
     }
 
     void apply(int i, const X& x) {
-        int u = i;
-        if constexpr (edge) {
-            u = tree.eToV(i);
-        }
-        int p = tree.in[u];
+        int p = id(i);
         modify(i, Mono::op(seg.rangeQuery(p, p + 1), x));
     }
 
     X pathQuery(int u, int v) {
         X ans = Mono::e();
-        hld.forPath(u, v, edge, [&](int l, int r, bool reversed) {
-            X cur = (reversed ? rev.rangeQuery(l, r) : seg.rangeQuery(l, r));
+        hld.forPath(u, v, edge, [&](int l, int r, bool rev) {
+            X cur = (rev ? rseg.rangeQuery(l, r) : seg.rangeQuery(l, r));
             ans = Mono::op(ans, cur);
         });
         return ans;
     }
 
-    // 非交换运算按原 HLD 序合并；换根边权不支持子树补集。
     X subtreeQuery(int u, int root = -1) {
         if (root == -1) {
             root = tree.root;
@@ -83,40 +70,38 @@ struct TreeMono {
     }
 
     template <typename F>
-    int maxPath(F&& check, int u, int v) {
-        // check 对路径前缀须满足从 true 到 false 的单调性。
+    int maxPath(F&& pred, int u, int v) {
         X acc = Mono::e();
-        if constexpr (!edge) {
-            if (!check(seg.rangeQuery(tree.in[u], tree.in[u] + 1))) {
-                return -1;
-            }
-        } else if (!check(acc)) {
+        if (edge && !pred(acc)) {
             return -1;
         }
 
         int ans = v;
         bool done = false;
-        hld.forPath(u, v, edge, [&](int l, int r, bool reversed) {
+        hld.forPath(u, v, edge, [&](int l, int r, bool rev) {
             if (done) {
                 return;
             }
-            X cur = reversed ? rev.rangeQuery(l, r) : seg.rangeQuery(l, r);
+            X cur = rev ? rseg.rangeQuery(l, r) : seg.rangeQuery(l, r);
             X next = Mono::op(acc, cur);
-            if (check(next)) {
+            if (pred(next)) {
                 acc = next;
                 return;
             }
-            int p = reversed ? rev.minLeft(r, check, acc) - 1
-                             : seg.maxRight(l, check, acc);
+            int p = (rev ? rseg.minLeft(r, pred, acc) - 1 : seg.maxRight(l, pred, acc));
             int w = tree.seq[p];
             if constexpr (edge) {
-                ans = reversed ? w : tree.fa[w];
+                ans = (rev ? w : tree.fa[w]);
             } else {
-                ans = w == u ? -1 : hld.jump(w, u, 1);
+                ans = (w == u ? -1 : hld.jump(w, u, 1));
             }
             done = true;
         });
         return ans;
     }
 
+    int id(int i) {
+        int u = (edge ? tree.eToV(i) : i);
+        return tree.in[u];
+    }
 };

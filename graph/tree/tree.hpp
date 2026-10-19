@@ -46,6 +46,15 @@ struct Tree {
         dfs(dfs, root);
     }
 
+    int eToV(int i) {
+        auto& e = g.edges[i];
+        return (dep[e.u] > dep[e.v] ? e.u : e.v);
+    }
+
+    int vToE(int u) {
+        return pe[u];
+    }
+
     vector<int> subtree(int u) {
         return vector<int>(seq.begin() + in[u], seq.begin() + out[u]);
     }

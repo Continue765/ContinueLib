@@ -20,7 +20,7 @@ struct TreeLifting {
             if (v == tree.root) {
                 lift.add(v, -1, Mono::e());
             } else {
-                lift.add(v, tree.fa[v], Mono::from(tree.g.edges[tree.pe[v]].w));
+                lift.add(v, tree.fa[v], Mono::from(tree.g.edges[tree.vToE(v)].w));
             }
         }
         lift.build();

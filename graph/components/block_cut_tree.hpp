@@ -1,10 +1,8 @@
 #pragma once
 #include <graph/graph.hpp>
-#include <graph/components/vbcc.hpp>
 
 struct BlockCutTree {
     int n, tot;
-    vector<int> cut;
     Graph<int, false> tree;
 
     BlockCutTree() {}
@@ -16,25 +14,43 @@ struct BlockCutTree {
     template <typename T>
     void init(const Graph<T, false>& g) {
         n = g.n;
-        vector<vector<int>> comp;
-        tie(comp, cut) = VBCC(g);
-        tot = n + int(comp.size());
-        tree = Graph<int, false>(tot);
-        for (int i = 0; i < int(comp.size()); i++) {
-            vector<int> node;
-            for (int id : comp[i]) {
-                node.push_back(g.edges[id].u);
-                node.push_back(g.edges[id].v);
+        tree = Graph<int, false>(n);
+        vector<int> dfn(n, -1), low(n), stk;
+        int cur = 0;
+        // 点双的 >= 判定允许父边参与 low 更新，自环不影响结果。
+        auto dfs = [&](auto&& self, int u) -> void {
+            dfn[u] = low[u] = cur++;
+            stk.push_back(u);
+            for (auto [v, id] : g[u]) {
+                if (dfn[v] == -1) {
+                    self(self, v);
+                    low[u] = min(low[u], low[v]);
+                    if (low[v] >= dfn[u]) {
+                        int b = tree.n++;
+                        tree.adj.emplace_back();
+                        tree.add(u, b);
+                        int x;
+                        do {
+                            x = stk.back();
+                            stk.pop_back();
+                            tree.add(x, b);
+                        } while (x != v);
+                    }
+                } else {
+                    low[u] = min(low[u], dfn[v]);
+                }
             }
-            sort(node.begin(), node.end());
-            node.erase(unique(node.begin(), node.end()), node.end());
-            for (auto& u : node) {
-                tree.add(u, n + i);
+        };
+        for (int u = 0; u < n; u++) {
+            if (dfn[u] == -1) {
+                dfs(dfs, u);
+                stk.pop_back();
             }
         }
+        tot = tree.n;
     }
 
-    bool isCut(int u) {
-        return cut[u];
+    bool isCut(int u) const {
+        return tree[u].size() > 1;
     }
 };

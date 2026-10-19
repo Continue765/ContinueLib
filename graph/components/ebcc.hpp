@@ -22,14 +22,12 @@ pair<int, vector<int>> EBCC(const Graph<T, false>& g) {
             }
         }
         if (dfn[u] == low[u]) {
-            while (true) {
-                int v = stk.back();
+            int v;
+            do {
+                v = stk.back();
                 stk.pop_back();
                 comp[v] = cnt;
-                if (v == u) {
-                    break;
-                }
-            }
+            } while (v != u);
             cnt++;
         }
     };

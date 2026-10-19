@@ -37,9 +37,7 @@ struct DynamicSegmentTree {
     }
 
     void pull(int p) {
-        X left = (lc[p] != -1) ? info[lc[p]] : Mono::e();
-        X right = (rc[p] != -1) ? info[rc[p]] : Mono::e();
-        info[p] = Mono::op(left, right);
+        info[p] = Mono::op(info[lc[p]], info[rc[p]]);
     }
 
     void apply(int p, int len, const Y& v) {
@@ -54,9 +52,8 @@ struct DynamicSegmentTree {
         if (rc[p] == -1) {
             rc[p] = newNode();
         }
-        int llen = len / 2;
-        apply(lc[p], llen, tag[p]);
-        apply(rc[p], len - llen, tag[p]);
+        apply(lc[p], len / 2, tag[p]);
+        apply(rc[p], (len + 1) / 2, tag[p]);
         tag[p] = Tag::e();
     }
 
@@ -79,7 +76,7 @@ struct DynamicSegmentTree {
     }
 
     X rangeQuery(int p, int l, int r, int x, int y) {
-        if (p == -1 || y <= l || r <= x) {
+        if (y <= l || r <= x) {
             return Mono::e();
         }
         if (x <= l && r <= y) {
@@ -113,7 +110,7 @@ struct DynamicSegmentTree {
 
     template <typename F>
     int findFirst(int p, int l, int r, int x, int y, F&& pred) {
-        if (p == -1 || y <= l || r <= x) {
+        if (y <= l || r <= x) {
             return -1;
         }
         if (x <= l && r <= y && !pred(info[p])) {
@@ -137,7 +134,7 @@ struct DynamicSegmentTree {
 
     template <typename F>
     int findLast(int p, int l, int r, int x, int y, F&& pred) {
-        if (p == -1 || y <= l || r <= x) {
+        if (y <= l || r <= x) {
             return -1;
         }
         if (x <= l && r <= y && !pred(info[p])) {
@@ -157,5 +154,31 @@ struct DynamicSegmentTree {
     template <typename F>
     int findLast(int l, int r, F&& pred) {
         return findLast(root, 0, n, l, r, pred);
+    }
+
+    template <typename F>
+    int maxRight(int l, F&& pred, X& sum) {
+        int p = findFirst(l, n, [&](const X& x) {
+            X v = Mono::op(sum, x);
+            if (!pred(v)) {
+                return true;
+            }
+            sum = v;
+            return false;
+        });
+        return p == -1 ? n : p;
+    }
+
+    template <typename F>
+    int minLeft(int r, F&& pred, X& sum) {
+        int p = findLast(0, r, [&](const X& x) {
+            X v = Mono::op(x, sum);
+            if (!pred(v)) {
+                return true;
+            }
+            sum = v;
+            return false;
+        });
+        return p + 1;
     }
 };

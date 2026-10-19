@@ -14,45 +14,40 @@ struct HLD {
         int n = tree.n;
         heavy.assign(n, -1);
         top.resize(n);
-        vector<vector<int>> child(n);
         for (int v = 0; v < n; v++) {
             int u = tree.fa[v];
             if (u == -1) {
                 continue;
             }
-            child[u].push_back(v);
             if (heavy[u] == -1 || tree.siz[v] > tree.siz[heavy[u]]) {
                 heavy[u] = v;
             }
         }
         int cur = 0;
-        auto dfs = [&](auto&& self, int u) -> void {
+        auto dfs = [&](auto&& self, int u, int t) -> void {
+            top[u] = t;
             tree.in[u] = cur;
             tree.seq[cur++] = u;
             if (heavy[u] != -1) {
-                top[heavy[u]] = top[u];
-                self(self, heavy[u]);
+                self(self, heavy[u], t);
             }
-            for (int v : child[u]) {
-                if (v == heavy[u]) {
+            for (auto [v, id] : tree.g[u]) {
+                if (v == tree.fa[u] || v == heavy[u]) {
                     continue;
                 }
-                top[v] = v;
-                self(self, v);
+                self(self, v, v);
             }
             tree.out[u] = cur;
         };
-        top[tree.root] = tree.root;
-        dfs(dfs, tree.root);
+        dfs(dfs, tree.root, tree.root);
     }
 
     int lca(int u, int v) {
         while (top[u] != top[v]) {
-            if (tree.dep[top[u]] > tree.dep[top[v]]) {
-                u = tree.fa[top[u]];
-            } else {
-                v = tree.fa[top[v]];
+            if (tree.dep[top[u]] < tree.dep[top[v]]) {
+                swap(u, v);
             }
+            u = tree.fa[top[u]];
         }
         return tree.dep[u] < tree.dep[v] ? u : v;
     }
@@ -125,18 +120,11 @@ struct HLD {
                 v = tree.fa[top[v]];
             }
         }
-        if (tree.dep[u] > tree.dep[v]) {
-            int l = tree.in[v] + edge;
-            int r = tree.in[u] + 1;
-            if (l < r) {
-                f(l, r, true);
-            }
-        } else {
-            int l = tree.in[u] + edge;
-            int r = tree.in[v] + 1;
-            if (l < r) {
-                down.emplace_back(l, r);
-            }
+        bool rev = tree.dep[u] > tree.dep[v];
+        int l = min(tree.in[u], tree.in[v]) + edge;
+        int r = max(tree.in[u], tree.in[v]) + 1;
+        if (l < r) {
+            f(l, r, rev);
         }
         for (int i = int(down.size()) - 1; i >= 0; i--) {
             auto [l, r] = down[i];

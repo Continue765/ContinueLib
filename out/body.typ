@@ -158,13 +158,7 @@
 /graph/components/ebcc.hpp
 ```
 
-=== 点双连通分量
-
-```cpp-ref
-/graph/components/vbcc.hpp
-```
-
-=== 圆方树
+=== 点双连通分量与圆方树
 
 ```cpp-ref
 /graph/components/block_cut_tree.hpp
@@ -230,6 +224,18 @@
 
 ```cpp-ref
 /graph/tree/virtual_tree.hpp
+```
+
+=== 树上阿贝尔群
+
+```cpp-ref
+/graph/tree/tree_abel.hpp
+```
+
+=== 树上幺半群
+
+```cpp-ref
+/graph/tree/tree_mono.hpp
 ```
 
 = 网络流

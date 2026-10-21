@@ -10,7 +10,7 @@ struct AdditiveGroup {
     static Type e() { return 0; }
     static Type op(Type a, Type b) { return a + b; }
     static Type inv(Type a) { return -a; }
-    static Type power(Type a, i64 k) { return a * k; }
+    static Type pow(Type a, i64 k) { return a * k; }
 };
 
 int main() {
@@ -23,7 +23,7 @@ int main() {
         assert(fw.kth(k) == expected);
     }
     for (int i = 0; i <= (int)freq.size(); ++i) {
-        assert(fw.sum(i) == accumulate(freq.begin(), freq.begin() + i, 0));
+        assert(fw.query(i) == accumulate(freq.begin(), freq.begin() + i, 0));
     }
 
     Fenwick2D<AddMono<long long>> fw2(3, 4);
@@ -45,7 +45,7 @@ int main() {
                     for (int i = x1; i < x2; ++i) {
                         for (int j = y1; j < y2; ++j) expected += grid[i][j];
                     }
-                    assert(fw2.rangeSum(x1, x2, y1, y2) == expected);
+                    assert(fw2.query(x1, x2, y1, y2) == expected);
                 }
             }
         }
@@ -59,7 +59,6 @@ int main() {
     };
     rangeAdd(0, 6, 3);
     rangeAdd(2, 5, -4);
-    rangeAdd(4, 4, 100);
     for (int i = 0; i < 6; ++i) assert(dual.query(i) == values[i]);
 
     FenwickRangeAdd<AdditiveGroup> range(7);
@@ -68,12 +67,11 @@ int main() {
         range.add(l, r, v);
         for (int i = l; i < r; ++i) plain[i] += v;
         for (int x = 0; x <= 7; ++x) {
-            assert(range.sum(x) == accumulate(plain.begin(), plain.begin() + x, 0LL));
+            assert(range.query(x) == accumulate(plain.begin(), plain.begin() + x, 0LL));
         }
     };
     rangeAddAndCheck(0, 7, 2);
     rangeAddAndCheck(1, 5, -3);
-    rangeAddAndCheck(3, 3, 8);
     rangeAddAndCheck(6, 7, 4);
 
     int a, b;

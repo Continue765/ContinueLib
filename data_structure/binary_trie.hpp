@@ -14,14 +14,7 @@ struct BinaryTrie {
     vector<Node> tr;
     int tot;
 
-    BinaryTrie(int n) {
-        init(n);
-    }
-
-    void init(int n) {
-        tr.resize(n);
-        tot = 1;
-    }
+    BinaryTrie(int n = 0) : tr(n), tot(1) {}
 
     void insert(int x) {
         int p = 1;

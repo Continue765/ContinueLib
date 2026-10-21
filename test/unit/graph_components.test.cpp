@@ -44,7 +44,7 @@ int main() {
     parallel.add(0, 1, 8); parallel.add(0, 1, 3); parallel.add(1, 2, 5);
     auto [pc, pi] = EBCC(parallel);
     assert(pc == 2 && pi[0] == pi[1] && pi[1] != pi[2]);
-    bct.init(parallel);
+    bct = BlockCutTree(parallel);
     assert(bct.n == 3 && bct.tot == 5 && bct.isCut(1));
     assert(!bct.isCut(0) && !bct.isCut(2));
     assert(bct.tree.edges.size() == 4);
@@ -52,7 +52,7 @@ int main() {
     Graph<int, false> single(1);
     auto [sc, si] = EBCC(single);
     assert(sc == 1 && si == vector<int>{0});
-    bct.init(single);
+    bct = BlockCutTree(single);
     assert(bct.tot == 1 && bct.tree.n == 1 && bct.tree.edges.empty());
     assert(!bct.isCut(0));
 
@@ -61,7 +61,7 @@ int main() {
     loops.add(0, 0);
     loops.add(0, 1);
     loops.add(0, 0);
-    bct.init(loops);
+    bct = BlockCutTree(loops);
     assert(bct.tot == 3 && bct.tree.edges.size() == 2);
     assert(!bct.isCut(0) && !bct.isCut(1));
     assert(bct.tree[2].size() == 2);
@@ -69,7 +69,7 @@ int main() {
     Graph<int, false> onlyLoops(1);
     onlyLoops.add(0, 0);
     onlyLoops.add(0, 0);
-    bct.init(onlyLoops);
+    bct = BlockCutTree(onlyLoops);
     assert(bct.tot == 1 && bct.tree.edges.empty() && !bct.isCut(0));
 
     // 非连通图中分别处理 DFS 根的割点判定。
@@ -78,14 +78,14 @@ int main() {
     forest.add(0, 2);
     forest.add(3, 4);
     forest.add(4, 5);
-    bct.init(forest);
+    bct = BlockCutTree(forest);
     for (int u = 0; u < forest.n; u++) {
         assert(bct.isCut(u) == (u == 0 || u == 4));
     }
     assert(bct.tot == 11 && bct.tree.edges.size() == 8);
     assert(bct.tree[6].empty());
 
-    bct.init(Graph<int, false>(0));
+    bct = BlockCutTree(Graph<int, false>(0));
     assert(bct.n == 0 && bct.tot == 0 && bct.tree.n == 0);
     assert(bct.tree.edges.empty());
     int a, b;

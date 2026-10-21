@@ -15,8 +15,8 @@ void boundaryTest() {
     std::mt19937 rng(1431);
     for (int n = 1; n <= 40; n++) {
         std::vector<i64> a(n);
-        SegmentTree<AddMono<i64>> seg(a);
-        LazySegmentTree<SumAdd<i64>> lazy(a);
+        SegmentTree<AddMono<i64>> seg(n);
+        LazySegmentTree<SumAdd<i64>> lazy(n);
         for (int q = 0; q < 100; q++) {
             int l = rng() % (n + 1);
             int r = rng() % (n + 1);
@@ -24,7 +24,7 @@ void boundaryTest() {
                 std::swap(l, r);
             }
             i64 add = rng() % 5;
-            lazy.rangeApply(l, r, add);
+            lazy.apply(l, r, add);
             for (int i = l; i < r; i++) {
                 a[i] += add;
                 seg.modify(i, a[i]);
@@ -80,7 +80,7 @@ int main() {
     boundaryTest();
     vector<long long> a{1, 5, 2, 7, 4, 3};
     SegmentTree<MaxMono<long long>> seg(a);
-    assert(seg.rangeQuery(1, 5) == 7);
+    assert(seg.query(1, 5) == 7);
     assert(seg.findFirst(1, 5, [](long long x) { return x >= 6; }) == 3);
     assert(seg.findLast(0, 5, [](long long x) { return x >= 4; }) == 4);
     assert(seg.findFirst(2, 4, [](long long x) { return x >= 8; }) == -1);
@@ -90,9 +90,9 @@ int main() {
 
     vector<string> words{"a", "bc", "d", "efg"};
     SegmentTree<ConcatMono> concat(words);
-    assert(concat.rangeQuery(1, 4) == "bcdefg");
+    assert(concat.query(1, 4) == "bcdefg");
     concat.modify(2, "XY");
-    assert(concat.rangeQuery(0, 4) == "abcXYefg");
+    assert(concat.query(0, 4) == "abcXYefg");
 
     int x, y;
     if (cin >> x >> y) cout << x + y << '\n';

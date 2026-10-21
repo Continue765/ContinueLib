@@ -4,7 +4,7 @@
 template <typename T>
 struct HLD {
     Tree<T>& tree;
-    vector<int> heavy, top;
+    vector<int> he, top;
 
     HLD(Tree<T>& tree) : tree(tree) {
         build();
@@ -12,15 +12,15 @@ struct HLD {
 
     void build() {
         int n = tree.n;
-        heavy.assign(n, -1);
+        he.assign(n, -1);
         top.resize(n);
         for (int v = 0; v < n; v++) {
             int u = tree.fa[v];
             if (u == -1) {
                 continue;
             }
-            if (heavy[u] == -1 || tree.siz[v] > tree.siz[heavy[u]]) {
-                heavy[u] = v;
+            if (he[u] == -1 || tree.siz[v] > tree.siz[he[u]]) {
+                he[u] = v;
             }
         }
         int cur = 0;
@@ -28,11 +28,11 @@ struct HLD {
             top[u] = t;
             tree.in[u] = cur;
             tree.seq[cur++] = u;
-            if (heavy[u] != -1) {
-                self(self, heavy[u], t);
+            if (he[u] != -1) {
+                self(self, he[u], t);
             }
             for (auto [v, id] : tree.g[u]) {
-                if (v == tree.fa[u] || v == heavy[u]) {
+                if (v == tree.fa[u] || v == he[u]) {
                     continue;
                 }
                 self(self, v, v);

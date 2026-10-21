@@ -9,7 +9,7 @@ T ie(int n, F&& cap) {
     T ans{};
     for (int S = 1; S < (1 << n); S++) {
         T cur = cap(S);
-        if (__builtin_popcount(S) & 1) {
+        if (popcount(u32(S)) & 1) {
             ans += cur;
         } else {
             ans -= cur;
@@ -24,7 +24,7 @@ T ieComp(int n, F&& cap) {
     T ans{};
     for (int S = 0; S < (1 << n); S++) {
         T cur = cap(S);
-        if (__builtin_popcount(S) & 1) {
+        if (popcount(u32(S)) & 1) {
             ans -= cur;
         } else {
             ans += cur;
@@ -38,7 +38,7 @@ template <typename T, typename F>
 vector<T> ieExact(int n, F&& cap) {
     vector<T> N(n + 1, T{});
     for (int S = 0; S < (1 << n); S++) {
-        int k = __builtin_popcount(S);
+        int k = popcount(u32(S));
         N[k] += cap(S);
     }
 

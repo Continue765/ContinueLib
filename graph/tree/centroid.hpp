@@ -21,11 +21,11 @@ void centroidDecompsition(const Tree<T>& tree, F&& f) {
             }
         }
     };
-    vector<int> roots{tree.root};
-    for (int t = 0; t < int(roots.size()); t++) {
+    vector<int> rts{tree.root};
+    for (int t = 0; t < int(rts.size()); t++) {
         vt.clear();
         fa.clear();
-        collect(roots[t], -1);
+        collect(rts[t], -1);
         int m = vt.size(), c = -1;
         siz.assign(m, 1);
         for (int i = m - 1; i >= 0; i--) {
@@ -41,7 +41,7 @@ void centroidDecompsition(const Tree<T>& tree, F&& f) {
         pos = {0, 1};
         for (auto [v, id] : g[c]) {
             if (!dead[v]) {
-                roots.push_back(v);
+                rts.push_back(v);
                 collect(v, 0);
                 pos.push_back(vt.size());
             }

@@ -7,17 +7,9 @@ struct BlockCutTree {
 
     BlockCutTree() {}
     template <typename T>
-    BlockCutTree(const Graph<T, false>& g) {
-        init(g);
-    }
-
-    template <typename T>
-    void init(const Graph<T, false>& g) {
-        n = g.n;
-        tree = Graph<int, false>(n);
+    BlockCutTree(const Graph<T, false>& g) : n(g.n), tree(n) {
         vector<int> dfn(n, -1), low(n), stk;
         int cur = 0;
-        // 点双的 >= 判定允许父边参与 low 更新，自环不影响结果。
         auto dfs = [&](auto&& self, int u) -> void {
             dfn[u] = low[u] = cur++;
             stk.push_back(u);

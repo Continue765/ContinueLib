@@ -8,7 +8,7 @@ void dsuOnTree(const HLD<T>& hld, F1&& add, F2&& query, F3&& reset) {
         int u = tree.seq[i];
         add(u);
         for (auto& [v, id] : tree.g[u]) {
-            if (v == tree.fa[u] || v == hld.heavy[u]) {
+            if (v == tree.fa[u] || v == hld.he[u]) {
                 continue;
             }
             for (int j = tree.in[v]; j < tree.out[v]; j++) {

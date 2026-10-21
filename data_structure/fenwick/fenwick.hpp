@@ -8,14 +8,14 @@ struct Fenwick {
     int n;
     vector<X> a;
 
-    Fenwick() : n(0) {}
-    Fenwick(int n_) {
-        init(n_);
-    }
-
-    void init(int n_) {
-        n = n_;
-        a.assign(n, Mono::e());
+    Fenwick(int n_ = 0) : n(n_), a(n, Mono::e()) {}
+    Fenwick(const vector<X>& init) : n(init.size()), a(init) {
+        for (int i = 1; i <= n; i++) {
+            int j = i + (i & -i);
+            if (j <= n) {
+                a[j - 1] = Mono::op(a[j - 1], a[i - 1]);
+            }
+        }
     }
 
     void add(int x, const X& v) {
@@ -25,7 +25,7 @@ struct Fenwick {
         }
     }
 
-    X sum(int x) {
+    X query(int x) {
         assert(0 <= x && x <= n);
         X res = Mono::e();
         for (int i = x; i > 0; i -= i & -i) {
@@ -34,9 +34,9 @@ struct Fenwick {
         return res;
     }
 
-    X rangeSum(int l, int r) {
+    X query(int l, int r) {
         assert(l <= r);
-        return Mono::op(Mono::inv(sum(l)), sum(r));
+        return Mono::op(Mono::inv(query(l)), query(r));
     }
 
     // lower_bound

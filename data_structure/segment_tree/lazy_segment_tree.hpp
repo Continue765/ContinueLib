@@ -13,19 +13,14 @@ struct LazySegmentTree {
     vector<Y> tag;
 
     LazySegmentTree() : n(0) {}
-    LazySegmentTree(const vector<X>& init_) {
-        init(init_);
-    }
-
-    void init(const vector<X>& init_) {
-        n = init_.size();
+    LazySegmentTree(int n_) : LazySegmentTree(vector<X>(n_, Mono::e())) {}
+    LazySegmentTree(const vector<X>& init) : n(init.size()) {
         int logn = __lg(n);
         info.assign(4 << logn, Mono::e());
         tag.assign(4 << logn, Tag::e());
-
         auto build = [&](auto&& self, int p, int l, int r) -> void {
             if (r - l == 1) {
-                info[p] = init_[l];
+                info[p] = init[l];
                 return;
             }
             int mid = (l + r) / 2;
@@ -33,7 +28,6 @@ struct LazySegmentTree {
             self(self, 2 * p + 1, mid, r);
             pull(p);
         };
-
         build(build, 1, 0, n);
     }
 
@@ -41,14 +35,14 @@ struct LazySegmentTree {
         info[p] = Mono::op(info[2 * p], info[2 * p + 1]);
     }
 
-    void apply(int p, int len, const Y& v) {
+    void update(int p, int len, const Y& v) {
         info[p] = ActMono::act(info[p], v, len);
         tag[p] = Tag::op(tag[p], v);
     }
 
     void push(int p, int len) {
-        apply(2 * p, len / 2, tag[p]);
-        apply(2 * p + 1, (len + 1) / 2, tag[p]);
+        update(2 * p, len / 2, tag[p]);
+        update(2 * p + 1, (len + 1) / 2, tag[p]);
         tag[p] = Tag::e();
     }
 
@@ -70,7 +64,7 @@ struct LazySegmentTree {
         modify(1, 0, n, p, v);
     }
 
-    X rangeQuery(int p, int l, int r, int x, int y) {
+    X query(int p, int l, int r, int x, int y) {
         if (y <= l || r <= x) {
             return Mono::e();
         }
@@ -79,28 +73,28 @@ struct LazySegmentTree {
         }
         int mid = (l + r) / 2;
         push(p, r - l);
-        return Mono::op(rangeQuery(2 * p, l, mid, x, y), rangeQuery(2 * p + 1, mid, r, x, y));
+        return Mono::op(query(2 * p, l, mid, x, y), query(2 * p + 1, mid, r, x, y));
     }
-    X rangeQuery(int l, int r) {
-        return rangeQuery(1, 0, n, l, r);
+    X query(int l, int r) {
+        return query(1, 0, n, l, r);
     }
 
-    void rangeApply(int p, int l, int r, int x, int y, const Y& v) {
+    void apply(int p, int l, int r, int x, int y, const Y& v) {
         if (y <= l || r <= x) {
             return;
         }
         if (x <= l && r <= y) {
-            apply(p, r - l, v);
+            update(p, r - l, v);
             return;
         }
         int mid = (l + r) / 2;
         push(p, r - l);
-        rangeApply(2 * p, l, mid, x, y, v);
-        rangeApply(2 * p + 1, mid, r, x, y, v);
+        apply(2 * p, l, mid, x, y, v);
+        apply(2 * p + 1, mid, r, x, y, v);
         pull(p);
     }
-    void rangeApply(int l, int r, const Y& v) {
-        return rangeApply(1, 0, n, l, r, v);
+    void apply(int l, int r, const Y& v) {
+        return apply(1, 0, n, l, r, v);
     }
 
     template <typename F>

@@ -14,7 +14,7 @@ int main() {
     while (q--) {
         int t, l, r;
         cin >> t >> l >> r;
-        if (t == 0) seg.modify(l, seg.rangeQuery(l, l + 1) + r);
-        else cout << seg.rangeQuery(l, r) << '\n';
+        if (t == 0) seg.modify(l, seg.query(l, l + 1) + r);
+        else cout << seg.query(l, r) << '\n';
     }
 }

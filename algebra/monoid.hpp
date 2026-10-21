@@ -1,24 +1,8 @@
 #pragma once
 #include <common.hpp>
 
-// Template
-// struct Monoid {
-//     struct Type {
-//         i64 v;
-//     };
-//     static Type e() {
-//         return {};
-//     }
-//     static Type op(const Type& a, const Type& b) {
-//         return {};
-//     }
-//     static Type from(const i64& x) {
-//         return {x};
-//     }
-// };
-
 template <typename Mono>
-struct ReverseMono {
+struct RevMono {
     using Type = typename Mono::Type;
     static Type e() {
         return Mono::e();

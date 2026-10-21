@@ -15,17 +15,7 @@ struct MaxFlow {
     vector<int> cur, level;
 
     MaxFlow() {}
-    MaxFlow(int n_) {
-        init(n_);
-    }
-
-    void init(int n_) {
-        n = n_;
-        e.clear();
-        adj.assign(n_, {});
-        cur.resize(n_);
-        level.resize(n_);
-    }
+    MaxFlow(int n_) : n(n_), adj(n), cur(n), level(n) {}
 
     bool bfs(int s, int t) {
         level.assign(n, -1);

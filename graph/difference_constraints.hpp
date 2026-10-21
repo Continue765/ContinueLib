@@ -7,14 +7,7 @@ struct DifferenceConstraints {
     Graph<T, true> graph;
 
     DifferenceConstraints() {}
-    DifferenceConstraints(int n_) {
-        init(n_);
-    }
-
-    void init(int n_) {
-        n = n_;
-        s = n;
-        graph = Graph<T, true>(n + 1);
+    DifferenceConstraints(int n_) : n(n_), s(n), graph(n + 1) {
         for (int u = 0; u < n; u++) {
             graph.add(s, u);
         }

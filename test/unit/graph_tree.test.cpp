@@ -99,6 +99,13 @@ int main() {
     }
 
     Tree tree(g);
+    for (int root = 0; root < g.n; root++) {
+        tree.build(root);
+        Tree rebuilt(g, root);
+        assert(tree.root == root && tree.fa == rebuilt.fa && tree.dep == rebuilt.dep);
+        assert(tree.siz == rebuilt.siz && tree.seq == rebuilt.seq && tree.dist == rebuilt.dist);
+    }
+    tree.build();
     TreeLifting<AddMono<i64>, int> lift(tree);
     VirtualTree<int> vt(lift);
     vector<int> h{6, 3, 4, 3};

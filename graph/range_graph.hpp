@@ -7,14 +7,7 @@ struct RangeGraph {
     vector<Edge<T>> edges;
 
     RangeGraph() {}
-    RangeGraph(int n_) {
-        init(n_);
-    }
-
-    void init(int n_) {
-        n = n_;
-        tot = 3 * n;
-        edges.clear();
+    RangeGraph(int n_) : n(n_), tot(3 * n) {
         for (int i = 2; i < 2 * n; i++) {
             add(out(i / 2), out(i), T{});
             add(in(i), in(i / 2), T{});

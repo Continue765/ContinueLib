@@ -9,10 +9,10 @@ struct Tree {
     vector<T> dist;
 
     Tree(Graph<T, false>& g, int rt = 0) : g(g) {
-        init(rt);
+        build(rt);
     }
 
-    void init(int rt = 0) {
+    void build(int rt = 0) {
         n = g.n;
         root = rt;
         assert(0 <= root && root < n);

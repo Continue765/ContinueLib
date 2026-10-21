@@ -24,9 +24,15 @@ void randomTest() {
     DynamicSegmentTree<SumAffine> seg;
     for (int it = 0; it < 100; it++) {
         int n = 1 + rng() % 80;
-        seg.init(n);
         vector<i64> a(n);
-        assert(seg.rangeQuery(0, n) == 0 && seg.info.size() == 1);
+        if (it % 2) {
+            for (auto& x : a) x = rng() % 20;
+            seg = DynamicSegmentTree<SumAffine>(a);
+        } else {
+            seg = DynamicSegmentTree<SumAffine>(n);
+            assert(seg.info.size() == 1);
+        }
+        assert(seg.query(0, n) == accumulate(a.begin(), a.end(), 0LL));
         for (int q = 0; q < 1000; q++) {
             int l = rng() % (n + 1), r = rng() % (n + 1);
             if (l > r) swap(l, r);
@@ -35,13 +41,13 @@ void randomTest() {
             if (op == 0) {
                 // 赋值与加法的复合不交换，必须验证标记顺序。
                 i64 mul = rng() % 2;
-                seg.rangeApply(l, r, {mul, x});
+                seg.apply(l, r, {mul, x});
                 for (int j = l; j < r; j++) a[j] = a[j] * mul + x;
             } else if (op == 1 && l < n) {
                 seg.modify(l, x);
                 a[l] = x;
             } else if (op == 2) {
-                assert(seg.rangeQuery(l, r) == accumulate(a.begin() + l, a.begin() + r, 0LL));
+                assert(seg.query(l, r) == accumulate(a.begin() + l, a.begin() + r, 0LL));
             } else {
                 int first = -1, last = -1;
                 for (int j = l; j < r; j++) if (a[j] > 0) {
@@ -54,9 +60,9 @@ void randomTest() {
             }
         }
     }
-    seg.init(1000000000);
-    seg.rangeApply(123456789, 987654321, {1, 2});
-    assert(seg.rangeQuery(0, 1000000000) == 2LL * (987654321 - 123456789));
+    seg = DynamicSegmentTree<SumAffine>(1000000000);
+    seg.apply(123456789, 987654321, {1, 2});
+    assert(seg.query(0, 1000000000) == 2LL * (987654321 - 123456789));
     assert(seg.info.size() < 1000);
 }
 
@@ -65,9 +71,9 @@ int main() {
     constexpr int n = 19;
     DynamicSegmentTree<SumAdd<long long>> seg(n);
     vector<long long> a(n);
-    seg.rangeApply(2, 16, 4);
+    seg.apply(2, 16, 4);
     for (int i = 2; i < 16; ++i) a[i] += 4;
-    seg.rangeApply(7, 19, 1);
+    seg.apply(7, 19, 1);
     for (int i = 7; i < 19; ++i) ++a[i];
     seg.modify(0, 8);
     a[0] = 8;
@@ -75,7 +81,7 @@ int main() {
     a[18] = 6;
     auto sum = [&](int l, int r) { return accumulate(a.begin() + l, a.begin() + r, 0LL); };
     for (int l = 0; l <= n; ++l) {
-        for (int r = l; r <= n; ++r) assert(seg.rangeQuery(l, r) == sum(l, r));
+        for (int r = l; r <= n; ++r) assert(seg.query(l, r) == sum(l, r));
     }
     assert(seg.findFirst(0, n, [](long long x) { return x >= 8; }) == 0);
     assert(seg.findLast(0, n, [](long long x) { return x > 0; }) == 18);

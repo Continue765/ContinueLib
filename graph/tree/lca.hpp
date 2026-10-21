@@ -1,21 +1,15 @@
 #pragma once
-#include <graph/tree/tree.hpp>
 #include <data_structure/sparse_table.hpp>
+#include <graph/tree/tree.hpp>
+
 
 template <typename T>
 struct LCA {
     Tree<T>& tree;
-    int logn;
+    int n, logn;
     vector<vector<int>> fa;
 
-    LCA(Tree<T>& tree) : tree(tree) {
-        init();
-    }
-
-    void init() {
-        int n = tree.n;
-        logn = __lg(n);
-        fa.assign(n, vector<int>(logn + 1));
+    LCA(Tree<T>& t) : tree(t), n(tree.n), logn(__lg(n)), fa(n, vector<int>(logn + 1)) {
         for (int u = 0; u < n; u++) {
             fa[u][0] = (tree.fa[u] == -1 ? u : tree.fa[u]);
         }
@@ -65,20 +59,16 @@ struct FastLCA {
     };
 
     Tree<T>& tree;
+    int n;
     SparseTable<DfnMin> st;
 
-    FastLCA(Tree<T>& tree) : tree(tree) {
-        init();
-    }
-
-    void init() {
-        int n = tree.n;
+    FastLCA(Tree<T>& tree) : tree(tree), n(tree.n) {
         vector<typename DfnMin::Type> seq(n);
         for (int u = 0; u < n; u++) {
             int p = tree.fa[u] == -1 ? u : tree.fa[u];
             seq[tree.in[u]] = {tree.in[p], p};
         }
-        st.init(seq);
+        st = SparseTable<DfnMin>(seq);
     }
 
     int query(int u, int v) {

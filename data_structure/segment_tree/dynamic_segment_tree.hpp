@@ -15,17 +15,23 @@ struct DynamicSegmentTree {
     vector<int> lc, rc;
 
     DynamicSegmentTree() : n(0), root(-1) {}
-    DynamicSegmentTree(int n_) {
-        init(n_);
-    }
-
-    void init(int n_) {
-        n = n_;
-        info.clear();
-        tag.clear();
-        lc.clear();
-        rc.clear();
+    DynamicSegmentTree(int n_) : n(n_), root(-1) {
         root = newNode();
+    }
+    DynamicSegmentTree(const vector<X>& init) : n(init.size()), root(-1) {
+        auto build = [&](auto&& self, int l, int r) -> int {
+            int p = newNode();
+            if (r - l == 1) {
+                info[p] = init[l];
+                return p;
+            }
+            int mid = (l + r) / 2;
+            lc[p] = self(self, l, mid);
+            rc[p] = self(self, mid, r);
+            pull(p);
+            return p;
+        };
+        root = build(build, 0, n);
     }
 
     int newNode() {
@@ -40,7 +46,7 @@ struct DynamicSegmentTree {
         info[p] = Mono::op(info[lc[p]], info[rc[p]]);
     }
 
-    void apply(int p, int len, const Y& v) {
+    void update(int p, int len, const Y& v) {
         info[p] = ActMono::act(info[p], v, len);
         tag[p] = Tag::op(tag[p], v);
     }
@@ -52,8 +58,8 @@ struct DynamicSegmentTree {
         if (rc[p] == -1) {
             rc[p] = newNode();
         }
-        apply(lc[p], len / 2, tag[p]);
-        apply(rc[p], (len + 1) / 2, tag[p]);
+        update(lc[p], len / 2, tag[p]);
+        update(rc[p], (len + 1) / 2, tag[p]);
         tag[p] = Tag::e();
     }
 
@@ -75,7 +81,7 @@ struct DynamicSegmentTree {
         modify(root, 0, n, x, v);
     }
 
-    X rangeQuery(int p, int l, int r, int x, int y) {
+    X query(int p, int l, int r, int x, int y) {
         if (y <= l || r <= x) {
             return Mono::e();
         }
@@ -84,28 +90,28 @@ struct DynamicSegmentTree {
         }
         int mid = (l + r) / 2;
         push(p, r - l);
-        return Mono::op(rangeQuery(lc[p], l, mid, x, y), rangeQuery(rc[p], mid, r, x, y));
+        return Mono::op(query(lc[p], l, mid, x, y), query(rc[p], mid, r, x, y));
     }
-    X rangeQuery(int l, int r) {
-        return rangeQuery(root, 0, n, l, r);
+    X query(int l, int r) {
+        return query(root, 0, n, l, r);
     }
 
-    void rangeApply(int p, int l, int r, int x, int y, const Y& v) {
+    void apply(int p, int l, int r, int x, int y, const Y& v) {
         if (y <= l || r <= x) {
             return;
         }
         if (x <= l && r <= y) {
-            apply(p, r - l, v);
+            update(p, r - l, v);
             return;
         }
         int mid = (l + r) / 2;
         push(p, r - l);
-        rangeApply(lc[p], l, mid, x, y, v);
-        rangeApply(rc[p], mid, r, x, y, v);
+        apply(lc[p], l, mid, x, y, v);
+        apply(rc[p], mid, r, x, y, v);
         pull(p);
     }
-    void rangeApply(int l, int r, const Y& v) {
-        rangeApply(root, 0, n, l, r, v);
+    void apply(int l, int r, const Y& v) {
+        apply(root, 0, n, l, r, v);
     }
 
     template <typename F>

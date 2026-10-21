@@ -8,16 +8,13 @@ int main() {
     cin.tie(nullptr);
     int n, q;
     cin >> n >> q;
-    Fenwick<AddMono<long long>> fw(n);
-    for (int i = 0; i < n; ++i) {
-        long long a;
-        cin >> a;
-        fw.add(i, a);
-    }
+    vector<long long> a(n);
+    for (auto& x : a) cin >> x;
+    Fenwick<AddMono<long long>> fw(a);
     while (q--) {
         int t, l, r;
         cin >> t >> l >> r;
         if (t == 0) fw.add(l, r);
-        else cout << fw.rangeSum(l, r) << '\n';
+        else cout << fw.query(l, r) << '\n';
     }
 }

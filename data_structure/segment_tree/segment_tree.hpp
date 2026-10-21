@@ -9,18 +9,14 @@ struct SegmentTree {
     vector<X> info;
 
     SegmentTree() : n(0) {}
-    SegmentTree(const vector<X>& init_) {
-        init(init_);
-    }
-
-    void init(const vector<X>& init_) {
-        n = init_.size();
+    SegmentTree(int n_) : SegmentTree(vector<X>(n_, Mono::e())) {}
+    SegmentTree(const vector<X>& init) : n(init.size()) {
+        n = init.size();
         int logn = __lg(n);
         info.assign(4 << logn, Mono::e());
-
         auto build = [&](auto&& self, int p, int l, int r) -> void {
             if (r - l == 1) {
-                info[p] = init_[l];
+                info[p] = init[l];
                 return;
             }
             int mid = (l + r) / 2;
@@ -28,7 +24,6 @@ struct SegmentTree {
             self(self, 2 * p + 1, mid, r);
             pull(p);
         };
-
         build(build, 1, 0, n);
     }
 
@@ -53,7 +48,7 @@ struct SegmentTree {
         modify(1, 0, n, p, v);
     }
 
-    X rangeQuery(int p, int l, int r, int x, int y) {
+    X query(int p, int l, int r, int x, int y) {
         if (y <= l || r <= x) {
             return Mono::e();
         }
@@ -61,10 +56,10 @@ struct SegmentTree {
             return info[p];
         }
         int mid = (l + r) / 2;
-        return Mono::op(rangeQuery(2 * p, l, mid, x, y), rangeQuery(2 * p + 1, mid, r, x, y));
+        return Mono::op(query(2 * p, l, mid, x, y), query(2 * p + 1, mid, r, x, y));
     }
-    X rangeQuery(int l, int r) {
-        return rangeQuery(1, 0, n, l, r);
+    X query(int l, int r) {
+        return query(1, 0, n, l, r);
     }
 
     template <typename F>

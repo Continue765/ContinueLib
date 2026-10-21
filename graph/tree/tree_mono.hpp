@@ -7,27 +7,21 @@ template <typename T, typename Mono, bool edge = false>
 struct TreeMono {
     using X = typename Mono::Type;
 
-    int n;
     HLD<T>& hld;
     Tree<T>& tree;
+    int n;
     SegmentTree<Mono> seg;
-    SegmentTree<ReverseMono<Mono>> rseg;
+    SegmentTree<RevMono<Mono>> rseg;
 
-    TreeMono(HLD<T>& hld) : n(hld.tree.n), hld(hld), tree(hld.tree) {
-        build(vector<X>(n - edge, Mono::e()));
-    }
-    TreeMono(HLD<T>& hld, const vector<X>& init) : n(hld.tree.n), hld(hld), tree(hld.tree) {
-        build(init);
-    }
-
-    void build(const vector<X>& init) {
+    TreeMono(HLD<T>& hld_) : TreeMono(hld_, vector<X>(hld_.tree.n - edge, Mono::e())) {}
+    TreeMono(HLD<T>& hld_, const vector<X>& init) : hld(hld_), tree(hld.tree), n(tree.n) {
         assert(int(init.size()) == n - edge);
         vector<X> a(n, Mono::e());
         for (int i = 0; i < int(init.size()); i++) {
             a[id(i)] = init[i];
         }
-        seg.init(a);
-        rseg.init(a);
+        seg = SegmentTree<Mono>(a);
+        rseg = SegmentTree<RevMono<Mono>>(a);
     }
 
     void modify(int i, const X& x) {
@@ -38,13 +32,13 @@ struct TreeMono {
 
     void apply(int i, const X& x) {
         int p = id(i);
-        modify(i, Mono::op(seg.rangeQuery(p, p + 1), x));
+        modify(i, Mono::op(seg.query(p, p + 1), x));
     }
 
     X pathQuery(int u, int v) {
         X ans = Mono::e();
         hld.forPath(u, v, edge, [&](int l, int r, bool rev) {
-            X cur = (rev ? rseg.rangeQuery(l, r) : seg.rangeQuery(l, r));
+            X cur = (rev ? rseg.query(l, r) : seg.query(l, r));
             ans = Mono::op(ans, cur);
         });
         return ans;
@@ -55,18 +49,18 @@ struct TreeMono {
             root = tree.root;
         }
         if (root == u) {
-            return seg.rangeQuery(0, n);
+            return seg.query(0, n);
         }
         if (!hld.isAncester(u, root)) {
-            return seg.rangeQuery(tree.in[u] + edge, tree.out[u]);
+            return seg.query(tree.in[u] + edge, tree.out[u]);
         }
         assert(!edge);
         int v = hld.jump(root, tree.dep[root] - tree.dep[u] - 1);
-        return Mono::op(seg.rangeQuery(0, tree.in[v]), seg.rangeQuery(tree.out[v], n));
+        return Mono::op(seg.query(0, tree.in[v]), seg.query(tree.out[v], n));
     }
 
     X allQuery() {
-        return seg.rangeQuery(0, n);
+        return seg.query(0, n);
     }
 
     template <typename F>
@@ -82,7 +76,7 @@ struct TreeMono {
             if (done) {
                 return;
             }
-            X cur = rev ? rseg.rangeQuery(l, r) : seg.rangeQuery(l, r);
+            X cur = rev ? rseg.query(l, r) : seg.query(l, r);
             X next = Mono::op(acc, cur);
             if (pred(next)) {
                 acc = next;

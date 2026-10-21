@@ -9,13 +9,8 @@ struct TreeLifting {
     Tree<T>& tree;
     BinaryLifting<Mono> lift;
 
-    TreeLifting(Tree<T>& tree) : tree(tree) {
-        init();
-    }
-
-    void init() {
+    TreeLifting(Tree<T>& tree) : tree(tree), lift(tree.n) {
         int n = tree.n;
-        lift.init(n);
         for (int v = 0; v < n; v++) {
             if (v == tree.root) {
                 lift.add(v, -1, Mono::e());

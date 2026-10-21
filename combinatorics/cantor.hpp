@@ -8,7 +8,7 @@ vector<int> toLehmer(vector<int>& p) {
     Fenwick<AddMono<int>> fen(n);
     vector<int> c(n);
     for (int i = n - 1; i >= 0; i--) {
-        c[i] = fen.sum(p[i]);
+        c[i] = fen.query(p[i]);
         fen.add(p[i], 1);
     }
     return c;

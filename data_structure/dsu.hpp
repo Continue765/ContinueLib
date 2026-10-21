@@ -6,10 +6,6 @@ struct DSU {
 
     DSU() {}
     DSU(int n) {
-        init(n);
-    }
-
-    void init(int n) {
         f.resize(n);
         iota(f.begin(), f.end(), 0);
         siz.assign(n, 1);

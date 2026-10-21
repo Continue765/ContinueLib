@@ -11,7 +11,7 @@ int main() {
             assert(st.query(l, r) == *min_element(a.begin() + l, a.begin() + r));
         }
     }
-    st.init(vector<long long>{7});
+    st = SparseTable<MinMono<long long>>(vector<long long>{7});
     assert(st.query(0, 1) == 7);
 
     int x, y;

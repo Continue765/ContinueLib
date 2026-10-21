@@ -8,18 +8,19 @@ struct DualFenwick {
     int n;
     Fenwick<Abel> fen;
 
-    DualFenwick() : n(0), fen(0) {}
-    DualFenwick(int n_) {
-        init(n_);
-    }
-
-    void init(int n_) {
-        n = n_;
-        fen.init(n);
+    DualFenwick(int n_ = 0) : n(n_), fen(n) {}
+    DualFenwick(const vector<X>& init) : n(init.size()) {
+        vector<X> d(n);
+        X pre = Abel::e();
+        for (int i = 0; i < n; i++) {
+            d[i] = Abel::op(Abel::inv(pre), init[i]);
+            pre = init[i];
+        }
+        fen = Fenwick<Abel>(d);
     }
 
     void add(int l, int r, const X& v) {
-        assert(0 <= l && l <= r && r <= n);
+        assert(0 <= l && l < r && r <= n);
         fen.add(l, v);
         if (r < n) {
             fen.add(r, Abel::inv(v));
@@ -28,6 +29,6 @@ struct DualFenwick {
 
     X query(int x) {
         assert(0 <= x && x < n);
-        return fen.sum(x + 1);
+        return fen.query(x + 1);
     }
 };

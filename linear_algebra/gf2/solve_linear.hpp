@@ -22,7 +22,7 @@ vector<U> solveLinear(int n, int m, vector<U> a, U b) {
             }
             continue;
         }
-        int k = bit_width(x) - 1;
+        int k = __lg(x);
         for (int j = k; j < m; j++) {
             if ((mat[j] ^ x) < mat[j]) {
                 mat[j] ^= x;

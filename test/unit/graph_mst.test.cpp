@@ -58,14 +58,14 @@ int main() {
     }
     Graph<int, false> chain(3);
     chain.add(0, 1, 4); chain.add(1, 2, 7);
-    KruskalTree<int> tree(chain);
-    tree.build();
-    assert(tree.root == 4 && tree.val[3] == 4 && tree.val[4] == 7);
+    auto [tree, val] = kruskalTree(chain);
+    assert(tree.n == 5 && val[3] == 4 && val[4] == 7);
     assert(tree.adj[4].size() == 2 && tree.adj[3].size() == 3);
     Graph<int, false> single(1);
-    tree.init(single);
-    tree.build();
-    assert(tree.root == 0 && tree.adj.size() == 1 && tree.edges.empty());
+    auto [singleTree, singleVal] = kruskalTree(single);
+    assert(singleTree.n == 1 && singleTree.edges.empty() && singleVal.size() == 1);
+    auto [forest, forestVal] = kruskalTree(disconnected);
+    assert(forest.n == 4 && forest.edges.size() == 2 && forestVal[3] == 2);
     mt19937 rng(765);
     for (int it = 0; it < 300; it++) {
         int n = 1 + rng() % 25;
@@ -81,12 +81,11 @@ int main() {
         for (int k = 0; k < n; k++) for (int u = 0; u < n; u++) for (int v = 0; v < n; v++) {
             best[u][v] = min(best[u][v], max(best[u][k], best[k][v]));
         }
-        KruskalTree<int> kt(random);
-        kt.build();
-        vector<int> par(2 * n - 1, -1), dep(2 * n - 1), order{kt.root};
+        auto [kt, value] = kruskalTree(random);
+        vector<int> par(2 * n - 1, -1), dep(2 * n - 1), order{kt.n - 1};
         for (int i = 0; i < int(order.size()); i++) {
             int u = order[i];
-            for (int v : kt.adj[u]) if (v != par[u]) {
+            for (auto [v, id] : kt.adj[u]) if (v != par[u]) {
                 par[v] = u;
                 dep[v] = dep[u] + 1;
                 order.push_back(v);
@@ -98,7 +97,7 @@ int main() {
             while (dep[x] > dep[y]) x = par[x];
             while (dep[y] > dep[x]) y = par[y];
             while (x != y) { x = par[x]; y = par[y]; }
-            assert(kt.val[x] == best[u][v]);
+            assert(value[x] == best[u][v]);
         }
     }
     int a, b;

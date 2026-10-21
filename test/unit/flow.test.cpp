@@ -14,7 +14,7 @@ int main() {
     for (auto e : fedges) { assert(e.flow >= 0 && e.flow <= e.cap); if (e.from == 0) total += e.flow; }
     assert(total == 5 && fedges.size() == 5);
     assert(mf.flow(0, 3) == 0);
-    mf.init(2); mf.addEdge(0, 1, 7);
+    mf = MaxFlow<int>(2); mf.addEdge(0, 1, 7);
     assert(mf.flow(0, 1) == 7 && mf.edges().size() == 1);
     MaxFlow<int> none(3); none.addEdge(0, 1, 4);
     assert(none.flow(0, 2) == 0 && none.minCut()[0] && !none.minCut()[2]);
@@ -30,7 +30,7 @@ int main() {
     assert(used == 5 && medges.size() == 5);
     auto [more, more_cost] = mcf.flow(0, 3, 2);
     assert(more == 1 && more_cost == 4);
-    mcf.init(2); mcf.addEdge(0, 1, 7, 4);
+    mcf = MinCostFlow<int>(2); mcf.addEdge(0, 1, 7, 4);
     auto [all, all_cost] = mcf.flow(0, 1, 3);
     assert(all == 3 && all_cost == 12);
     MinCostFlow<int> unreachable(4);

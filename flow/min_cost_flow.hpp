@@ -41,16 +41,7 @@ struct MinCostFlow {
     }
 
     MinCostFlow() {}
-    MinCostFlow(int n_) {
-        init(n_);
-    }
-
-    void init(int n_) {
-        n = n_;
-        e.clear();
-        adj.assign(n, {});
-        h.assign(n, {});
-    }
+    MinCostFlow(int n_) : n(n_), adj(n), h(n) {}
 
     void addEdge(int u, int v, T cap, T cost) {
         adj[u].push_back(e.size());

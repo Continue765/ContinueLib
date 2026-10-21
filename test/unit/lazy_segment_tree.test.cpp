@@ -7,16 +7,16 @@ int main() {
     vector<long long> a{2, 1, 4, 3, 0, 5, 2};
     LazySegmentTree<SumAdd<long long>> seg(a);
     auto sum = [&](int l, int r) { return accumulate(a.begin() + l, a.begin() + r, 0LL); };
-    assert(seg.rangeQuery(0, 7) == sum(0, 7));
-    seg.rangeApply(1, 6, 3);
+    assert(seg.query(0, 7) == sum(0, 7));
+    seg.apply(1, 6, 3);
     for (int i = 1; i < 6; ++i) a[i] += 3;
-    assert(seg.rangeQuery(2, 5) == sum(2, 5));
+    assert(seg.query(2, 5) == sum(2, 5));
     seg.modify(4, -2);
     a[4] = -2;
-    seg.rangeApply(0, 3, -1);
+    seg.apply(0, 3, -1);
     for (int i = 0; i < 3; ++i) --a[i];
     for (int l = 0; l <= 7; ++l) {
-        for (int r = l; r <= 7; ++r) assert(seg.rangeQuery(l, r) == sum(l, r));
+        for (int r = l; r <= 7; ++r) assert(seg.query(l, r) == sum(l, r));
     }
     assert(seg.findFirst(0, 7, [](long long x) { return x > 0; }) == 0);
     assert(seg.findLast(0, 7, [](long long x) { return x > 0; }) == 6);

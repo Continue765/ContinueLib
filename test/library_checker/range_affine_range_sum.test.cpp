@@ -53,9 +53,9 @@ int main() {
         if (t == 0) {
             Mod b, c;
             cin >> b >> c;
-            seg.rangeApply(l, r, {b, c});
+            seg.apply(l, r, {b, c});
         } else {
-            cout << seg.rangeQuery(l, r) << '\n';
+            cout << seg.query(l, r) << '\n';
         }
     }
 }

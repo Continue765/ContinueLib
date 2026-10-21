@@ -11,7 +11,6 @@ struct SegmentTree {
     SegmentTree() : n(0) {}
     SegmentTree(int n_) : SegmentTree(vector<X>(n_, Mono::e())) {}
     SegmentTree(const vector<X>& init) : n(init.size()) {
-        n = init.size();
         int logn = __lg(n);
         info.assign(4 << logn, Mono::e());
         auto build = [&](auto&& self, int p, int l, int r) -> void {

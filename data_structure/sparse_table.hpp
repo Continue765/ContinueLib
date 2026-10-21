@@ -10,7 +10,7 @@ struct SparseTable {
 
     SparseTable() : n(0) {}
     SparseTable(const vector<X>& a) : n(a.size()) {
-        int logn = (n == 0 ? 0 : __lg(n));
+        int logn = __lg(n);
         st.assign(logn + 1, vector<X>(n));
         for (int i = 0; i < n; i++) {
             st[0][i] = a[i];

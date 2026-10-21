@@ -33,7 +33,6 @@ struct VirtualTree {
             adj[u].emplace_back(v, w);
             adj[v].emplace_back(u, w);
         }
-
         return {vt, adj};
     }
 };

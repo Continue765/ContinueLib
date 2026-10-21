@@ -9,8 +9,8 @@ struct BinaryLifting {
     vector<vector<int>> nxt;
     vector<vector<X>> info;
 
-    BinaryLifting(int n_ = 0) : n(n_) {
-        logn = (n == 0 ? 0 : __lg(n));
+    BinaryLifting() : n(0) {}
+    BinaryLifting(int n_ = 0) : n(n_), logn(__lg(n)) {
         nxt.assign(logn + 1, vector<int>(n, -1));
         info.assign(logn + 1, vector<X>(n, Mono::e()));
     }

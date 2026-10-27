@@ -8,7 +8,7 @@
 #include "graph/shortest_path/restore_path.hpp"
 
 int main() {
-    Graph<int> adj(5);
+    Digraph<int> adj(5);
     auto add = [&](int u, int v, int w) { adj.add(u, v, w); };
     add(0, 1, 0); add(0, 2, 4); add(1, 2, 1); add(1, 3, 2);
     add(2, 3, 0); add(3, 1, 1);
@@ -30,12 +30,12 @@ int main() {
     raw[0][1] = 5; raw[0][2] = 20; raw[1][2] = -2; raw[2][3] = 3;
     floyd(raw);
     assert(raw[0][2] == 3 && raw[0][3] == 6 && raw[3][0] == inf<int>);
-    Graph<int> neg(3);
+    Digraph<int> neg(3);
     neg.add(0, 1, 1); neg.add(1, 2, -3); neg.add(2, 1, 1);
     assert(bellmanFord(neg, 0).first.empty());
     assert(spfa(neg, 0).first.empty());
     // 权重与边编号不同，且存在重边。
-    Graph<int, false> undirected(4);
+    Undigraph<int> undirected(4);
     undirected.add(0, 1, 9); undirected.add(0, 1, 2); undirected.add(1, 2, 3);
     auto expected = vector<int>{5, 3, 0, inf<int>};
     assert(dijkstra(undirected, 2).first == expected);
@@ -43,7 +43,7 @@ int main() {
     assert(bellmanFord(undirected, 2).first == expected);
     assert(spfa(undirected, 2).first == expected);
     assert(floyd(undirected)[2] == expected);
-    Graph<int> binary(4);
+    Digraph<int> binary(4);
     binary.add(0, 1, 1); binary.add(0, 1, 0); binary.add(1, 2, 1);
     assert((bfs_01(binary, 0).first == vector<int>{0, 0, 1, inf<int>}));
     vector<int> starts{0, 3};

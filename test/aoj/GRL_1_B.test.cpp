@@ -7,7 +7,7 @@ int main() {
     cin.tie(nullptr);
     int n, m, s;
     cin >> n >> m >> s;
-    Graph<i64> adj(n);
+    Digraph<i64> adj(n);
     while (m--) { int u, v; i64 w; cin >> u >> v >> w; adj.add(u, v, w); }
     auto [dist, pre] = bellmanFord(adj, s);
     if (dist.empty()) { cout << "NEGATIVE CYCLE\n"; return 0; }

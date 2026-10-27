@@ -7,7 +7,7 @@ int main() {
     cin.tie(nullptr);
     int n, m;
     cin >> n >> m;
-    Graph<i64> adj(n);
+    Digraph<i64> adj(n);
     while (m--) { int u, v; i64 w; cin >> u >> v >> w; adj.add(u, v, w); }
     auto dist = floyd(adj);
     for (int i = 0; i < n; ++i) if (dist[i][i] < 0) { cout << "NEGATIVE CYCLE\n"; return 0; }

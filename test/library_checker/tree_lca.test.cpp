@@ -7,7 +7,7 @@ int main() {
     cin.tie(nullptr);
     int n, q;
     cin >> n >> q;
-    Graph<int, false> g(n);
+    Undigraph<int> g(n);
     for (int v = 1; v < n; ++v) { int p; cin >> p; g.add(p, v); }
     Tree tree(g);
     LCA lca(tree);

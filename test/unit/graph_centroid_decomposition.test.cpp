@@ -2,7 +2,7 @@
 #include <graph/tree/centroid.hpp>
 #include <graph/tree/hld.hpp>
 
-void checkTree(Graph<i64, false>& g, int root, bool heavy) {
+void checkTree(Undigraph<i64>& g, int root, bool heavy) {
     Tree tree(g, root);
     if (heavy) {
         HLD hld(tree);
@@ -106,7 +106,7 @@ int main() {
     mt19937 rng(4178);
     for (int n = 1; n <= 60; n++) {
         for (int type = 0; type < 3; type++) {
-            Graph<i64, false> g(n);
+            Undigraph<i64> g(n);
             for (int v = 1; v < n; v++) {
                 int u = type == 0 ? v - 1 : type == 1 ? 0 : int(rng() % v);
                 g.add(u, v, int(rng() % 16) - 5);

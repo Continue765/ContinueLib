@@ -7,7 +7,7 @@ int main() {
     cin.tie(nullptr);
     int n, m;
     cin >> n >> m;
-    Graph<int, false> g(n);
+    Undigraph<int> g(n);
     while (m--) { int u, v; cin >> u >> v; g.add(u, v); }
     BlockCutTree bct(g);
     for (int u = 0; u < n; ++u) {

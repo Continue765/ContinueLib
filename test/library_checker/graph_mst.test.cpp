@@ -7,7 +7,7 @@ int main() {
     cin.tie(nullptr);
     int n, m;
     cin >> n >> m;
-    Graph<i64, false> g(n);
+    Undigraph<i64> g(n);
     for (int i = 0; i < m; ++i) { int u, v; i64 w; cin >> u >> v >> w; g.add(u, v, w); }
     auto [answer, cost] = kruskal(g);
     cout << cost << '\n';

@@ -2,12 +2,12 @@
 #include <graph/mst/kruskal.hpp>
 
 template <typename T>
-pair<Graph<int, false>, vector<T>> kruskalTree(const Graph<T, false>& g) {
+pair<Undigraph<int>, vector<T>> kruskalTree(const Undigraph<T>& g) {
     int n = g.n;
     auto [ids, cost] = kruskal(g);
     int c = ids.size();
 
-    Graph<int, false> res(n + c);
+    Undigraph<int> res(n + c);
     vector<T> val(n + c);
     DSU dsu(n);
     vector<int> top(n);

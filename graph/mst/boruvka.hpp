@@ -3,7 +3,7 @@
 #include <data_structure/dsu.hpp>
 
 template <typename T>
-pair<vector<int>, T> boruvka(Graph<T, false>& g) {
+pair<vector<int>, T> boruvka(Undigraph<T>& g) {
     auto& edges = g.edges;
     int n = g.n;
     T cost = 0;

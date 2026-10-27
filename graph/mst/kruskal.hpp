@@ -3,7 +3,7 @@
 #include <data_structure/dsu.hpp>
 
 template <typename T>
-pair<vector<int>, T> kruskal(const Graph<T, false>& g) {
+pair<vector<int>, T> kruskal(const Undigraph<T>& g) {
     vector<int> ord(g.edges.size());
     iota(ord.begin(), ord.end(), 0);
     sort(ord.begin(), ord.end(), [&](int i, int j) {

@@ -15,8 +15,8 @@ void floyd(vector<vector<T>>& dist) {
     }
 }
 
-template <typename T, bool directed>
-vector<vector<T>> floyd(const Graph<T, directed>& g) {
+template <typename T, bool dir>
+vector<vector<T>> floyd(const Graph<T, dir>& g) {
     int n = g.n;
     vector dist(n, vector<T>(n, inf<T>));
     for (int u = 0; u < n; u++) {

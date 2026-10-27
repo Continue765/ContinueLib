@@ -3,11 +3,11 @@
 
 struct BlockCutTree {
     int n, tot;
-    Graph<int, false> tree;
+    Undigraph<int> tree;
 
     BlockCutTree() {}
     template <typename T>
-    BlockCutTree(const Graph<T, false>& g) : n(g.n), tree(n) {
+    BlockCutTree(const Undigraph<T>& g) : n(g.n), tree(n) {
         vector<int> dfn(n, -1), low(n), stk;
         int cur = 0;
         auto dfs = [&](auto&& self, int u) -> void {

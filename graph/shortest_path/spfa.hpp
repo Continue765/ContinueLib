@@ -1,8 +1,8 @@
 #pragma once
 #include <graph/graph.hpp>
 
-template <typename T, bool directed>
-pair<vector<T>, vector<int>> spfa(const Graph<T, directed>& g, int s) {
+template <typename T, bool dir>
+pair<vector<T>, vector<int>> spfa(const Graph<T, dir>& g, int s) {
     int n = g.n;
     vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1);

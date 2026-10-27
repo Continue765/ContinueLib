@@ -1,8 +1,8 @@
 #pragma once
 #include <graph/graph.hpp>
 
-template <typename T, bool directed>
-vector<int> toposort(const Graph<T, directed>& g) {
+template <typename T>
+vector<int> toposort(const Digraph<T>& g) {
     int n = g.n;
     vector<int> topo, deg(n, 0);
     for (int u = 0; u < n; u++) {
@@ -26,8 +26,8 @@ vector<int> toposort(const Graph<T, directed>& g) {
     return (int(topo.size()) != n ? vector<int>() : topo);
 }
 
-template <typename T, bool directed>
-vector<int> lexMinToposort(const Graph<T, directed>& g) {
+template <typename T>
+vector<int> lexMinToposort(const Digraph<T>& g) {
     int n = g.n;
     vector<int> topo, deg(n, 0);
     for (int u = 0; u < n; u++) {

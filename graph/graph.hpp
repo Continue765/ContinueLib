@@ -7,7 +7,7 @@ struct Edge {
     T w;
 };
 
-template <typename T = int, bool directed = true>
+template <typename T = int, bool dir = true>
 struct Graph {
     int n;
     vector<Edge<T>> edges;
@@ -20,7 +20,7 @@ struct Graph {
         int id = edges.size();
         edges.emplace_back(u, v, w);
         adj[u].emplace_back(v, id);
-        if constexpr (!directed) {
+        if constexpr (!dir) {
             adj[v].emplace_back(u, id);
         }
         return id;
@@ -32,8 +32,13 @@ struct Graph {
 };
 
 template <typename T>
-Graph<T, true> reverse(const Graph<T, true>& g) {
-    Graph<T, true> rg(g.n);
+using Digraph = Graph<T, true>;
+template <typename T>
+using Undigraph = Graph<T, false>;
+
+template <typename T>
+Digraph<T> reverse(const Digraph<T>& g) {
+    Digraph<T> rg(g.n);
     for (auto& [u, v, w] : g.edges) {
         rg.add(v, u, w);
     }
@@ -41,7 +46,7 @@ Graph<T, true> reverse(const Graph<T, true>& g) {
 }
 
 template <typename T>
-vector<int> degree(const Graph<T, false>& g) {
+vector<int> degree(const Undigraph<T>& g) {
     vector<int> deg(g.n);
     for (auto& e : g.edges) {
         deg[e.u]++;
@@ -51,7 +56,7 @@ vector<int> degree(const Graph<T, false>& g) {
 }
 
 template <typename T>
-pair<vector<int>, vector<int>> degree(const Graph<T, true>& g) {
+pair<vector<int>, vector<int>> degree(const Digraph<T>& g) {
     vector<int> in(g.n), out(g.n);
     for (auto& e : g.edges) {
         in[e.v]++;
@@ -60,14 +65,14 @@ pair<vector<int>, vector<int>> degree(const Graph<T, true>& g) {
     return {in, out};
 }
 
-template <typename T, bool directed>
-Graph<T, directed> induced(const Graph<T, directed>& g, const vector<int>& a) {
+template <typename T, bool dir>
+Graph<T, dir> induced(const Graph<T, dir>& g, const vector<int>& a) {
     int n = a.size();
     vector<int> id(g.n, -1);
     for (int i = 0; i < n; i++) {
         id[a[i]] = i;
     }
-    Graph<T, directed> res(n);
+    Graph<T, dir> res(n);
     for (auto& e : g.edges) {
         if (id[e.u] != -1 && id[e.v] != -1) {
             res.add(id[e.u], id[e.v], e.w);
@@ -77,8 +82,8 @@ Graph<T, directed> induced(const Graph<T, directed>& g, const vector<int>& a) {
 }
 
 template <typename T>
-Graph<T, false> toUndigraph(const Graph<T, true>& g) {
-    Graph<T, false> res(g.n);
+Undigraph<T> toUndigraph(const Digraph<T>& g) {
+    Undigraph<T> res(g.n);
     for (auto& e : g.edges) {
         res.add(e.u, e.v, e.w);
     }

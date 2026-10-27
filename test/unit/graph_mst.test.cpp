@@ -5,7 +5,7 @@
 #include "graph/mst/prim.hpp"
 #include "graph/mst/kruskal_tree.hpp"
 
-void checkEdges(Graph<int, false>& g, const vector<int>& ids, int cost, int count) {
+void checkEdges(Undigraph<int>& g, const vector<int>& ids, int cost, int count) {
     assert(int(ids.size()) == count);
     DSU dsu(g.n);
     int sum = 0;
@@ -19,7 +19,7 @@ void checkEdges(Graph<int, false>& g, const vector<int>& ids, int cost, int coun
 }
 
 int main() {
-    Graph<int, false> g(4);
+    Undigraph<int> g(4);
     for (auto [u, v, w] : vector<Edge<int>>{{0, 1, 4}, {0, 2, 3}, {1, 2, 1}, {1, 3, 2}, {2, 3, 5}}) {
         g.add(u, v, w);
     }
@@ -39,7 +39,7 @@ int main() {
     for (auto e : dense) sum += e.w;
     assert(dense.size() == 3 && sum == 6);
 
-    Graph<int, false> disconnected(3);
+    Undigraph<int> disconnected(3);
     disconnected.add(0, 1, 2);
     auto [de, dc] = kruskal(disconnected);
     auto [fe, fc] = boruvka(disconnected);
@@ -47,7 +47,7 @@ int main() {
     checkEdges(disconnected, de, dc, 1);
     checkEdges(disconnected, fe, fc, 1);
 
-    Graph<int, false> parallel(3);
+    Undigraph<int> parallel(3);
     parallel.add(0, 1, 9); parallel.add(0, 1, -2);
     parallel.add(1, 2, 4); parallel.add(0, 2, 7);
     for (auto [ids, cost] : {kruskal(parallel), boruvka(parallel), prim(parallel)}) {
@@ -56,12 +56,12 @@ int main() {
         sort(ids.begin(), ids.end());
         assert((ids == vector<int>{1, 2}));
     }
-    Graph<int, false> chain(3);
+    Undigraph<int> chain(3);
     chain.add(0, 1, 4); chain.add(1, 2, 7);
     auto [tree, val] = kruskalTree(chain);
     assert(tree.n == 5 && val[3] == 4 && val[4] == 7);
     assert(tree.adj[4].size() == 2 && tree.adj[3].size() == 3);
-    Graph<int, false> single(1);
+    Undigraph<int> single(1);
     auto [singleTree, singleVal] = kruskalTree(single);
     assert(singleTree.n == 1 && singleTree.edges.empty() && singleVal.size() == 1);
     auto [forest, forestVal] = kruskalTree(disconnected);
@@ -69,7 +69,7 @@ int main() {
     mt19937 rng(765);
     for (int it = 0; it < 300; it++) {
         int n = 1 + rng() % 25;
-        Graph<int, false> random(n);
+        Undigraph<int> random(n);
         vector<vector<int>> best(n, vector<int>(n, inf<int>));
         auto add = [&](int u, int v, int w) {
             random.add(u, v, w);

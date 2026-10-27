@@ -3,7 +3,7 @@
 #include <graph/tree/tree_abel.hpp>
 
 template <bool edge>
-void check(Graph<int, false>& g, int root, mt19937& rng) {
+void check(Undigraph<int>& g, int root, mt19937& rng) {
     Tree<int> tree(g, root);
     HLD<int> hld(tree);
     int n = g.n;
@@ -48,7 +48,7 @@ int main() {
     mt19937 rng(81251);
     for (int it = 0; it < 60; it++) {
         int n = 1 + rng() % 25;
-        Graph<int, false> g(n);
+        Undigraph<int> g(n);
         for (int u = 1; u < n; u++) g.add(u, rng() % u);
         int root = rng() % n;
         check<false>(g, root, rng);

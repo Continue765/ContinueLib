@@ -4,7 +4,7 @@
 template <typename T>
 struct DifferenceConstraints {
     int n, s;
-    Graph<T, true> graph;
+    Digraph<T> graph;
 
     DifferenceConstraints() {}
     DifferenceConstraints(int n_) : n(n_), s(n), graph(n + 1) {

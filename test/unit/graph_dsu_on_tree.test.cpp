@@ -5,7 +5,7 @@ int main() {
     std::mt19937 rng(7654178);
     for (int it = 0; it < 2000; it++) {
         int n = 1 + rng() % 100;
-        Graph<int, false> g(n);
+        Undigraph<int> g(n);
         for (int v = 1; v < n; v++) {
             int u = it % 3 == 0 ? v - 1 : it % 3 == 1 ? 0 : int(rng() % v);
             g.add(u, v);

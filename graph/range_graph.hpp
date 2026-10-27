@@ -55,8 +55,8 @@ struct RangeGraph {
         toRange(u, l2, r2, T{});
     }
 
-    Graph<T, true> build() {
-        Graph<T, true> g(tot);
+    Digraph<T> build() {
+        Digraph<T> g(tot);
         for (auto& [u, v, w] : edges) {
             g.add(u, v, w);
         }

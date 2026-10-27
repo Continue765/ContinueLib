@@ -20,14 +20,14 @@ void checkWalk(Graph<int, Directed>& g, int start = -1) {
 }
 
 int main() {
-    Graph<> directed(4);
+    Digraph<int> directed(4);
     directed.add(0, 1); directed.add(1, 0);
     assert(isEulerian(directed) == 2 && isEulerianPath(directed) && isEulerianCircuit(directed));
     directed.add(0, 2); directed.add(2, 0);
     assert(isEulerian(directed, 0) == 2);
     checkWalk(directed);
     checkWalk(directed, 2);
-    Graph<> path(4);
+    Digraph<int> path(4);
     path.add(0, 1); path.add(1, 2);
     assert(isEulerian(path) == 1 && isEulerianPath(path, 0));
     assert(!isEulerianPath(path, 2) && isEulerian(path, 3) == 0);
@@ -38,7 +38,7 @@ int main() {
     assert(isEulerianCircuit(path) && isEulerian(path, 1) == 2);
     checkWalk(path, 1);
 
-    Graph<int, false> undirected(4);
+    Undigraph<int> undirected(4);
     undirected.add(0, 1); undirected.add(1, 2);
     assert(isEulerian(undirected) == 1 && isEulerianPath(undirected, 0));
     assert(!isEulerianPath(undirected, 3));
@@ -51,11 +51,11 @@ int main() {
     assert(isEulerian(undirected) == 0);
     assert(findEulerian(undirected).first.empty());
 
-    Graph<int, false> parallel(2);
+    Undigraph<int> parallel(2);
     parallel.add(0, 1, 9); parallel.add(0, 1, 3); parallel.add(0, 0, 5);
     assert(isEulerianCircuit(parallel));
     checkWalk(parallel);
-    Graph<> directedParallel(2);
+    Digraph<int> directedParallel(2);
     directedParallel.add(0, 1); directedParallel.add(0, 1);
     directedParallel.add(1, 0); directedParallel.add(0, 0);
     assert(isEulerian(directedParallel) == 1);

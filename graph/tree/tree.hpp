@@ -3,12 +3,12 @@
 
 template <typename T>
 struct Tree {
-    Graph<T, false>& g;
+    Undigraph<T>& g;
     int n, root;
     vector<int> fa, pe, dep, siz, in, out, seq;
     vector<T> dist;
 
-    Tree(Graph<T, false>& g, int rt = 0) : g(g) {
+    Tree(Undigraph<T>& g, int rt = 0) : g(g) {
         build(rt);
     }
 

@@ -3,7 +3,7 @@
 
 struct TwoSat {
     int n;
-    Graph<int, true> graph;
+    Digraph<int> graph;
     vector<int> ans;
 
     TwoSat(int n_) : n(n_), graph(2 * n), ans(n) {}

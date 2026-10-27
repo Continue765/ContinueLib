@@ -6,7 +6,7 @@
 #include "graph/tree/tree_lifting.hpp"
 #include "graph/tree/virtual_tree.hpp"
 
-void checkTree(Graph<int, false>& g, int root) {
+void checkTree(Undigraph<int>& g, int root) {
     // 各套算法独立使用 Tree。
     Tree tree(g, root), hldTree(g, root);
     LCA lca(tree);
@@ -86,14 +86,14 @@ void checkTree(Graph<int, false>& g, int root) {
 }
 
 int main() {
-    Graph<int, false> g(7);
+    Undigraph<int> g(7);
     g.add(0, 1, 2); g.add(0, 2, 5); g.add(1, 3, 3);
     g.add(1, 4, 7); g.add(2, 5, 11); g.add(5, 6, 13);
     for (int root = 0; root < 7; ++root) checkTree(g, root);
     mt19937 rng(765);
     for (int it = 0; it < 30; ++it) {
         int n = 1 + rng() % 15;
-        Graph<int, false> random(n);
+        Undigraph<int> random(n);
         for (int v = 1; v < n; ++v) random.add(v, rng() % v, int(rng() % 21) - 10);
         checkTree(random, rng() % n);
     }

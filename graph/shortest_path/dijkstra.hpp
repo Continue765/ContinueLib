@@ -1,8 +1,8 @@
 #pragma once
 #include <graph/graph.hpp>
 
-template <typename T, bool directed>
-pair<vector<T>, vector<int>> dijkstra(const Graph<T, directed>& g, int s) {
+template <typename T, bool dir>
+pair<vector<T>, vector<int>> dijkstra(const Graph<T, dir>& g, int s) {
     int n = g.n;
     vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1);
@@ -31,8 +31,8 @@ pair<vector<T>, vector<int>> dijkstra(const Graph<T, directed>& g, int s) {
     return {dist, pre};
 }
 
-template <typename T, bool directed>
-pair<vector<T>, vector<int>> dijkstraDense(const Graph<T, directed>& g, int s) {
+template <typename T, bool dir>
+pair<vector<T>, vector<int>> dijkstraDense(const Graph<T, dir>& g, int s) {
     int n = g.n;
     vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1);
@@ -63,8 +63,8 @@ pair<vector<T>, vector<int>> dijkstraDense(const Graph<T, directed>& g, int s) {
     return {dist, pre};
 }
 
-template <typename T, bool directed>
-tuple<vector<T>, vector<int>, vector<int>> dijkstra(const Graph<T, directed>& g, vector<int>& s) {
+template <typename T, bool dir>
+tuple<vector<T>, vector<int>, vector<int>> dijkstra(const Graph<T, dir>& g, vector<int>& s) {
     int n = g.n;
     vector<T> dist(n, inf<T>);
     vector<int> pre(n, -1), root(n, -1);

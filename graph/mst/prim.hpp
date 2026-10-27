@@ -33,7 +33,7 @@ vector<Edge<T>> prim(int n, F&& cost) {
 }
 
 template <typename T>
-pair<vector<int>, T> prim(Graph<T, false>& g) {
+pair<vector<int>, T> prim(Undigraph<T>& g) {
     int n = g.n;
     vector<int> res, pre(n, -2);
     vector<T> wei(n, inf<T>);

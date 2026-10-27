@@ -7,7 +7,7 @@ int main() {
     cin.tie(nullptr);
     int n, m;
     cin >> n >> m;
-    Graph<> g(n);
+    Digraph<int> g(n);
     while (m--) { int u, v; cin >> u >> v; g.add(u, v); }
     auto [count, id] = SCC(g);
     vector<vector<int>> comp(count);

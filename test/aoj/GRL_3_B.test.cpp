@@ -7,7 +7,7 @@ int main() {
     cin.tie(nullptr);
     int n, m;
     cin >> n >> m;
-    Graph<int, false> g(n);
+    Undigraph<int> g(n);
     vector<pair<int, int>> edges(m);
     for (auto& [u, v] : edges) { cin >> u >> v; g.add(u, v); }
     auto [count, id] = EBCC(g);

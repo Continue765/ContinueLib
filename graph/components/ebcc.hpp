@@ -2,7 +2,7 @@
 #include <graph/graph.hpp>
 
 template <typename T>
-pair<int, vector<int>> EBCC(const Graph<T, false>& g) {
+pair<int, vector<int>> EBCC(const Undigraph<T>& g) {
     int n = g.n;
     vector<int> stk;
     vector<int> dfn(n, -1), low(n), comp(n, -1);

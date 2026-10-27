@@ -24,7 +24,7 @@ int main() {
 
     int n;
     cin >> n;
-    Graph<i64, false> g(n);
+    Undigraph<i64> g(n);
     for (int i = 1; i < n; i++) {
         int u, v;
         i64 w;

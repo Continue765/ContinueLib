@@ -7,7 +7,7 @@ struct Strings {
 };
 
 template <bool edge>
-void check(Graph<int, false>& g, int root, mt19937& rng) {
+void check(Undigraph<int>& g, int root, mt19937& rng) {
     Tree<int> tree(g, root);
     HLD<int> hld(tree);
     int n = tree.n;
@@ -61,7 +61,7 @@ int main() {
     mt19937 rng(41278);
     for (int it = 0; it < 100; it++) {
         int n = 1 + rng() % 30;
-        Graph<int, false> g(n);
+        Undigraph<int> g(n);
         for (int v = 1; v < n; v++) g.add(v, rng() % v);
         int root = rng() % n;
         check<false>(g, root, rng);

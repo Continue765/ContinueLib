@@ -6,7 +6,7 @@ int main() {
 
     int n, q;
     cin >> n >> q;
-    Graph<int, false> g(n);
+    Undigraph<int> g(n);
     for (int i = 1; i < n; i++) {
         int u, v;
         cin >> u >> v;

@@ -4,7 +4,7 @@
 #include "graph/toposort.hpp"
 
 int main() {
-    Graph<int> graph(4);
+    Digraph<int> graph(4);
     graph.add(0, 1, 3);
     graph.add(0, 2, 5);
     graph.add(1, 3, 7);
@@ -25,13 +25,13 @@ int main() {
         auto e = graph.edges[id], r = reversed.edges[id];
         assert(r.u == e.v && r.v == e.u && r.w == e.w);
     }
-    Graph<int, false> undirected(2);
+    Undigraph<int> undirected(2);
     assert(undirected.add(0, 1, 8) == 0);
     assert(undirected.add(0, 1) == 1);
     assert(undirected.edges.size() == 2 && undirected.edges[1].w == 1);
     assert((undirected.adj[0] == vector<pair<int, int>>{{1, 0}, {1, 1}}));
     assert((undirected.adj[1] == vector<pair<int, int>>{{0, 0}, {0, 1}}));
-    Graph<> parallel(3);
+    Digraph<int> parallel(3);
     parallel.add(0, 1, 9); parallel.add(0, 1, 2); parallel.add(1, 2);
     assert((toposort(parallel) == vector<int>{0, 1, 2}));
     assert((lexMinToposort(parallel) == vector<int>{0, 1, 2}));

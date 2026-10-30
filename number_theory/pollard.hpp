@@ -1,9 +1,8 @@
 #pragma once
 #include <common.hpp>
+#include <misc/rng.hpp>
 #include <number_theory/miller_rabin.hpp>
 #include <mod/calc.hpp>
-
-static mt19937_64 rng(static_cast<u32>(chrono::steady_clock::now().time_since_epoch().count()));
 
 i64 rho(i64 n, i64 c) {
     auto f = [&](i64 x) {
@@ -41,8 +40,7 @@ i64 primeFactor(i64 n) {
         return 2;
     }
     while (!isPrime(n)) {
-        uniform_int_distribution<i64> pick(1, n - 1);
-        n = rho(n, pick(rng));
+        n = rho(n, randInt(1, n));
     }
     return n;
 }

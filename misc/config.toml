@@ -1,12 +1,4 @@
 [[item]]
-name = "debug"
-file = "debug.hpp"
-
-[[item]]
-name = "template"
-file = "template.cpp"
-
-[[item]]
 name = "二分答案"
 file = "binary_search.hpp"
 
@@ -17,3 +9,15 @@ file = "i128.hpp"
 [[item]]
 name = "日期"
 file = "date.hpp"
+
+[[item]]
+name = "template"
+file = "template.cpp"
+
+[[item]]
+name = "debug"
+file = "debug.hpp"
+
+[[item]]
+name = "对拍"
+file = "stress.sh"

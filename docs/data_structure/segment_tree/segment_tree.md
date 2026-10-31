@@ -4,23 +4,34 @@ documentation_of: //data_structure/segment_tree/segment_tree.hpp
 
 # SegmentTree
 
-单点赋值 + 区间聚合，区间 $[l, r)$，下标从 $0$ 起。
-
-`Mono` 提供 `Type`、`e()`（单位元）、`op(a, b)`（可结合）。
-
-| 接口 | 说明 |
-| --- | --- |
-| `SegmentTree(int n)` / `SegmentTree(vector<X> init)` | 建树，$O(n)$ |
-| `modify(p, v)` | $a_p \leftarrow v$ |
-| `query(l, r)` | `op` 作用于 $a_l, \dots, a_{r-1}$ |
-| `findFirst(l, r, pred)` | 区间内首个使 `pred` 成立的下标，无则 $-1$ |
-| `findLast(l, r, pred)` | 同上，从右往左 |
-| `maxRight(l, pred, sum)` / `minLeft(r, pred, sum)` | 从 `sum = e()` 起向一侧累加，返回边界 |
-
-除建树外均为 $O(\log n)$。`pred` 对 `op` 单调时 `findFirst` / `findLast` / `maxRight` / `minLeft` 才成立。
+Defined in `segment_tree.hpp`.
 
 ```cpp
-SegmentTree<AddMono<int>> seg({1, 2, 3, 4});
-int s = 0;
-int r = seg.maxRight(0, [](int v) { return v <= 12; }, s);  // r = 2, s = 11
+template <typename Mono>
+struct SegmentTree;
 ```
+
+`Mono` 需满足：
+
+```cpp
+using Type = X;
+static X e();
+static X op(const X&, const X&);
+```
+
+`op` 可结合，`e()` 是 `op` 的单位元。维护长度 $n$ 的序列 $a$，区间为 $[l, r)$。
+
+**Member functions**
+
+| 签名 | 语义 | 复杂度 |
+| --- | --- | --- |
+| `SegmentTree(int n)` | $a_i = e()$ | $O(n)$ |
+| `SegmentTree(const std::vector<X>& init)` | $a_i = \text{init}_i$ | $O(n)$ |
+| `void modify(int p, const X& v)` | $a_p \leftarrow v$ | $O(\log n)$ |
+| `X query(int l, int r)` | 返回 `op(a_l, …, a_{r-1})` | $O(\log n)$ |
+| `template <typename F> int findFirst(int l, int r, F&& pred)` | 最小的 $i \in [l, r)$ 使 `pred(a_i)` 为真，无则 $-1$ | $O(\log n)$ |
+| `template <typename F> int findLast(int l, int r, F&& pred)` | 最大的 $i \in [l, r)$ 使 `pred(a_i)` 为真，无则 $-1$ | $O(\log n)$ |
+| `template <typename F> int maxRight(int l, F&& pred, X& sum)` | 最大的 $r$ 使 `pred(op(a_l, …, a_{r-1}))` 为真 | $O(\log n)$ |
+| `template <typename F> int minLeft(int r, F&& pred, X& sum)` | 最小的 $l$ 使 `pred(op(a_l, …, a_{r-1}))` 为真 | $O(\log n)$ |
+
+`pred` 须对 `op` 单调；`maxRight` / `minLeft` 的 `sum` 初值为 `e()`，返回时写回区间聚合值。

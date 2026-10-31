@@ -100,6 +100,48 @@ int main() {
             assert(value[x] == best[u][v]);
         }
     }
+    for (int it = 0; it < 500; it++) {
+        int n = 1 + rng() % 6, m = rng() % 10;
+        Undigraph<int> g(n);
+        for (int j = 0; j < m; j++) g.add(rng() % n, rng() % n, int(rng() % 21) - 10);
+        DSU connected(n);
+        for (auto e : g.edges) connected.merge(e.u, e.v);
+        int components = 0;
+        for (int u = 0; u < n; u++) components += connected.find(u) == u;
+        int best = inf<int>;
+        for (int mask = 0; mask < (1 << m); mask++) {
+            if (__builtin_popcount(unsigned(mask)) != n - components) continue;
+            DSU dsu(n);
+            int cost = 0;
+            bool valid = true;
+            for (int j = 0; j < m; j++) if (mask >> j & 1) {
+                auto e = g.edges[j];
+                valid &= dsu.merge(e.u, e.v);
+                cost += e.w;
+            }
+            if (valid) best = min(best, cost);
+        }
+        for (auto [ids, cost] : {kruskal(g), boruvka(g)}) {
+            assert(cost == best);
+            checkEdges(g, ids, cost, n - components);
+        }
+        if (components == 1) {
+            auto [ids, cost] = prim(g);
+            assert(cost == best);
+            checkEdges(g, ids, cost, n - 1);
+            auto dense = prim<int>(n, [&](int u, int v) {
+                int w = inf<int>;
+                for (auto [x, id] : g[u]) if (x == v) w = min(w, g.edges[id].w);
+                return w;
+            });
+            int sum = 0;
+            for (auto e : dense) sum += e.w;
+            assert(int(dense.size()) == n - 1 && sum == best);
+        }
+    }
+    auto [partialEdges, partialCost] = prim(disconnected);
+    assert(partialCost == 2);
+    checkEdges(disconnected, partialEdges, partialCost, 1);
     int a, b;
     if (cin >> a >> b) cout << a + b << '\n';
 }

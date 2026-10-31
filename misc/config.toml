@@ -3,6 +3,10 @@ name = "二分答案"
 file = "binary_search.hpp"
 
 [[item]]
+name = "三分"
+file = "ternary_search.hpp"
+
+[[item]]
 name = "i128"
 file = "i128.hpp"
 
@@ -21,3 +25,11 @@ file = "debug.hpp"
 [[item]]
 name = "对拍"
 file = "stress.sh"
+
+[[item]]
+name = "对拍(with SPJ)"
+file = "stress_spj.sh"
+
+[[item]]
+name = "SPJ"
+file = "spj.cpp"

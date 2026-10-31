@@ -88,6 +88,52 @@ int main() {
     bct = BlockCutTree(Undigraph<int>(0));
     assert(bct.n == 0 && bct.tot == 0 && bct.tree.n == 0);
     assert(bct.tree.edges.empty());
+    mt19937 rng(57115);
+    for (int it = 0; it < 500; it++) {
+        int n = 1 + rng() % 8;
+        Digraph<int> dg(n);
+        Undigraph<int> ug(n);
+        vector<vector<bool>> reach(n, vector<bool>(n));
+        for (int u = 0; u < n; u++) reach[u][u] = true;
+        for (int j = 0, m = rng() % 20; j < m; j++) {
+            int u = rng() % n, v = rng() % n;
+            dg.add(u, v); ug.add(u, v);
+            reach[u][v] = true;
+        }
+        for (int k = 0; k < n; k++) for (int u = 0; u < n; u++) for (int v = 0; v < n; v++) {
+            reach[u][v] = reach[u][v] || (reach[u][k] && reach[k][v]);
+        }
+        auto [cnt, id] = SCC(dg);
+        set<int> labels(id.begin(), id.end());
+        assert(int(labels.size()) == cnt);
+        for (int u = 0; u < n; u++) for (int v = 0; v < n; v++) {
+            assert((id[u] == id[v]) == (reach[u][v] && reach[v][u]));
+            if (reach[u][v] && id[u] != id[v]) assert(id[u] < id[v]);
+        }
+        auto components = [&](int bannedVertex, int bannedEdge, const vector<bool>& bridges) {
+            vector<int> label(n, -1);
+            int count = 0;
+            for (int s = 0; s < n; s++) if (s != bannedVertex && label[s] == -1) {
+                vector<int> q{s};
+                label[s] = count++;
+                for (int i = 0; i < int(q.size()); i++) for (auto [v, eid] : ug[q[i]]) {
+                    if (v == bannedVertex || eid == bannedEdge || (!bridges.empty() && bridges[eid]) || label[v] != -1) continue;
+                    label[v] = label[s];
+                    q.push_back(v);
+                }
+            }
+            return pair{count, label};
+        };
+        int base = components(-1, -1, {}).first;
+        vector<bool> bridges(ug.edges.size());
+        for (int eid = 0; eid < int(ug.edges.size()); eid++) bridges[eid] = components(-1, eid, {}).first > base;
+        auto [ec, eb] = EBCC(ug);
+        auto [expectedCount, expected] = components(-1, -1, bridges);
+        assert(ec == expectedCount);
+        for (int u = 0; u < n; u++) for (int v = 0; v < n; v++) assert((eb[u] == eb[v]) == (expected[u] == expected[v]));
+        BlockCutTree bct(ug);
+        for (int u = 0; u < n; u++) assert(bct.isCut(u) == (components(u, -1, {}).first > base));
+    }
     int a, b;
     if (cin >> a >> b) cout << a + b << '\n';
 }

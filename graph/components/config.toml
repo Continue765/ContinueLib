@@ -7,5 +7,5 @@ name = "边双连通分量"
 file = "ebcc.hpp"
 
 [[item]]
-name = "点双连通分量与圆方树"
+name = "圆方树"
 file = "block_cut_tree.hpp"

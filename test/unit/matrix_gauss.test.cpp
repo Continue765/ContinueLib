@@ -85,6 +85,18 @@ int main() {
     assert(tt.n == 3 && tt.m == 2 && tt[2][1] == Fp(6));
     assert(augment(t, Matrix<Fp>::identity(2)).m == 5);
     assert(augment(t, vector<Fp>{7, 8}).m == 4);
+    auto block = augment(t, Matrix<Fp>::identity(2));
+    auto column = augment(t, vector<Fp>{7, 8});
+    for (int i = 0; i < 2; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            assert(block[i][j] == t[i][j]);
+            assert(column[i][j] == t[i][j]);
+        }
+        for (int j = 0; j < 2; ++j) assert(block[i][3 + j] == Fp(i == j));
+        assert(column[i][3] == Fp(7 + i));
+    }
+    assert(matrixInv(t).second.n == 0);
+    assert(power(Matrix<Fp>::identity(3), 0).a == id.a);
 
     Matrix<Fp> fib(2);
     fib[0] = {1, 1};

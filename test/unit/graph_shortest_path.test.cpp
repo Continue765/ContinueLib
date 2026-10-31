@@ -51,6 +51,40 @@ int main() {
     auto [multi, multiParent, multiRoot] = dijkstra(binary, starts);
     assert((dist == vector<int>{0, 0, 1, 0}));
     assert(dist == multi && roots == multiRoot && roots[2] == 0 && roots[3] == 3);
+    mt19937 rng(12376);
+    for (int it = 0; it < 500; it++) {
+        int n = 1 + rng() % 12;
+        Digraph<int> g(n);
+        vector<vector<int>> expected(n, vector<int>(n, inf<int>));
+        for (int i = 0; i < n; i++) expected[i][i] = 0;
+        for (int j = 0, m = rng() % 50; j < m; j++) {
+            int u = rng() % n, v = rng() % n, w = rng() % 2;
+            g.add(u, v, w);
+            expected[u][v] = min(expected[u][v], w);
+        }
+        for (int k = 0; k < n; k++) for (int u = 0; u < n; u++) for (int v = 0; v < n; v++) {
+            if (expected[u][k] != inf<int> && expected[k][v] != inf<int>) {
+                expected[u][v] = min(expected[u][v], expected[u][k] + expected[k][v]);
+            }
+        }
+        vector<int> sources;
+        for (int j = 0, m = rng() % (n + 2); j < m; j++) sources.push_back(rng() % n);
+        auto [dd, dp, dr] = dijkstra(g, sources);
+        auto [bd, bp, br] = bfs_01(g, sources);
+        for (int v = 0; v < n; v++) {
+            int want = inf<int>;
+            for (int u : sources) want = min(want, expected[u][v]);
+            assert(dd[v] == want && bd[v] == want);
+            for (int root : {dr[v], br[v]}) {
+                if (want == inf<int>) assert(root == -1);
+                else assert(find(sources.begin(), sources.end(), root) != sources.end() && expected[root][v] == want);
+            }
+        }
+        int u = rng() % n;
+        assert(dijkstraDense(g, u).first == expected[u]);
+        assert(spfa(g, u).first == expected[u]);
+        assert(bellmanFord(g, u).first == expected[u]);
+    }
     int a, b;
     if (cin >> a >> b) cout << a + b << '\n';
 }

@@ -122,6 +122,49 @@ int main() {
     vector<int> single{6};
     auto [nodes2, adj2] = vt.build(single);
     assert(nodes2 == single && adj2.size() == 1 && adj2[0].empty());
+    for (int it = 0; it < 300; it++) {
+        int n = 1 + rng() % 30;
+        Undigraph<int> graph(n);
+        for (int v = 1; v < n; v++) graph.add(v, rng() % v);
+        Tree t(graph, rng() % n);
+        TreeLifting<AddMono<i64>, int> tl(t);
+        VirtualTree<int> random(tl);
+        vector<int> selected;
+        for (int j = 0, m = rng() % (n + 1); j < m; j++) selected.push_back(rng() % n);
+        vector<int> expected = selected;
+        for (int u : selected) for (int v : selected) {
+            int x = u, y = v;
+            while (t.dep[x] > t.dep[y]) x = t.fa[x];
+            while (t.dep[y] > t.dep[x]) y = t.fa[y];
+            while (x != y) { x = t.fa[x]; y = t.fa[y]; }
+            expected.push_back(x);
+        }
+        sort(expected.begin(), expected.end());
+        expected.erase(unique(expected.begin(), expected.end()), expected.end());
+        auto [vertices, links] = random.build(selected);
+        auto sorted = vertices;
+        sort(sorted.begin(), sorted.end());
+        assert(sorted == expected && links.size() == vertices.size());
+        for (int i = 0; i < int(vertices.size()); i++) {
+            int u = vertices[i], parent = -1;
+            for (int v : expected) if (v != u && t.in[v] <= t.in[u] && t.in[u] < t.out[v]) {
+                if (parent == -1 || t.dep[v] > t.dep[parent]) parent = v;
+            }
+            int found = 0;
+            for (auto [j, w] : links[i]) {
+                assert(0 <= j && j < int(vertices.size()));
+                int v = vertices[j];
+                assert(w == abs(t.dep[u] - t.dep[v]));
+                if (v == parent) found++;
+                else assert(t.fa[v] != -1 && t.in[u] <= t.in[v] && t.in[v] < t.out[u]);
+                assert(count(links[j].begin(), links[j].end(), pair{i, w}) == 1);
+            }
+            assert(found == (parent != -1));
+        }
+        int edgeCount = 0;
+        for (auto& e : links) edgeCount += e.size();
+        assert(edgeCount == 2 * max(0, int(vertices.size()) - 1));
+    }
     int a, b;
     if (cin >> a >> b) cout << a + b << '\n';
 }

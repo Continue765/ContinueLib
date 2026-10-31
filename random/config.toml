@@ -1,0 +1,15 @@
+[[item]]
+name = "随机数"
+file = "base.hpp"
+
+[[item]]
+name = "随机数组"
+file = "array.hpp"
+
+[[item]]
+name = "随机图"
+file = "graph.hpp"
+
+[[item]]
+name = "模拟退火"
+file = "simulated_annealing.hpp"

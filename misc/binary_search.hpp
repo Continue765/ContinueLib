@@ -4,7 +4,7 @@
 template <typename T, typename F>
 T firstTrue(T lo, T hi, F&& pred) {
     while (lo < hi) {
-        T mid = (lo + hi) / 2;
+        T mid = midpoint(lo, hi);
         if (pred(mid)) {
             hi = mid;
         } else {
@@ -17,7 +17,7 @@ T firstTrue(T lo, T hi, F&& pred) {
 template <typename T, typename F>
 T lastTrue(T lo, T hi, F&& pred) {
     while (lo < hi) {
-        T mid = (lo + hi + 1) / 2;
+        T mid = midpoint(hi, lo);
         if (pred(mid)) {
             lo = mid;
         } else {

@@ -158,7 +158,7 @@
 /graph/components/ebcc.hpp
 ```
 
-=== 点双连通分量与圆方树
+=== 圆方树
 
 ```cpp-ref
 /graph/components/block_cut_tree.hpp
@@ -394,6 +394,38 @@
 /data_structure/fenwick/fenwick_2d.hpp
 ```
 
+== PBDS
+
+=== 哈希表
+
+```typ-prose
+/data_structure/pb_ds/hashmap.typ
+```
+
+```cpp-ref
+/data_structure/pb_ds/hashmap.hpp
+```
+
+=== 红黑树
+
+```typ-prose
+/data_structure/pb_ds/red_black_tree.typ
+```
+
+```cpp-ref
+/data_structure/pb_ds/red_black_tree.hpp
+```
+
+=== 配对堆
+
+```typ-prose
+/data_structure/pb_ds/pairing_heap.typ
+```
+
+```cpp-ref
+/data_structure/pb_ds/pairing_heap.hpp
+```
+
 == 倍增
 
 ```cpp-ref
@@ -496,24 +528,44 @@
 /string/aho_corasick.hpp
 ```
 
+= 随机化
+
+== 随机数
+
+```cpp-ref
+/random/base.hpp
+```
+
+== 随机数组
+
+```cpp-ref
+/random/array.hpp
+```
+
+== 随机图
+
+```cpp-ref
+/random/graph.hpp
+```
+
+== 模拟退火
+
+```cpp-ref
+/random/simulated_annealing.hpp
+```
+
 = 杂项
-
-== debug
-
-```cpp-ref
-/misc/debug.hpp
-```
-
-== template
-
-```cpp-ref
-/misc/template.cpp
-```
 
 == 二分答案
 
 ```cpp-ref
 /misc/binary_search.hpp
+```
+
+== 三分
+
+```cpp-ref
+/misc/ternary_search.hpp
 ```
 
 == i128
@@ -526,5 +578,35 @@
 
 ```cpp-ref
 /misc/date.hpp
+```
+
+== template
+
+```cpp-ref
+/misc/template.cpp
+```
+
+== debug
+
+```cpp-ref
+/misc/debug.hpp
+```
+
+== 对拍
+
+```cpp-ref
+/misc/stress.sh
+```
+
+== 对拍(with SPJ)
+
+```cpp-ref
+/misc/stress_spj.sh
+```
+
+== SPJ
+
+```cpp-ref
+/misc/spj.cpp
 ```
 

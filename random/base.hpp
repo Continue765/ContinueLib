@@ -21,21 +21,3 @@ double randReal(double lo, double hi) {
     assert(lo < hi);
     return uniform_real_distribution<double>(lo, hi)(rng);
 }
-
-template <typename T>
-void shuffle(vector<T>& a) {
-    int n = a.size();
-    for (int i = 0; i < n; i++) {
-        int j = randInt(0, i + 1);
-        if (i != j) {
-            swap(a[i], a[j]);
-        }
-    }
-}
-// OR ranges::shuffle(a, rng);
-
-template <typename T>
-T& randElem(vector<T>& a) {
-    assert(!a.empty());
-    return a[randInt(a.size())];
-}

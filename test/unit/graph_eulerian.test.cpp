@@ -60,6 +60,13 @@ int main() {
     directedParallel.add(1, 0); directedParallel.add(0, 0);
     assert(isEulerian(directedParallel) == 1);
     checkWalk(directedParallel);
+    Digraph<int> noDirectedEdges(3);
+    Undigraph<int> noUndirectedEdges(3);
+    assert(isEulerianCircuit(noDirectedEdges) && isEulerianCircuit(noUndirectedEdges));
+    for (int start : {-1, 0, 2}) {
+        checkWalk(noDirectedEdges, start);
+        checkWalk(noUndirectedEdges, start);
+    }
     int a, b;
     if (cin >> a >> b) cout << a + b << '\n';
 }

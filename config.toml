@@ -36,5 +36,9 @@ name = "字符串"
 dir = "string"
 
 [[item]]
+name = "随机化"
+dir = "random"
+
+[[item]]
 name = "杂项"
 dir = "misc"

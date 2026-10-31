@@ -9,6 +9,30 @@ struct Fenwick2D {
     vector<X> a;
 
     Fenwick2D(int h_ = 0, int w_ = 0) : h(h_), w(w_), a((h + 1) * (w + 1), Mono::e()) {}
+    Fenwick2D(const vector<vector<X>>& init) : Fenwick2D(init.size(), init[0].size()) {
+        for (int x = 0; x < h; x++) {
+            assert(init[x].size() == w);
+            for (int y = 0; y < w; y++) {
+                a[(x + 1) * (w + 1) + (y + 1)] = init[x][y];
+            }
+        }
+        for (int i = 1; i <= h; i++) {
+            for (int j = 1; j <= w; j++) {
+                int jj = j + (j & -j);
+                if (jj <= w) {
+                    a[i * (w + 1) + jj] = Mono::op(a[i * (w + 1) + jj], a[i * (w + 1) + j]);
+                }
+            }
+        }
+        for (int i = 1; i <= h; i++) {
+            for (int j = 1; j <= w; j++) {
+                int ii = i + (i & -i);
+                if (ii <= h) {
+                    a[ii * (w + 1) + j] = Mono::op(a[ii * (w + 1) + j], a[i * (w + 1) + j]);
+                }
+            }
+        }
+    }
 
     void add(int x, int y, const X& v) {
         assert(0 <= x && x < h);

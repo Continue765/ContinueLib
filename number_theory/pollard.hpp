@@ -1,6 +1,6 @@
 #pragma once
 #include <common.hpp>
-#include <misc/rng.hpp>
+#include <random/base.hpp>
 #include <number_theory/miller_rabin.hpp>
 #include <mod/calc.hpp>
 

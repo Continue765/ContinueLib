@@ -58,6 +58,18 @@ void randomTest() {
                 assert(seg.findFirst(l, r, pred) == first);
                 assert(seg.findLast(l, r, pred) == last);
             }
+            i64 seed = rng() % 10, limit = seed + rng() % 500;
+            auto pred = [&](i64 sum) { return sum <= limit; };
+            int right = l;
+            i64 expected = seed;
+            while (right < n && pred(expected + a[right])) expected += a[right++];
+            i64 acc = seed;
+            assert(seg.maxRight(l, pred, acc) == right && acc == expected);
+            int left = r;
+            expected = seed;
+            while (left > 0 && pred(a[left - 1] + expected)) expected += a[--left];
+            acc = seed;
+            assert(seg.minLeft(r, pred, acc) == left && acc == expected);
         }
     }
     seg = DynamicSegmentTree<SumAffine>(1000000000);

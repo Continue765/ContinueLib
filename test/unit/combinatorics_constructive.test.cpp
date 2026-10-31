@@ -41,6 +41,8 @@ void test() {
     Polyomino shape(cells);
     assert(normalize(shape).cells == set<Polyomino::Cell>({{0, 0}, {1, 0}, {1, 1}}));
     auto rotated = rotate(shape);
+    assert(rotated.cells == set<Polyomino::Cell>({{0, 0}, {0, 1}, {1, 0}}));
+    assert(flip(shape).cells == set<Polyomino::Cell>({{0, 1}, {1, 0}, {1, 1}}));
     assert(rotated.cells.size() == shape.cells.size());
     assert(rotate(rotate(rotate(rotate(shape)))).cells == normalize(shape).cells);
     assert(flip(flip(shape)).cells == normalize(shape).cells);

@@ -16,6 +16,17 @@ void test() {
     assert(c.inv(4) * 4 == 1);
     c.init(3);
     assert(c.fact(8) == 40320);
+    vector<vector<Fp>> pascal(101, vector<Fp>(101));
+    pascal[0][0] = 1;
+    for (int n = 1; n <= 100; ++n) {
+        pascal[n][0] = 1;
+        for (int k = 1; k <= n; ++k) {
+            pascal[n][k] = pascal[n - 1][k - 1] + pascal[n - 1][k];
+        }
+    }
+    for (int n = 0; n <= 100; ++n) {
+        for (int k = 0; k <= n; ++k) assert(c.binom(n, k) == pascal[n][k]);
+    }
 }
 
 int main() {

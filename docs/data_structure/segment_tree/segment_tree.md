@@ -57,7 +57,18 @@ struct SegmentTree;
 ## 示例
 
 ```cpp
-SegmentTree<AddMono<int>> seg({1, 2, 3, 4});
-int s = 0;
-int r = seg.maxRight(0, [](int v) { return v <= 12; }, s);  // r = 2, s = 11
+SegmentTree<AddMono<i64>> seg(vector<i64>{3, 1, 4, 1, 5});  // 以 init 构造
+SegmentTree<AddMono<i64>> fresh(5);                          // 5 个 e()
+
+seg.modify(2, 0);                                            // a = {3, 1, 0, 1, 5}
+i64 s = seg.query(1, 4);                                     // s = 2
+
+i64 sum = 0;
+int r = seg.maxRight(0, [](i64 v) { return v <= 4; }, sum);  // r = 3, sum = 4
+sum = 0;
+int l = seg.minLeft(5, [](i64 v) { return v <= 6; }, sum);   // l = 2, sum = 6
+
+SegmentTree<MinMono<i64>> mn({3, 1, 4, 1, 5});
+int i = mn.findFirst(0, 5, [](i64 v) { return v <= 1; });    // i = 1
+int j = mn.findLast(0, 5, [](i64 v) { return v <= 1; });     // j = 3
 ```

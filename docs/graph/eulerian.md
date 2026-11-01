@@ -44,7 +44,7 @@ template <typename T, bool dir>
 pair<vector<int>, vector<int>> findEulerian(const Graph<T, dir>& g, int s = -1);
 ```
 
-返回 `{vs, es}`：`vs` 为点序列，`es` 为边序列，`es[i]` 是连接 `vs[i]` 与 `vs[i+1]` 的边编号。`s` 为 `-1` 时自动选择起点。不存在时返回 `{{}, {}}`；无边时返回 `{{s}, {}}`。
+返回 `{vs, es}`：`vs` 为点序列，`es` 为边序列，`es[i]` 是连接 `vs[i]` 与 `vs[i+1]` 的边编号。`s` 为 `-1` 时自动选择起点。不存在时返回 `{ {}, {} }`；无边时返回 `{ {s}, {} }`。
 
 ## 复杂度
 

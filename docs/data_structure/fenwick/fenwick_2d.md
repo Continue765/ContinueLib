@@ -59,6 +59,6 @@ f.add(1, 2, 5);
 i64 s = f.query(3, 4);
 i64 r = f.query(0, 2, 1, 3);
 
-Fenwick2D<AddMono<i64>> g(vector<vector<i64>>{{1, 2}, {3, 4}});
+Fenwick2D<AddMono<i64>> g(vector<vector<i64>>{ {1, 2}, {3, 4} });
 i64 t = g.query(1, 2);
 ```

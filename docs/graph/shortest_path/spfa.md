@@ -11,7 +11,7 @@ template <typename T, bool dir>
 pair<vector<T>, vector<int>> spfa(const Graph<T, dir>& g, int s);
 ```
 
-求 `g` 中以 `s` 为源点的单源最短路，允许负权边，返回 `{dist, pre}`；存在从 `s` 可达的负环时返回 `{{}, {}}`。
+求 `g` 中以 `s` 为源点的单源最短路，允许负权边，返回 `{dist, pre}`；存在从 `s` 可达的负环时返回 `{ {}, {} }`。
 
 ## 参数
 

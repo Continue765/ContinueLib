@@ -4,7 +4,7 @@ documentation_of: //graph/mst/boruvka.hpp
 
 # boruvka
 
-在头文件 `boruvka.hpp` 中定义
+定义于头文件 `boruvka.hpp`
 
 ```cpp
 template <typename T>
@@ -21,10 +21,7 @@ pair<vector<int>, T> boruvka(Undigraph<T>& g);
 
 ## 返回值
 
-| 值 | 说明 |
-| --- | --- |
-| `res` | 选中的边编号 |
-| `cost` | 选中边的权值之和 |
+返回 `{res, cost}`：`res` 为选中的边编号，`cost` 为选中边的权值之和。
 
 ## 复杂度
 

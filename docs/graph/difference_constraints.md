@@ -4,7 +4,7 @@ documentation_of: //graph/difference_constraints.hpp
 
 # DifferenceConstraints
 
-在头文件 `difference_constraints.hpp` 中定义
+定义于头文件 `difference_constraints.hpp`
 
 ```cpp
 template <typename T>
@@ -43,12 +43,7 @@ struct DifferenceConstraints;
 
 ## 返回值
 
-`solve()` 返回 `{ok, x}`：
-
-| 值 | 说明 |
-| --- | --- |
-| `ok` | 系统是否可满足 |
-| `x[i]` | $x_i$ 的一组取值，长度 $n$；`ok` 为 `false` 时为空 |
+`solve()` 返回 `{ok, x}`：`ok` 为系统是否可满足，`x[i]` 为 $x_i$ 的一组取值，`ok` 为 `false` 时 `x` 为空。
 
 ## 复杂度
 

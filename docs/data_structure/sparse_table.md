@@ -4,7 +4,7 @@ documentation_of: //data_structure/sparse_table.hpp
 
 # SparseTable
 
-在头文件 `sparse_table.hpp` 中定义
+定义于头文件 `sparse_table.hpp`
 
 ```cpp
 template <typename Mono>
@@ -41,7 +41,7 @@ struct SparseTable;
 
 ## 注解
 
-`op` 须幂等，查询在两段可重叠区间上聚合。
+`op` 须幂等。
 
 ## 示例
 

@@ -4,7 +4,7 @@ documentation_of: //graph/tree/lca.hpp
 
 # LCA
 
-在头文件 `lca.hpp` 中定义
+定义于头文件 `lca.hpp`
 
 ```cpp
 template <typename T>
@@ -47,7 +47,7 @@ int d = lca.dist(0, 1);
 
 # FastLCA
 
-在头文件 `lca.hpp` 中定义
+定义于头文件 `lca.hpp`
 
 ```cpp
 template <typename T>

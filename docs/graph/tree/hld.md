@@ -4,7 +4,7 @@ documentation_of: //graph/tree/hld.hpp
 
 # HLD
 
-在头文件 `hld.hpp` 中定义
+定义于头文件 `hld.hpp`
 
 ```cpp
 template <typename T>

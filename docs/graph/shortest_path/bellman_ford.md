@@ -4,7 +4,7 @@ documentation_of: //graph/shortest_path/bellman_ford.hpp
 
 # bellmanFord
 
-在头文件 `bellman_ford.hpp` 中定义
+定义于头文件 `bellman_ford.hpp`
 
 ```cpp
 template <typename T, bool dir>
@@ -22,10 +22,7 @@ pair<vector<T>, vector<int>> bellmanFord(const Graph<T, dir>& g, int s);
 
 ## 返回值
 
-| 值 | 说明 |
-| --- | --- |
-| `dist[v]` | `s` 到 `v` 的最短距离，不可达为 `inf<T>` |
-| `pre[v]` | 最短路树上 `v` 的前驱，`v = s` 或 `v` 不可达时为 `-1` |
+返回 `{dist, pre}`：`dist[v]` 为 `s` 到 `v` 的最短距离，不可达为 `inf<T>`；`pre[v]` 为最短路树上 `v` 的前驱，`v = s` 或不可达时为 `-1`。
 
 ## 复杂度
 

@@ -4,7 +4,7 @@ documentation_of: //graph/tree/centroid.hpp
 
 # centroidDecompsition
 
-在头文件 `centroid.hpp` 中定义
+定义于头文件 `centroid.hpp`
 
 ```cpp
 template <typename T, typename F>

@@ -4,7 +4,7 @@ documentation_of: //data_structure/binary_trie.hpp
 
 # BinaryTrie
 
-在头文件 `binary_trie.hpp` 中定义
+定义于头文件 `binary_trie.hpp`
 
 ```cpp
 struct BinaryTrie;
@@ -32,10 +32,6 @@ struct BinaryTrie;
 | 成员函数 | 说明 |
 | --- | --- |
 | `int query(int x)` | 返回集合中与 $x$ 异或的最大值 |
-
-## 注解
-
-结点池须容纳根结点 $1$ 与每次 `insert` 产生的至多 $31$ 个新结点。
 
 ## 示例
 

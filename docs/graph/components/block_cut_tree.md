@@ -4,7 +4,7 @@ documentation_of: //graph/components/block_cut_tree.hpp
 
 # BlockCutTree
 
-在头文件 `block_cut_tree.hpp` 中定义
+定义于头文件 `block_cut_tree.hpp`
 
 ```cpp
 struct BlockCutTree;

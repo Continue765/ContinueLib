@@ -4,7 +4,7 @@ documentation_of: //graph/range_graph.hpp
 
 # RangeGraph
 
-在头文件 `range_graph.hpp` 中定义
+定义于头文件 `range_graph.hpp`
 
 ```cpp
 template <typename T>
@@ -53,7 +53,7 @@ struct RangeGraph;
 
 ## 注解
 
-原图点 `i` 在 `build()` 结果中对应 `out(i)` 与 `in(i)` 两个编号；从点出发的边用 `out(i)`，连向点的边用 `in(i)`。`add`、`toRange`、`fromRange` 的端点使用这些编号，已有边在 `build()` 时统一复制。
+原图点 `i` 在 `build()` 结果中对应 `out(i)` 与 `in(i)` 两个编号；从点出发的边用 `out(i)`，连向点的边用 `in(i)`。`add`、`toRange`、`fromRange` 的端点使用这些编号。
 
 ## 示例
 

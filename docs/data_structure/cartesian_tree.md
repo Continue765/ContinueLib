@@ -4,7 +4,7 @@ documentation_of: //data_structure/cartesian_tree.hpp
 
 # CartesianTree
 
-在头文件 `cartesian_tree.hpp` 中定义
+定义于头文件 `cartesian_tree.hpp`
 
 ```cpp
 template <typename T, bool IS_MIN = false>
@@ -41,7 +41,7 @@ struct CartesianTree;
 
 ## 注解
 
-构造时保存 `a` 的引用，`a` 的生命周期须覆盖该结构。键相等时下标小者作为祖先。
+键相等时下标小者作为祖先。
 
 ## 示例
 

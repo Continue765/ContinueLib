@@ -4,7 +4,7 @@ documentation_of: //graph/tree/tree_lifting.hpp
 
 # TreeLifting
 
-在头文件 `tree_lifting.hpp` 中定义
+定义于头文件 `tree_lifting.hpp`
 
 ```cpp
 template <typename Mono, typename T>

@@ -4,7 +4,7 @@ documentation_of: //graph/tree/dsu_on_tree.hpp
 
 # dsuOnTree
 
-在头文件 `dsu_on_tree.hpp` 中定义
+定义于头文件 `dsu_on_tree.hpp`
 
 ```cpp
 template <typename T, typename F1, typename F2, typename F3>

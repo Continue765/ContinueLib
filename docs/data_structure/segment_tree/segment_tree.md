@@ -4,7 +4,7 @@ documentation_of: //data_structure/segment_tree/segment_tree.hpp
 
 # SegmentTree
 
-在头文件 `segment_tree.hpp` 中定义
+定义于头文件 `segment_tree.hpp`
 
 ```cpp
 template <typename Mono>

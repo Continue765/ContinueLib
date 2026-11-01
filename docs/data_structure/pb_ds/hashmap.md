@@ -4,7 +4,7 @@ documentation_of: //data_structure/pb_ds/hashmap.hpp
 
 # HashMap
 
-在头文件 `hashmap.hpp` 中定义
+定义于头文件 `hashmap.hpp`
 
 ```cpp
 struct splitmix64Hash;

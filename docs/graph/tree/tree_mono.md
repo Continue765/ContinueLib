@@ -4,7 +4,7 @@ documentation_of: //graph/tree/tree_mono.hpp
 
 # TreeMono
 
-在头文件 `tree_mono.hpp` 中定义
+定义于头文件 `tree_mono.hpp`
 
 ```cpp
 template <typename T, typename Mono, bool edge = false>
@@ -55,9 +55,7 @@ struct TreeMono;
 
 ## 注解
 
-`init` 的长度须为 $n$（`edge = false`）或 $n - 1$（`edge = true`）；`edge = true` 时 `init[i]`、`modify` 与 `apply` 的参数 `i` 指编号 `i` 的边。`pathQuery` 在 `edge = false` 时包含两端点，`edge = true` 时只含路径上的边。`subtreeQuery` 的 `root` 取 $-1$ 时使用 `tree.root`。
-
-`maxPath` 的 `pred` 须对前缀单调：路径上自 $u$ 起的取值前缀满足 `pred` 后即不再满足。返回值为 `edge = false` 时该前缀最后一个顶点，`edge = true` 时最后一条边靠 `v` 一侧的端点（无满足的边时返回 `u`）；`edge = false` 且 `u` 不合 `pred` 时返回 $-1$，`edge = true` 且 `pred(e())` 为假时返回 $-1$。
+`edge = true` 时 `init[i]`、`modify`、`apply` 的 `i` 指第 `i` 条边，`init` 长度为 $n - 1$；`pathQuery` 只含路径上的边。
 
 ## 示例
 

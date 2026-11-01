@@ -4,7 +4,7 @@ documentation_of: //data_structure/fenwick/fenwick_2d.hpp
 
 # Fenwick2D
 
-在头文件 `fenwick_2d.hpp` 中定义
+定义于头文件 `fenwick_2d.hpp`
 
 ```cpp
 template <typename Mono>

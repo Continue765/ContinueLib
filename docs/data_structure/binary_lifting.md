@@ -4,7 +4,7 @@ documentation_of: //data_structure/binary_lifting.hpp
 
 # BinaryLifting
 
-在头文件 `binary_lifting.hpp` 中定义
+定义于头文件 `binary_lifting.hpp`
 
 ```cpp
 template <typename Mono>
@@ -49,7 +49,7 @@ struct BinaryLifting;
 
 ## 注解
 
-`v` 取 $-1$ 表示无后继，越过链尾后点保持 $-1$ 而信息不再变化。`add` 在 `build` 之前对每个点至多调用一次，且 `step` 满足 $0 \le \text{step} < 2^{\lfloor \log_2 n \rfloor + 1}$。
+`v` 取 $-1$ 表示无后继；`add` 须在 `build` 前调用，`step` 取 $0 \le \text{step} < 2^{\lfloor \log_2 n \rfloor + 1}$。
 
 ## 示例
 

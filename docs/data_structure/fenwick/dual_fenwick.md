@@ -4,7 +4,7 @@ documentation_of: //data_structure/fenwick/dual_fenwick.hpp
 
 # DualFenwick
 
-在头文件 `dual_fenwick.hpp` 中定义
+定义于头文件 `dual_fenwick.hpp`
 
 ```cpp
 template <typename Abel>

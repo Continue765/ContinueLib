@@ -4,7 +4,7 @@ documentation_of: //graph/graph.hpp
 
 # Graph
 
-在头文件 `graph.hpp` 中定义
+定义于头文件 `graph.hpp`
 
 ```cpp
 template <typename T = int, bool dir = true>

@@ -4,7 +4,7 @@ documentation_of: //data_structure/fenwick/fenwick_range_add.hpp
 
 # FenwickRangeAdd
 
-在头文件 `fenwick_range_add.hpp` 中定义
+定义于头文件 `fenwick_range_add.hpp`
 
 ```cpp
 template <typename Abel>
@@ -49,7 +49,7 @@ struct FenwickRangeAdd;
 
 ## 注解
 
-除 `Abel::inv` 外还使用 `Abel::pow`，其指数取 $[-n, n]$ 内的整数。
+需 `Abel::inv` 与 `Abel::pow`。
 
 ## 示例
 

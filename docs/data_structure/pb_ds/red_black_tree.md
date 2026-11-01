@@ -4,7 +4,7 @@ documentation_of: //data_structure/pb_ds/red_black_tree.hpp
 
 # OrderedMap
 
-在头文件 `red_black_tree.hpp` 中定义
+定义于头文件 `red_black_tree.hpp`
 
 ```cpp
 template <typename K, typename V, typename Comp = less<K>>

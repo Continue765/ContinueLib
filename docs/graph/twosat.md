@@ -4,7 +4,7 @@ documentation_of: //graph/twosat.hpp
 
 # TwoSat
 
-在头文件 `twosat.hpp` 中定义
+定义于头文件 `twosat.hpp`
 
 ```cpp
 struct TwoSat;
@@ -36,12 +36,7 @@ struct TwoSat;
 
 ## 返回值
 
-`satisfiable()` 返回 `{ok, ans}`：
-
-| 值 | 说明 |
-| --- | --- |
-| `ok` | 子句集是否可满足 |
-| `ans[i]` | $x_i$ 的取值，`1` 为真、`0` 为假；`ok` 为 `false` 时为空 |
+`satisfiable()` 返回 `{ok, ans}`：`ok` 为子句集是否可满足，`ans[i]` 为 $x_i$ 的取值（`1` 为真、`0` 为假），`ok` 为 `false` 时 `ans` 为空。
 
 ## 复杂度
 

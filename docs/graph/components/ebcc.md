@@ -4,7 +4,7 @@ documentation_of: //graph/components/ebcc.hpp
 
 # EBCC
 
-在头文件 `ebcc.hpp` 中定义
+定义于头文件 `ebcc.hpp`
 
 ```cpp
 template <typename T>
@@ -21,10 +21,7 @@ pair<int, vector<int>> EBCC(const Undigraph<T>& g);
 
 ## 返回值
 
-| 值 | 说明 |
-| --- | --- |
-| `cnt` | 边双连通分量个数 |
-| `comp[u]` | 点 `u` 所属分量编号，$0 \le \text{comp}[u] < \text{cnt}$ |
+返回 `{cnt, comp}`：`cnt` 为边双连通分量个数，`comp[u]` 为点 `u` 所属分量编号，$0 \le \text{comp}[u] < \text{cnt}$。
 
 ## 复杂度
 

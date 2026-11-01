@@ -4,7 +4,7 @@ documentation_of: //graph/mst/kruskal_tree.hpp
 
 # kruskalTree
 
-在头文件 `kruskal_tree.hpp` 中定义
+定义于头文件 `kruskal_tree.hpp`
 
 ```cpp
 template <typename T>
@@ -21,10 +21,7 @@ pair<Undigraph<int>, vector<T>> kruskalTree(const Undigraph<T>& g);
 
 ## 返回值
 
-| 值 | 说明 |
-| --- | --- |
-| `res` | Kruskal 重构树，点 $0, \dots, n - 1$ 为原图点，点 $n + i$ 为第 $i$ 条选中的边对应的新点 |
-| `val[p]` | 点 `p` 的权值，原图点为 $0$，新点为其对应边的权值 |
+返回 `{res, val}`：`res` 为 Kruskal 重构树，点 $0, \dots, n - 1$ 为原图点，点 $n + i$ 为第 $i$ 条选中边对应的新点；`val[p]` 为点 `p` 的权值，原图点为 $0$，新点为对应边的权值。
 
 ## 复杂度
 

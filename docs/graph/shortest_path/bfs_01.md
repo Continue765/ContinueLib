@@ -4,80 +4,42 @@ documentation_of: //graph/shortest_path/bfs_01.hpp
 
 # bfs_01
 
-在头文件 `bfs_01.hpp` 中定义
+定义于头文件 `bfs_01.hpp`
 
 ```cpp
 template <typename T, bool dir>
-pair<vector<T>, vector<int>> bfs_01(const Graph<T, dir>& g, int s);
+pair<vector<T>, vector<int>> bfs_01(const Graph<T, dir>& g, int s);  // (1)
+
+template <typename T, bool dir>
+tuple<vector<T>, vector<int>, vector<int>> bfs_01(const Graph<T, dir>& g, vector<int>& s);  // (2)
 ```
 
-求 `g` 中以 `s` 为源点的单源最短路，要求所有边权为 $0$ 或 $1$，返回 `{dist, pre}`。
+求边权为 $0$ 或 $1$ 时的最短路。第一个重载返回 `{dist, pre}`，第二个重载返回 `{dist, pre, root}`。
 
 ## 参数
 
 | 参数 | 说明 |
 | --- | --- |
 | `g` | 有向或无向图，边权为 $0$ 或 $1$ |
-| `s` | 源点 |
+| `s` | 源点；第二个重载为源点集合 |
 
 ## 返回值
 
-| 值 | 说明 |
-| --- | --- |
-| `dist[v]` | `s` 到 `v` 的最短距离，不可达为 `inf<T>` |
-| `pre[v]` | 最短路树上 `v` 的前驱，`v = s` 或 `v` 不可达时为 `-1` |
-
-## 复杂度
-
-$O(n + m)$，$n$ 为点数，$m$ 为边数。
-
-## 示例
-
-```cpp
-Graph<int> g(n);
-g.add(0, 1, 0);
-g.add(1, 2, 1);
-auto [dist, pre] = bfs_01(g, 0);
-```
-
-## 多源最短路
-
-```cpp
-template <typename T, bool dir>
-tuple<vector<T>, vector<int>, vector<int>> bfs_01(const Graph<T, dir>& g, vector<int>& s);
-```
-
-求各源点到全图的最短距离，返回 `{dist, pre, root}`。
-
-## 参数
-
-| 参数 | 说明 |
-| --- | --- |
-| `g` | 有向或无向图，边权为 $0$ 或 $1$ |
-| `s` | 源点集合 |
-
-## 返回值
-
-| 值 | 说明 |
-| --- | --- |
-| `dist[v]` | `v` 到最近源点的距离，不可达为 `inf<T>` |
-| `pre[v]` | 最短路树上 `v` 的前驱，`v` 为源点或不可达时为 `-1` |
-| `root[v]` | `v` 所属的最近源点，`v` 不可达时为 `-1` |
+返回 `{dist, pre}` 或 `{dist, pre, root}`：`dist[v]` 为到最近源点的距离，不可达为 `inf<T>`；`pre[v]` 为最短路树上 `v` 的前驱，`v` 为源点或不可达时为 `-1`；`root[v]` 为 `v` 所属的最近源点，不可达时为 `-1`。
 
 ## 复杂度
 
 $O(n + m)$。
 
-## 注解
-
-`s` 以非 const 引用传入，函数不修改其内容。
-
 ## 示例
 
 ```cpp
-Graph<int> g(n);
-g.add(0, 1, 1);
-g.add(1, 2, 0);
-vector<int> s = {0, 1};
-auto [dist, pre, root] = bfs_01(g, s);
+Digraph<int> g(n);
+g.add(0, 1, 0);
+g.add(1, 2, 1);
+
+auto [dist, pre] = bfs_01(g, 0);
+
+vector<int> s = {0, 2};
+auto [dist2, pre2, root] = bfs_01(g, s);
 ```

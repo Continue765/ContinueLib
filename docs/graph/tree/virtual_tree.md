@@ -4,7 +4,7 @@ documentation_of: //graph/tree/virtual_tree.hpp
 
 # VirtualTree
 
-在头文件 `virtual_tree.hpp` 中定义
+定义于头文件 `virtual_tree.hpp`
 
 ```cpp
 template <typename T>
@@ -40,10 +40,6 @@ struct VirtualTree;
 | 成员函数 | 说明 |
 | --- | --- |
 | `pair<vector<int>&, vector<vector<pair<int, T>>>&> build(vector<int>& h)` | 构造点集 `h` 的虚树，返回 `{vt, adj}` |
-
-## 注解
-
-`build` 会补入 `h` 中相邻点间的 LCA；`adj` 中边的权为两端点的深度差。
 
 ## 示例
 

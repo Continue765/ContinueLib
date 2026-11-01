@@ -4,7 +4,7 @@ documentation_of: //data_structure/disjoint_spase_table.hpp
 
 # DisjointSparseTable
 
-在头文件 `disjoint_spase_table.hpp` 中定义
+定义于头文件 `disjoint_spase_table.hpp`
 
 ```cpp
 template <typename Mono>

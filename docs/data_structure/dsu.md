@@ -4,7 +4,7 @@ documentation_of: //data_structure/dsu.hpp
 
 # DSU
 
-在头文件 `dsu.hpp` 中定义
+定义于头文件 `dsu.hpp`
 
 ```cpp
 struct DSU;

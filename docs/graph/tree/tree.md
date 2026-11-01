@@ -4,7 +4,7 @@ documentation_of: //graph/tree/tree.hpp
 
 # Tree
 
-在头文件 `tree.hpp` 中定义
+定义于头文件 `tree.hpp`
 
 ```cpp
 template <typename T>
@@ -58,7 +58,7 @@ struct Tree;
 
 ## 注解
 
-`g` 须为 $n$ 个点、$n - 1$ 条边的无向树，并以引用保存，其生命周期须覆盖该结构。`build` 可反复调用以更换根。
+`g` 须为 $n$ 个点、$n - 1$ 条边的无向树。
 
 ## 示例
 

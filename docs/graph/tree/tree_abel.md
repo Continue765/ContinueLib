@@ -4,7 +4,7 @@ documentation_of: //graph/tree/tree_abel.hpp
 
 # TreeAbel
 
-在头文件 `tree_abel.hpp` 中定义
+定义于头文件 `tree_abel.hpp`
 
 ```cpp
 template <typename T, typename Abel, bool edge = false>
@@ -46,7 +46,7 @@ struct TreeAbel;
 
 ## 注解
 
-`init` 的长度须为 $n$（`edge = false`）或 $n - 1$（`edge = true`）；`edge = true` 时 `init[i]` 为编号 `i` 的边的权值。`pathQuery` 在 `edge = false` 时包含两端点，`edge = true` 时只含路径上的边。`subtreeQuery` 的 `root` 取 $-1$ 时使用 `tree.root`。
+`edge = true` 时 `init[i]` 为第 `i` 条边的权值，`init` 长度为 $n - 1$；`pathQuery` 只含路径上的边。
 
 ## 示例
 

@@ -4,7 +4,7 @@ documentation_of: //data_structure/pb_ds/pairing_heap.hpp
 
 # PairingHeap
 
-在头文件 `pairing_heap.hpp` 中定义
+定义于头文件 `pairing_heap.hpp`
 
 ```cpp
 template <typename T, typename Comp = less<T>>

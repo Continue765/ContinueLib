@@ -4,14 +4,17 @@ documentation_of: //graph/toposort.hpp
 
 # toposort
 
-在头文件 `toposort.hpp` 中定义
+定义于头文件 `toposort.hpp`
 
 ```cpp
 template <typename T>
-vector<int> toposort(const Digraph<T>& g);
+vector<int> toposort(const Digraph<T>& g);  // (1)
+
+template <typename T>
+vector<int> lexMinToposort(const Digraph<T>& g);  // (2)
 ```
 
-求有向图 `g` 的拓扑序，长度为 $n$；图中存在环时返回空序列。
+返回 `g` 的拓扑序，长度为 $n$；存在环时返回空序列。`lexMinToposort` 返回字典序最小的拓扑序。
 
 ## 参数
 
@@ -21,18 +24,7 @@ vector<int> toposort(const Digraph<T>& g);
 
 ## 复杂度
 
-$O(n + m)$，$n$ 为点数，$m$ 为边数。
-
-## lexMinToposort
-
-```cpp
-template <typename T>
-vector<int> lexMinToposort(const Digraph<T>& g);
-```
-
-求字典序最小的拓扑序，长度为 $n$；图中存在环时返回空序列。
-
-$O((n + m) \log n)$。
+`toposort` 为 $O(n + m)$，`lexMinToposort` 为 $O((n + m) \log n)$。
 
 ## 示例
 

@@ -4,47 +4,33 @@ documentation_of: //graph/mst/prim.hpp
 
 # prim
 
-在头文件 `prim.hpp` 中定义
+定义于头文件 `prim.hpp`
 
 ```cpp
 template <typename T, typename F>
-vector<Edge<T>> prim(int n, F&& cost);
+vector<Edge<T>> prim(int n, F&& cost);  // (1)
 
 template <typename T>
-pair<vector<int>, T> prim(Undigraph<T>& g);
+pair<vector<int>, T> prim(Undigraph<T>& g);  // (2)
 ```
 
-求最小生成树，$O(n^2)$。
+求最小生成树。`prim(n, cost)` 返回生成树的 $n - 1$ 条边，`prim(g)` 返回 `{res, cost}`。
 
 ## 参数
-
-**`prim(n, cost)`**
 
 | 参数 | 说明 |
 | --- | --- |
 | `n` | 点数 |
-| `cost` | `T cost(int u, int v)`，返回点 `u` 与 `v` 之间边的权值 |
-
-**`prim(g)`**
-
-| 参数 | 说明 |
-| --- | --- |
+| `cost` | `T cost(int u, int v)`，点 `u`、`v` 之间边的权值 |
 | `g` | 无向图 |
 
 ## 返回值
 
-**`prim(n, cost)`**
+`prim(n, cost)` 返回生成树的 $n - 1$ 条边；`prim(g)` 返回 `{res, cost}`：`res` 为选中的边编号，`cost` 为选中边的权值之和。
 
-| 值 | 说明 |
-| --- | --- |
-| `vector<Edge<T>>` | 生成树的 $n - 1$ 条边，`Edge<T>` 的 `u`、`v` 为端点，`w` 为权值 |
+## 复杂度
 
-**`prim(g)`**
-
-| 值 | 说明 |
-| --- | --- |
-| `first` | 选中的边编号 |
-| `second` | 选中边的权值之和 |
+$O(n^2)$。
 
 ## 示例
 
